@@ -1,0 +1,12 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>Edit title</h2>
+    
+    <div body>
+        <input #todoTitle [value]="title" type="text" />
+    </div>
+    
+    <div footer>
+        <button (click)="edit()">Edit</button>
+        <button (click)="wrapper.close()">Close</button>
+    </div>
+</app-dialog-wrapper>

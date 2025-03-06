@@ -1,0 +1,17 @@
+hgroup {
+    background-color: var(--c-black);
+    color: var(--c-white-d1);
+
+    padding: .5rem 1rem;
+    box-shadow: 2px 2px 5px var(--c-black);
+
+    & p {
+        margin: 0;
+    }
+}
+
+main {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+

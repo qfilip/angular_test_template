@@ -1,0 +1,20 @@
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--rem-xxxs);
+    }
+
+    & li:nth-child(even) {
+        background-color: #eee;
+    }
+}
+
+button {
+    font-size: 1.2rem;
+}

@@ -1,0 +1,31 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>Todo history</h2>
+
+    <div body>
+        <ul>
+            @for(x of todoHistory; track $index) {
+                <li>
+                    <dl>
+                        <div>
+                            <dt>Title</dt>
+                            <dd>{{ x.title }}</dd>
+                        </div>
+                        <div>
+                            <dt>Completed</dt>
+                            <dd>{{ x.completed }}</dd>
+                        </div>
+                        <div>
+                            <dt>Modified</dt>
+                            <dd>{{ x.createdOn | date: 'yyyy/MM/dd' }}</dd>
+                        </div>
+                    </dl>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div footer>
+        <button (click)="wrapper.close()">Close</button>
+    </div>
+    
+</app-dialog-wrapper>

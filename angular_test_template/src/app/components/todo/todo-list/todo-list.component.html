@@ -1,0 +1,28 @@
+<app-todo-title-dialog #todoTitleDialog></app-todo-title-dialog>
+<app-todo-history-dialog #todoHistoryDialog></app-todo-history-dialog>
+
+<ul>
+    @let todos = $todos();
+    @let display = $display();
+
+    @for(x of todos; track $index) {
+        <li>
+            <span>
+                {{ x.title }}
+            </span>
+            <span>
+                @switch (display) {
+                    @case('pending') {
+                        <button (click)="toggleCompleted(x)" class="green">Complete</button>
+                        <button (click)="updateTitle(x)" class="orange">Update title</button>
+                    }
+                    @case ('completed') {
+                        <button (click)="toggleCompleted(x)" class="green">Reactivate</button>
+                    }
+                }
+                <button (click)="viewHistory(x)" class="blue">View history</button>
+                <button (click)="deleteTodo(x)" class="red">Delete</button>
+            </span>
+        </li>
+    }
+</ul>

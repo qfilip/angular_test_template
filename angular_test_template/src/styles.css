@@ -4,9 +4,15 @@
 @import "./assets/css/scrollbar.css";
 @import "./assets/css/tables.css";
 @import "./assets/css/variables.css";
+@import "./assets/css/classes.css";
 
 * {
     transition: var(--transition);
+}
+
+html, body {
+    max-height: 99vh;
+    overflow-y: hidden;
 }
 
 html, body, h1, h2, h3, h4, h5, h6 {
@@ -14,6 +20,6 @@ html, body, h1, h2, h3, h4, h5, h6 {
     padding: 0;
 }
 
-html, body {
-    font-size: 1.2rem;
+html, body, button {
+    font-size: 1.1rem;
 }

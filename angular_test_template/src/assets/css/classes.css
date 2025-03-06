@@ -1,0 +1,23 @@
+.blue {
+    --color: var(--c-blue);
+    --bgColor: var(--c-white);
+    --borderColor: var(--c-blue);
+}
+
+.green {
+    --color: var(--c-green);
+    --bgColor: var(--c-white);
+    --borderColor: var(--c-green);
+}
+
+.orange {
+    --color: var(--c-orange);
+    --bgColor: var(--c-white);
+    --borderColor: var(--c-orange);
+}
+
+.red {
+    --color: var(--c-red);
+    --bgColor: var(--c-white);
+    --borderColor: var(--c-red);
+}
