@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { DialogWrapperComponent } from "../../common-ui/dialog-wrapper/dialog-wrapper.component";
 import { Todo } from '../todo.models';
 import { TodoStateService } from '../todo-state.service';
@@ -10,16 +10,15 @@ import { TodoStateService } from '../todo-state.service';
   styleUrl: './todo-title.dialog.css'
 })
 export class TodoTitleDialog {
-  @ViewChild('wrapper') wrapper!: DialogWrapperComponent;
-  @ViewChild('todoTitle') todoTitle!: ElementRef<HTMLInputElement>;
+  @ViewChild('wrapper') private wrapper!: DialogWrapperComponent;
+  @ViewChild('todoTitle') private todoTitle!: ElementRef<HTMLInputElement>;
 
   private todoService = inject(TodoStateService);
-  private todo!: Todo;
-  title = '';
+  private _$todo = signal<Todo | null>(null);
+  $title = computed(() => this._$todo()?.title);
 
   open = (x: Todo) => {
-    this.todo = {...x};
-    this.title = x.title;
+    this._$todo.set({...x});
     this.wrapper.open();
   }
 
@@ -27,7 +26,7 @@ export class TodoTitleDialog {
 
   edit() {
     const newName = this.todoTitle.nativeElement.value;
-    this.todoService.updateTodoTitle(this.todo, newName);
+    this.todoService.updateTodoTitle(this._$todo()!, newName);
     this.wrapper.close();
   }
 }

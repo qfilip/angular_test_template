@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 
 import { DialogWrapperComponent } from '../../common-ui/dialog-wrapper/dialog-wrapper.component';
 import { TodoStateService } from '../todo-state.service';
@@ -13,14 +13,16 @@ import { TodoUtils } from '../todo.utils';
   styleUrl: './todo-history-dialog.dialog.css'
 })
 export class TodoHistoryDialog {
-  @ViewChild('wrapper') wrapper!: DialogWrapperComponent;
+  @ViewChild('wrapper') private wrapper!: DialogWrapperComponent;
 
   private todoService = inject(TodoStateService);
-  todoHistory: TodoHistory[] = [];
+  private _$todoHistory = signal<TodoHistory[]>([]);
+  $todoHistory = this._$todoHistory.asReadonly();
 
   open(x: Todo) {
     const events = this.todoService.getTodoEvents();
-    this.todoHistory = TodoUtils.mapTodoHistoryFromEvents(events, x);
+    const history = TodoUtils.mapTodoHistoryFromEvents(events, x);
+    this._$todoHistory.set(history) ;
     this.wrapper.open();
   }
 }

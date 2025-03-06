@@ -1,4 +1,5 @@
 <app-dialog-wrapper #wrapper>
+    @let todoHistory = $todoHistory();
     <h2 header>Todo history</h2>
 
     <div body>
@@ -15,8 +16,19 @@
                             <dd>{{ x.completed }}</dd>
                         </div>
                         <div>
-                            <dt>Modified</dt>
-                            <dd>{{ x.createdOn | date: 'yyyy/MM/dd' }}</dd>
+                            <dt>
+                                @if($index === 0) {
+                                    Created
+                                }
+                                @else {
+                                    Modified
+                                }
+                            </dt>
+                            <dd>
+                                <time [dateTime]="x.createdOn">
+                                    {{ x.createdOn | date: 'yyyy/MM/dd' }}
+                                </time>
+                            </dd>
                         </div>
                     </dl>
                 </li>
