@@ -51,12 +51,14 @@ export class TodoListComponent {
       buttons: [
         {
           label: 'Yup',
+          class: 'green',
           action: () => {
             this.todoService.deleteTodo(x);
           }
         },
         {
-          label: 'Hell no!'
+          label: 'Hell no!',
+          class: 'red'
         }
       ]
     } as DialogOptions);

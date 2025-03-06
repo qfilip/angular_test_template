@@ -5,6 +5,7 @@
 @import "./assets/css/tables.css";
 @import "./assets/css/variables.css";
 @import "./assets/css/classes.css";
+@import "./assets/css/dialogs.css";
 
 * {
     transition: var(--transition);

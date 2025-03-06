@@ -1,8 +1,8 @@
-& section, .new-todo {
+section, .new-todo {
     margin: .5rem 1rem;
 }
 
-& section {
+section {
     border: 1px groove var(--c-black);
     box-shadow: 2px 2px 5px var(--c-black);
 
@@ -10,7 +10,7 @@
     max-height: 30vh;
 
     overflow-y: auto;
-
+    
     & h2 {
         font-size: 1em;
         padding: .5rem 1rem;
@@ -20,10 +20,11 @@
         position: sticky;
         top: 0;
     }
-
+    
     & div {
         padding: 0rem 1rem;
     }
+    
 }
 
 .new-todo {

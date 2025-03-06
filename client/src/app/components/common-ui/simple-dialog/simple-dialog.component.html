@@ -1,5 +1,5 @@
 @if(options) {
-<article>
+<article class="dialog">
     <section>
         <header>
             {{ options.header }}
@@ -9,7 +9,7 @@
         </main>
         <footer>
             @for(btn of options.buttons; track $index) {
-            <button (click)="onButtonClicked(btn.action)">{{ btn.label }}</button>
+            <button (click)="onButtonClicked(btn.action)" [class]="btn.class">{{ btn.label }}</button>
             }
         </footer>
     </section>

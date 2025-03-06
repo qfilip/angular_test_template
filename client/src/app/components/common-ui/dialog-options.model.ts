@@ -3,7 +3,8 @@ export type DialogOptions = {
     message: string;
     type: 'info' | 'warning';
     buttons: { 
-        label: string;
+        label: string,
+        class: string,
         action: () => void
     }[];
 }
