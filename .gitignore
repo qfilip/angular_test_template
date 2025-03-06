@@ -10,6 +10,7 @@ db/db.json
 /bazel-out
 
 # Node
+client/dist
 client/node_modules
 db/node_modules
 npm-debug.log
