@@ -10,7 +10,8 @@ db/db.json
 /bazel-out
 
 # Node
-/node_modules
+client/node_modules
+db/node_modules
 npm-debug.log
 yarn-error.log
 
