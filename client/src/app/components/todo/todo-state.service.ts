@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, signal } from "@angular/core";
-import { TodoApiService } from "./todo-api.service";
-import { TodoUtils } from "./todo.utils";
-import { TodoEvent, Todo, TodoCreatedEvent, TodoUpdatedEvent, TodoDeletedEvent } from "./todo.models";
+import { computed, inject, Injectable, signal } from '@angular/core';
+
+import { TodoApiService } from './todo-api.service';
+import { Todo, TodoEvent } from './todo.models';
+import { TodoUtils } from './todo.utils';
 
 @Injectable({
     providedIn: 'root'

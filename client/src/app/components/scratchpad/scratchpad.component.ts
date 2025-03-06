@@ -11,8 +11,8 @@ import { ScratchpadApiService } from './scratchpad.api.service';
   styleUrl: './scratchpad.component.css'
 })
 export class ScratchpadComponent {
-  dialogService = inject(DialogService);
-  spinnerService = inject(LoaderService);
+  private dialogService = inject(DialogService);
+  private spinnerService = inject(LoaderService);
   private apiService = inject(ScratchpadApiService);
 
   openDialog() {

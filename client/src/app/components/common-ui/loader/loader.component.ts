@@ -1,4 +1,5 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+
 import { LoaderService } from '../loader.service';
 
 @Component({
@@ -8,13 +9,15 @@ import { LoaderService } from '../loader.service';
   styleUrl: './loader.component.css'
 })
 export class LoaderComponent {
-  private service = inject(LoaderService)
-  
+  private service = inject(LoaderService);
+  private _$visible = signal<boolean>(false);
+  private _$message = signal<string>('loading...');
+
+  $visible = this._$visible.asReadonly();
+  $message = this._$message.asReadonly();
+
   constructor() {
-    effect(() => this.visible = this.service.isLoading());
-    effect(() => this.message = this.service.message());
+    effect(() => this._$visible.set(this.service.$isLoading()));
+    effect(() => this._$message.set(this.service.$message()));
   }
-  
-  visible = false;
-  message = 'Loading...';
 }

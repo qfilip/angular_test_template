@@ -1,10 +1,11 @@
 import { Component, computed, inject, input, ViewChild } from '@angular/core';
-import { TodoStateService } from '../todo-state.service';
-import { Todo } from '../todo.models';
-import { TodoTitleDialog } from "../todo-title-dialog/todo-title.dialog";
-import { DialogService } from '../../common-ui/dialog.service';
+
 import { DialogOptions } from '../../common-ui/dialog-options.model';
-import { TodoHistoryDialog } from "../todo-history-dialog/todo-history-dialog.dialog";
+import { DialogService } from '../../common-ui/dialog.service';
+import { TodoHistoryDialog } from '../todo-history-dialog/todo-history-dialog.dialog';
+import { TodoStateService } from '../todo-state.service';
+import { TodoTitleDialog } from '../todo-title-dialog/todo-title.dialog';
+import { Todo } from '../todo.models';
 
 @Component({
   selector: 'app-todo-list',

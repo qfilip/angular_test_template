@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-dialog-wrapper',
@@ -7,13 +7,14 @@ import { Component } from '@angular/core';
   styleUrl: './dialog-wrapper.component.css'
 })
 export class DialogWrapperComponent {
-  visible = false;
+  private _$visible = signal<boolean>(false);
+  $visible = this._$visible.asReadonly();
   
   open() {
-    this.visible = true;
+    this._$visible.set(true);
   }
 
   close() {
-    this.visible = false;
+    this._$visible.set(false);
   }
 }

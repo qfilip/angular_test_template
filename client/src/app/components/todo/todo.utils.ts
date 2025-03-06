@@ -1,4 +1,4 @@
-import { Todo, TodoCreatedEvent, TodoUpdatedEvent, TodoDeletedEvent, TodoEvent, TodoHistory } from "./todo.models";
+import { Todo, TodoCreatedEvent, TodoDeletedEvent, TodoEvent, TodoHistory, TodoUpdatedEvent } from './todo.models';
 
 export class TodoUtils {
 

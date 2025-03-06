@@ -5,16 +5,16 @@ import { DialogOptions } from "./dialog-options.model";
     providedIn: 'root'
 })
 export class DialogService {
-    private dialogOptions$ = signal<DialogOptions | null>(null);
-    dialogOptions = this.dialogOptions$.asReadonly();
+    private _$dialogOptions = signal<DialogOptions | null>(null);
+    $dialogOptions = this._$dialogOptions.asReadonly();
 
     open(options: DialogOptions) {
         const o = this.setDefaultOptions(options);
-        this.dialogOptions$.set(o);
+        this._$dialogOptions.set(o);
     }
 
     close() {
-        this.dialogOptions$.set(null);
+        this._$dialogOptions.set(null);
     }
 
     private setDefaultOptions(options: DialogOptions) {

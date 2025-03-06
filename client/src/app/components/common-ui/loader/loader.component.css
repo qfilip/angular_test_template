@@ -28,7 +28,7 @@
 
 .la-cog {
     line-height: 100%;
-    color: wheat;
+    color: var(--c-white);
     width: fit-content;
     height: 100%;
     text-align: center;
@@ -40,7 +40,7 @@
 
 .la-cog > i {
     font-size: 2rem;
-    color: wheat;
+    color: var(--c-white);
     background-color: transparent;
 }
 

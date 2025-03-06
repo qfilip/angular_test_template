@@ -1,4 +1,4 @@
-@if(visible) {
+@if($visible()) {
     <div class="wrapper">
         <div class="body">
             <div class="la-cog">
@@ -6,7 +6,7 @@
                 <!-- &#9851; -->
             </div>
             <div>
-                {{ message }}
+                {{ $message() }}
             </div>
         </div>
     </div>

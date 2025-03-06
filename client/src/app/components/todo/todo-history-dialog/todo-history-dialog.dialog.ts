@@ -1,9 +1,10 @@
-import { Component, inject, ViewChild } from '@angular/core';
-import { DialogWrapperComponent } from '../../common-ui/dialog-wrapper/dialog-wrapper.component';
-import { Todo, TodoHistory } from '../todo.models';
-import { TodoStateService } from '../todo-state.service';
-import { TodoUtils } from '../todo.utils';
 import { DatePipe } from '@angular/common';
+import { Component, inject, ViewChild } from '@angular/core';
+
+import { DialogWrapperComponent } from '../../common-ui/dialog-wrapper/dialog-wrapper.component';
+import { TodoStateService } from '../todo-state.service';
+import { Todo, TodoHistory } from '../todo.models';
+import { TodoUtils } from '../todo.utils';
 
 @Component({
   selector: 'app-todo-history-dialog',

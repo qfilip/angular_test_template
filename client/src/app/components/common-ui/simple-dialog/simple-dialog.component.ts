@@ -1,4 +1,5 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
+
 import { DialogOptions } from '../dialog-options.model';
 import { DialogService } from '../dialog.service';
 
@@ -10,12 +11,13 @@ import { DialogService } from '../dialog.service';
 })
 export class SimpleDialogComponent {
   private service = inject(DialogService);
-  
+  private _$options = signal<DialogOptions | null>(null);
+
+  $options = this._$options.asReadonly();
+
   constructor() {
-    effect(() => this.options = this.service.dialogOptions())
+    effect(() => this._$options.set(this.service.$dialogOptions()))
   }
-  
-  options: DialogOptions | null = null;
   
   onButtonClicked(btnAction: () => void) {
     btnAction();

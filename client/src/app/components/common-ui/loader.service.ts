@@ -4,11 +4,11 @@ import { Injectable, signal } from '@angular/core';
     providedIn: 'root'
 })
 export class LoaderService {
-    private isLoading$ = signal<boolean>(false);
-    isLoading = this.isLoading$.asReadonly();
+    private _$isLoading = signal<boolean>(false);
+    private _$message = signal<string>('');
 
-    private message$ = signal<string>('');
-    message = this.message$.asReadonly();
+    $isLoading = this._$isLoading.asReadonly();
+    $message = this._$message.asReadonly();
 
     private tasks = 0;
 
@@ -16,18 +16,18 @@ export class LoaderService {
 
     show(message: string = 'Working...') {
         this.tasks += 1;
-        this.message$.set(message);
-        this.isLoading$.set(true);
+        this._$message.set(message);
+        this._$isLoading.set(true);
     }
 
     setMessage(message: string) {
-        this.message$.set(message);
+        this._$message.set(message);
     }
 
     hide() {
         this.tasks -= 1;
         if (this.tasks === 0) {
-            this.isLoading$.set(false);
+            this._$isLoading.set(false);
         }
     }
 }
