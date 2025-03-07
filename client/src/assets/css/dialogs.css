@@ -48,6 +48,10 @@ article.dialog {
             border-top: 1px solid var(--c-black);;
             padding: var(--rem-xxs) var(--rem-xs);
             background-color: var(--c-white);
+
+            & button {
+                width: 5rem;
+            }
         }
     }
 }
