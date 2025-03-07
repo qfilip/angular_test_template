@@ -2,11 +2,12 @@
 <app-simple-dialog></app-simple-dialog>
 
 <hgroup>
-    <h1>App Template</h1>
-    <p>Your experiment begins here...</p>
+    <a (click)="router.navigate([''])">
+        <h1>App Template</h1>
+        <p>Your experiment begins here...</p>
+    </a>
 </hgroup>
 <main>
     <app-popup></app-popup>
-    <app-todos-page></app-todos-page>
-    <app-scratchpad></app-scratchpad>
+    <router-outlet></router-outlet>
 </main>

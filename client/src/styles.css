@@ -24,3 +24,17 @@ html, body, h1, h2, h3, h4, h5, h6 {
 html, body, button {
     font-size: 1.1rem;
 }
+
+a {
+    color: var(--c-green);
+}
+
+a:hover {
+    color: var(--c-white);
+    background-color: var(--c-green);
+}
+
+::selection {
+    color: var(--c-white);
+    background: var(--c-green);
+}
