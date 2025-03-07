@@ -10,18 +10,18 @@ import { TodoUtils } from './todo.utils';
 export class TodoStateService {
     private api = inject(TodoApiService);
 
-    private $todoEvents = signal<TodoEvent[]>([]);
+    private _$todoEvents = signal<TodoEvent[]>([]);
     
     $todos = computed(() => {
-        const evs = this.$todoEvents();
+        const evs = this._$todoEvents();
         return TodoUtils.mapTodosFromEvents(evs);
     });
 
-    getTodoEvents = () => this.$todoEvents();
+    getTodoEvents = () => this._$todoEvents();
 
     loadTodos() {
-        this.api.getAll().subscribe({
-            next: xs => this.$todoEvents.set(xs)
+        this.api.getAllEvents().subscribe({
+            next: xs => this._$todoEvents.set(xs)
         });
     }
     
@@ -46,7 +46,7 @@ export class TodoStateService {
     }
 
     private sendEvent = (ev: TodoEvent) => 
-        this.api.addEvent(ev).subscribe({
-            next: x => this.$todoEvents.update((xs) => xs.concat(x))
+        this.api.postEvent(ev).subscribe({
+            next: x => this._$todoEvents.update((xs) => xs.concat(x))
         });
 }

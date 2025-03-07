@@ -8,6 +8,6 @@ import { TodoEvent } from "./todo.models";
 export class TodoApiService extends BaseApiService {
     private path = this.apiUrl + '/todo-events';
     
-    getAll = () => this.http.get<TodoEvent[]>(this.path);
-    addEvent = (ev: TodoEvent) => this.http.post<TodoEvent>(this.path, ev);
+    getAllEvents = () => this.http.get<TodoEvent[]>(this.path);
+    postEvent = (ev: TodoEvent) => this.http.post<TodoEvent>(this.path, ev);
 }
