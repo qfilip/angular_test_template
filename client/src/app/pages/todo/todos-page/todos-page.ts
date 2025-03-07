@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TodoListComponent } from "../../../components/todo/todo-list/todo-list.component";
 import { TodoStateService } from '../../../components/todo/todo-state.service';
 import { TodoUtils } from '../../../components/todo/todo.utils';
+import { PopupService } from '../../../components/common-ui/popup/popup.service';
 
 @Component({
   selector: 'app-todos-page',
@@ -11,17 +12,22 @@ import { TodoUtils } from '../../../components/todo/todo.utils';
   styleUrl: './todos.page.css'
 })
 export class TodosPage implements OnInit {
-  todoService = inject(TodoStateService);
+  private todoService = inject(TodoStateService);
+  private popupService = inject(PopupService);
 
   ngOnInit(): void {
     this.todoService.loadTodos();
   }
 
   addTodo(title: string) {
-    const valid = !!title && title.length > 0;
+    const valid = TodoUtils.validateTitle(title);
     
     if(!valid) {
-      alert('Todo must have title');
+      this.popupService.push({
+        color: 'orange',
+        header: 'Validation failed',
+        text: 'Todo must have title' 
+      });
       return;
     }
     

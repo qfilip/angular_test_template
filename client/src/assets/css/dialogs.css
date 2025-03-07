@@ -14,7 +14,7 @@ article.dialog {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--c-black-t1);
+    background-color: var(--c-black-t2);
     
     & section {
         width: fit-content;

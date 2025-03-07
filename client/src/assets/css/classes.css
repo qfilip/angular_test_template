@@ -1,21 +1,25 @@
 .blue {
     --c1: var(--c-blue);
     --c2: var(--c-white);
+    --c3: var(--c-blue-t);
 }
 
 .green {
     --c1: var(--c-green);
     --c2: var(--c-white);
+    --c3: var(--c-green-t);
 }
 
 .orange {
     --c1: var(--c-orange);
     --c2: var(--c-white);
+    --c3: var(--c-orange-t);
 }
 
 .red {
     --c1: var(--c-red);
     --c2: var(--c-white);
+    --c3: var(--c-red-t);
 }
 
 .noselect {

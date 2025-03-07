@@ -17,32 +17,34 @@ export class PopupComponent {
   constructor() {
     effect(() => {
       const payload = this.service.$popup();
-      payload ? this.render(payload.x, payload.duration) : () => {};
+      payload ? this.render(payload.x, payload.duration) : () => { };
     })
   }
 
-  private render(x:Popup, duration: number) {
-    console.log('here');
+  private render(x: Popup, duration: number) {
     const header = this.renderer.createElement('h1');
     const headerText = this.renderer.createText(x.header);
     this.renderer.appendChild(header, headerText);
-    
+
     const text = this.renderer.createElement('p');
     const messageText = this.renderer.createText(x.text);
     this.renderer.appendChild(text, messageText);
-    
+
     const box = this.renderer.createElement('section');
     this.renderer.addClass(box, x.color);
     this.renderer.appendChild(box, header);
     this.renderer.appendChild(box, text);
 
-    this.renderer.appendChild(this.popupContainer.nativeElement, box);
+    const div = this.renderer.createElement('div');
+    this.renderer.appendChild(div, box);
+
+    this.renderer.appendChild(this.popupContainer.nativeElement, div);
 
     setTimeout(() => {
-      this.renderer.setStyle(box, 'opacity', '0');
+      this.renderer.setStyle(div, 'opacity', '0');
       setTimeout(() => {
-          this.renderer.removeChild(this.popupContainer.nativeElement, box);
-      }, 1000);
-  }, duration);
+        this.renderer.removeChild(this.popupContainer.nativeElement, div);
+      }, duration / 3);
+    }, duration);
   }
 }

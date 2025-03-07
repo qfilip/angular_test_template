@@ -5,11 +5,14 @@
     --greenHue: 122;
     --orangeHue: 39;
     --redHue: 4;
+    --transparency: 0.2;
+    --transparency-1: 0.8;
     
     --c-black: hsl(var(--blackHue), 0%, 7%);
     --c-black-l1: hsl(var(--blackHue), 0%, 17%);
     --c-black-l2: hsl(var(--blackHue), 0%, 27%);
-    --c-black-t1: hsla(var(--blackHue), 0%, 7%, 90%);
+    --c-black-t1: hsla(var(--blackHue), 0%, 7%, var(--transparency));
+    --c-black-t2: hsla(var(--blackHue), 0%, 7%, var(--transparency-1));
     --c-white: hsl(var(--blackHue), 0%, 100%);
     --c-white-d1: hsl(var(--blackHue), 0%, 90%);
     --c-white-d2: hsl(var(--blackHue), 0%, 80%);
@@ -18,9 +21,7 @@
     --c-grey-d1: hsl(var(--blackHue), 0%, 20%);
     
     --c-blue: hsl(var(--blueHue), 90%, 54%);
-    
-    --c-blue-t1: hsla(var(--blueHue), 90%, 54%, 0.8);
-    --c-blue-t2: hsla(var(--blueHue), 90%, 54%, 0.6);
+    --c-blue-t: hsla(var(--blueHue), 90%, 54%, var(--transparency));
     
     --c-blue-d1: hsl(var(--blueHue), 90%, 44%);
     --c-blue-d2: hsl(var(--blueHue), 90%, 34%);
@@ -28,23 +29,22 @@
     --c-green-l1:hsl(var(--greenHue), 39%, 59%);
     
     --c-green:hsl(var(--greenHue), 39%, 49%);
-    
-    --c-green-t1:hsla(var(--greenHue), 39%, 49%, 0.8);
-    --c-green-t2:hsla(var(--greenHue), 39%, 49%, 0.6);
+    --c-green-t:hsla(var(--greenHue), 39%, 49%, var(--transparency));
     
     --c-green-d1:hsl(var(--greenHue), 39%, 39%);
     --c-green-d2:hsl(var(--greenHue), 39%, 29%);
     
     --c-orange:hsl(var(--orangeHue), 100%, 50%);
-    
-    --c-orange-t1:hsl(var(--orangeHue), 100%, 50%, 0.8);
-    --c-orange-t2:hsl(var(--orangeHue), 100%, 50%, 0.6);
+    --c-orange-t:hsla(var(--orangeHue), 100%, 50%, var(--transparency));
     
     --c-orange-d1:hsl(var(--orangeHue), 100%, 40%);
     --c-orange-d2:hsl(var(--orangeHue), 100%, 30%);
     
     --c-red: hsl(var(--redHue), 90%, 58%);
+    --c-red-t: hsla(var(--redHue), 90%, 58%, var(--transparency));
+    
     --c-red-d1: hsl(var(--redHue), 90%, 38%);
+    
 
     /* layout */
     --rem-xxxs: .1rem;

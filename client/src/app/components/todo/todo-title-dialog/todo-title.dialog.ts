@@ -2,6 +2,8 @@ import { Component, computed, ElementRef, inject, signal, ViewChild } from '@ang
 import { DialogWrapperComponent } from "../../common-ui/dialog-wrapper/dialog-wrapper.component";
 import { Todo } from '../todo.models';
 import { TodoStateService } from '../todo-state.service';
+import { TodoUtils } from '../todo.utils';
+import { PopupService } from '../../common-ui/popup/popup.service';
 
 @Component({
   selector: 'app-todo-title-dialog',
@@ -14,6 +16,8 @@ export class TodoTitleDialog {
   @ViewChild('todoTitle') private todoTitle!: ElementRef<HTMLInputElement>;
 
   private todoService = inject(TodoStateService);
+  private popupService = inject(PopupService);
+  
   private _$todo = signal<Todo | null>(null);
   $title = computed(() => this._$todo()?.title);
 
@@ -25,8 +29,19 @@ export class TodoTitleDialog {
   close = () => this.wrapper.close();
 
   edit() {
-    const newName = this.todoTitle.nativeElement.value;
-    this.todoService.updateTodoTitle(this._$todo()!, newName);
+    const newTitle = this.todoTitle.nativeElement.value;
+    const valid = TodoUtils.validateTitle(newTitle);
+
+    if(!valid) {
+      this.popupService.push({
+        color: 'orange',
+        header: 'Validation failed',
+        text: 'Todo must have title' 
+      });
+      return;
+    }
+
+    this.todoService.updateTodoTitle(this._$todo()!, newTitle);
     this.wrapper.close();
   }
 }

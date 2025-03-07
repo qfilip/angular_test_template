@@ -3,12 +3,14 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { TodoApiService } from './todo-api.service';
 import { Todo, TodoEvent } from './todo.models';
 import { TodoUtils } from './todo.utils';
+import { PopupService } from '../common-ui/popup/popup.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TodoStateService {
     private api = inject(TodoApiService);
+    private popup = inject(PopupService);
 
     private _$todoEvents = signal<TodoEvent[]>([]);
     
@@ -27,26 +29,38 @@ export class TodoStateService {
     
     addTodo(x: Todo) {
         const ev = TodoUtils.getCreateEvent(x);
-        this.sendEvent(ev);
+        this.postEvent(ev, 'Todo added', 'Failed to add todo');
     }
 
     updateTodoTitle(x: Todo, newTitle: string) {
         const ev = TodoUtils.getUpdateEvent({...x, title: newTitle});
-        this.sendEvent(ev);
+        this.postEvent(ev, 'Todo title updated', 'Failed to update todo title');
     }
 
     toggleTodoCompleted(x: Todo) {
         const ev = TodoUtils.getUpdateEvent({...x, completed: !x.completed });
-        this.sendEvent(ev);
+        this.postEvent(ev, 'Todo state toggled', 'Failed to toggle todo state');
     }
 
     deleteTodo(x: Todo) {
         const ev = TodoUtils.getDeleteEvent(x);
-        this.sendEvent(ev);
+        this.postEvent(ev, 'Todo deleted', 'Failed to delete todo');
     }
 
-    private sendEvent = (ev: TodoEvent) => 
+    private postEvent = (ev: TodoEvent, okMessage: string, errMessage: string) => 
         this.api.postEvent(ev).subscribe({
-            next: x => this._$todoEvents.update((xs) => xs.concat(x))
+            next: x => {
+                this._$todoEvents.update((xs) => xs.concat(x));
+                this.popup.push({
+                    color: 'green',
+                    header: 'Ok',
+                    text: okMessage
+                })
+            },
+            error: _ => this.popup.push({
+                color: 'red',
+                header: 'Error',
+                text: errMessage
+            })
         });
 }
