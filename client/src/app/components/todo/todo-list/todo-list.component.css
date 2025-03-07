@@ -7,14 +7,11 @@ ul {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: var(--rem-xxxs);
-    }
-
-    & li:nth-child(even) {
-        background-color: #eee;
+        border-bottom: var(--rem-xxxs) solid var(--c-black-t1);
     }
 }
 
 button {
     font-size: 1.2rem;
+    border: none;
 }
