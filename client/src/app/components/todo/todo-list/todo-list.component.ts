@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, ViewChild } from '@angular/core';
 
-import { DialogOptions } from '../../common-ui/dialog-options.model';
-import { DialogService } from '../../common-ui/dialog.service';
+import { DialogOptions } from '../../common-ui/simple-dialog/dialog-options.model';
+import { DialogService } from '../../common-ui/simple-dialog/dialog.service';
 import { TodoHistoryDialog } from '../todo-history-dialog/todo-history-dialog.dialog';
 import { TodoStateService } from '../todo-state.service';
 import { TodoTitleDialog } from '../todo-title-dialog/todo-title.dialog';

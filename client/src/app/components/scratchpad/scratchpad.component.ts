@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { DialogOptions } from '../common-ui/dialog-options.model';
-import { LoaderService } from '../common-ui/loader.service';
-import { DialogService } from '../common-ui/dialog.service';
+import { DialogOptions } from '../common-ui/simple-dialog/dialog-options.model';
+import { LoaderService } from '../common-ui/loader/loader.service';
+import { DialogService } from '../common-ui/simple-dialog/dialog.service';
 import { ScratchpadApiService } from './scratchpad.api.service';
+import { PopupService } from '../common-ui/popup/popup.service';
 
 @Component({
   selector: 'app-scratchpad',
@@ -11,6 +12,7 @@ import { ScratchpadApiService } from './scratchpad.api.service';
   styleUrl: './scratchpad.component.css'
 })
 export class ScratchpadComponent {
+  private popupService = inject(PopupService);
   private dialogService = inject(DialogService);
   private spinnerService = inject(LoaderService);
   private apiService = inject(ScratchpadApiService);
@@ -36,5 +38,13 @@ export class ScratchpadComponent {
       next: x => console.log(x),
       error: e => console.log(e)
     });
+  }
+
+  addPopup() {
+    this.popupService.push({
+      color: 'blue',
+      header: 'Test',
+      text: 'This is working',
+    })
   }
 }

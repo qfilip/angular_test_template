@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 
-import { DialogOptions } from '../dialog-options.model';
-import { DialogService } from '../dialog.service';
+import { DialogOptions } from './dialog-options.model';
+import { DialogService } from './dialog.service';
 
 @Component({
   selector: 'app-simple-dialog',

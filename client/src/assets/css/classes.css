@@ -1,23 +1,29 @@
 .blue {
-    --color: var(--c-blue);
-    --bgColor: var(--c-white);
-    --borderColor: var(--c-blue);
+    --c1: var(--c-blue);
+    --c2: var(--c-white);
 }
 
 .green {
-    --color: var(--c-green);
-    --bgColor: var(--c-white);
-    --borderColor: var(--c-green);
+    --c1: var(--c-green);
+    --c2: var(--c-white);
 }
 
 .orange {
-    --color: var(--c-orange);
-    --bgColor: var(--c-white);
-    --borderColor: var(--c-orange);
+    --c1: var(--c-orange);
+    --c2: var(--c-white);
 }
 
 .red {
-    --color: var(--c-red);
-    --bgColor: var(--c-white);
-    --borderColor: var(--c-red);
+    --c1: var(--c-red);
+    --c2: var(--c-white);
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
 }

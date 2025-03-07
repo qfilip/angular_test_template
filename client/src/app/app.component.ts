@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 import { TodoStateService } from './components/todo/todo-state.service';
 import { DialogWrapperComponent } from "./components/common-ui/dialog-wrapper/dialog-wrapper.component";
 import { TodosPage } from "./pages/todo/todos-page/todos-page";
+import { ScratchpadComponent } from "./components/scratchpad/scratchpad.component";
+import { PopupComponent } from "./components/common-ui/popup/popup.component";
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, LoaderComponent, SimpleDialogComponent, TodosPage],
+  imports: [CommonModule, LoaderComponent, SimpleDialogComponent, TodosPage, ScratchpadComponent, PopupComponent],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

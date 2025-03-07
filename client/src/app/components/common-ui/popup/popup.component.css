@@ -1,0 +1,29 @@
+.popup {
+    position: absolute;
+    z-index: 1500;
+    width: 25%;
+    right: 0;
+    overflow-y: hidden;
+    max-height: 70%;
+
+    transition: .3s;
+    background-color: transparent;
+    
+    & section {
+        color: var(--color, var(--c-black));
+        background-color: var(--bgColor, var(--c-white-d3));
+        
+        border-top: var(--rem-s) solid var(--color, var(--c-black));
+        border-left: none;
+        border-right: none;
+        border-bottom: var(--rem-s) solid var(--color, var(--c-black));
+        
+        padding: var(--rem-xs) var(--rem);
+        margin-bottom: var(--rem);
+
+        & p {
+            margin: 0;
+            color: var(--c-black);
+        }
+    }
+}
