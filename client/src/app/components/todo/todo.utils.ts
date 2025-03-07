@@ -2,10 +2,6 @@ import { Todo, TodoCreatedEvent, TodoDeletedEvent, TodoEvent, TodoHistory, TodoU
 
 export class TodoUtils {
 
-    static validateTitle(title: string) {
-        return !!title && title.length > 0;
-    }
-
     static createTodo(title: string) {
         const todo: Todo = {
             id: this.makeId(),

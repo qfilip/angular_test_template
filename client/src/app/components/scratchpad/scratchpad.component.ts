@@ -34,7 +34,7 @@ export class ScratchpadComponent {
     this.popupService.push({
       color: 'blue',
       header: 'Test',
-      text: 'This is working',
+      text: 'This is workingaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa very looooong',
     })
   }
 }

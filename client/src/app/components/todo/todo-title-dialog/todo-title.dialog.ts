@@ -4,6 +4,7 @@ import { Todo } from '../todo.models';
 import { TodoStateService } from '../todo-state.service';
 import { TodoUtils } from '../todo.utils';
 import { PopupService } from '../../common-ui/popup/popup.service';
+import { TodoModelUtils } from '../todo.model.utils';
 
 @Component({
   selector: 'app-todo-title-dialog',
@@ -30,14 +31,11 @@ export class TodoTitleDialog {
 
   edit() {
     const newTitle = this.todoTitle.nativeElement.value;
-    const valid = TodoUtils.validateTitle(newTitle);
-
-    if(!valid) {
-      this.popupService.push({
-        color: 'orange',
-        header: 'Validation failed',
-        text: 'Todo must have title' 
-      });
+    const todo = TodoUtils.createTodo(newTitle);
+    const errors = TodoModelUtils.validate(todo);
+    
+    if(errors.length > 0) {
+      TodoModelUtils.printErrors(this.popupService, errors);
       return;
     }
 

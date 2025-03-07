@@ -1,8 +1,11 @@
 .popup {
     position: absolute;
     z-index: 1500;
-    width: 20%;
     right: 0;
+    
+    width: 20%;
+    max-width: 20%;
+    overflow-x: hidden;
     overflow-y: hidden;
     max-height: 90%;
 
@@ -11,7 +14,7 @@
     
     & div {
         background-color: var(--c-white);
-        
+
         & section {
             color: var(--c1, var(--c-black));
             background-color: var(--c3, var(--c-white-d3));
@@ -27,6 +30,7 @@
             & p {
                 margin: 0;
                 color: var(--c-black);
+                text-wrap: wrap;
             }
         }
     }

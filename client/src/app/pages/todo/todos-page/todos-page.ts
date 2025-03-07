@@ -3,6 +3,7 @@ import { TodoListComponent } from "../../../components/todo/todo-list/todo-list.
 import { TodoStateService } from '../../../components/todo/todo-state.service';
 import { TodoUtils } from '../../../components/todo/todo.utils';
 import { PopupService } from '../../../components/common-ui/popup/popup.service';
+import { TodoModelUtils } from '../../../components/todo/todo.model.utils';
 
 @Component({
   selector: 'app-todos-page',
@@ -20,18 +21,14 @@ export class TodosPage implements OnInit {
   }
 
   addTodo(title: string) {
-    const valid = TodoUtils.validateTitle(title);
+    const todo = TodoUtils.createTodo(title);
+    const errors = TodoModelUtils.validate(todo);
     
-    if(!valid) {
-      this.popupService.push({
-        color: 'orange',
-        header: 'Validation failed',
-        text: 'Todo must have title' 
-      });
+    if(errors.length > 0) {
+      TodoModelUtils.printErrors(this.popupService, errors);
       return;
     }
     
-    const todo = TodoUtils.createTodo(title);
     this.todoService.addTodo(todo);
   }
 }
