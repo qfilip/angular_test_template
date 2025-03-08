@@ -7,18 +7,25 @@
         </section>
         <section>
             <h3>Tree</h3>
+            <app-fs-toolbar></app-fs-toolbar>
             @if(root$ | async; as root) {
-                <app-fs-toolbar [fsItem]="root"></app-fs-toolbar>
-                @for (item of items.dirs; track $index) {
-                    <app-tree [fsItem]="item"></app-tree>
-                }
-                @for (item of items.docs; track $index) {
-                    <app-tree [fsItem]="item"></app-tree>
-                }
+                <ul>
+                    @for (item of items.dirs; track $index) {
+                        <li>
+                            <app-tree [fsItem]="item"></app-tree>
+                        </li>
+                    }
+                    @for (item of items.docs; track $index) {
+                        <li>
+                            <app-tree [fsItem]="item"></app-tree>
+                        </li>
+                    }
+                </ul>
             }
         </section>
         <section>
             <h3>File Preview</h3>
+            <app-file-preview></app-file-preview>
         </section>
     </div>
 </section>

@@ -1,4 +1,5 @@
-import { Utils } from "../../shared/services/utils";
+import { makeResult, Utils } from "../../shared/services/utils";
+import { root } from "./fsConstants";
 import { FsDirectory, FsItem, FsItemType } from "./fsitem.models";
 
 export class FsItemUtils {
@@ -18,17 +19,40 @@ export class FsItemUtils {
       }
 
     static createFsItem(name: string, type: FsItemType) {
-        const fsi = {
-            id: Utils.makeId(),
-            name: name,
-            type: type
-        } as FsItem;
-
-        return fsi;
+        if(!name) return makeResult<FsItem>(['Name cannot be empty']);
+        const errors = this.validateName(name);
+        const fsi: FsItem = {
+            id: name + '/',
+            type: type,
+            content: '',
+            items: []
+        };
+        
+        return makeResult<FsItem>(errors, fsi);
     }
 
-    static validate(x: FsItem) {
-        const valid = !!x.name && x.name.length > 0;
-        return valid ? [] : ['Name cannot be empty'];
+    static getName(id: string) {
+        if(id === root.id)
+            return id;
+        
+        const arr = id.match(/[^\/]+\/?|\//g)?.filter(x => !!x) as string[];
+        const last = arr[arr.length - 1];
+        
+        return last.substring(0, last.length - 1);
+    }
+
+    private static validateName(name: string) {
+        if(!name) return ['Name cannot be empty'];
+        
+        const validators = 
+        [
+            () => name.length === 0 ? 'Name cannot be empty' : null,
+            () => name.startsWith('/') ? 'Name cannot start with forward slash' : null,
+            () => name.endsWith('/') ? 'Name cannot end with forward slash' : null
+        ];
+        
+        return validators
+            .reduce((acc, fn) => acc.concat(fn()), [] as (string | null)[])
+            .filter(x => !!x) as string[];
     }
 }

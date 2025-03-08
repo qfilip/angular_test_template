@@ -1,7 +1,6 @@
 type FsEntity = {
     id: string;
     type: FsItemType;
-    name: string;
 }
 
 export type FsItemType = 'directory' | 'document';

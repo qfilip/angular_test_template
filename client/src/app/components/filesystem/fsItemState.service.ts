@@ -2,19 +2,14 @@ import { Injectable } from "@angular/core";
 import { FsDirectory, FsItem } from "./fsitem.models";
 import { FsItemUtils } from "./fsitem.utils";
 import { BehaviorSubject, Subject } from "rxjs";
+import { root } from "./fsConstants";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FsItemStateService {
-    private _root$ = new BehaviorSubject<FsItem>({
-        id: '/',
-        name: '/',
-        type: 'directory',
-        items: []
-    });
-
-    private _selected$ = new Subject<FsItem>();
+    private _root$ = new BehaviorSubject<FsItem>(root);
+    private _selected$ = new BehaviorSubject<FsItem>(root);
     private _updated$ = new Subject<FsItem>();
 
     root$ = this._root$.asObservable();
@@ -34,6 +29,10 @@ export class FsItemStateService {
         }
 
         return addedToTree;
+    }
+
+    getPath(fsItem: FsItem) {
+        
     }
 
     private addToTree(parentId: string, parent: FsItem, x: FsItem): FsItem | null {

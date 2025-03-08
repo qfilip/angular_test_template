@@ -7,10 +7,11 @@ import { FsItemStateService } from '../../components/filesystem/fsItemState.serv
 import { Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../../components/filesystem/fsitem.utils';
+import { FilePreviewComponent } from "../../components/filesystem/file-preview/file-preview.component";
 
 @Component({
   selector: 'app-filesystem',
-  imports: [CommonModule, TrackerComponent, TreeComponent, FsToolbarComponent],
+  imports: [CommonModule, TrackerComponent, TreeComponent, FsToolbarComponent, FilePreviewComponent],
   templateUrl: './filesystem.page.html',
   styleUrl: './filesystem.page.css'
 })

@@ -1,7 +1,6 @@
-<!-- @let _ = selected$ | async; -->
-@if(fsItem) {
-    <details #dt (toggle)="log($event, dt)">
-        <summary>{{ fsItem.name }}</summary>
+@if(item) {
+    <details #fsDetails (toggle)="setSelected(item)">
+        <summary>{{ name }}</summary>
         <ul>
             @for (dir of items.dirs; track $index) {
                 <li>
@@ -11,7 +10,7 @@
         </ul>
         <ul>
             @for (doc of items.docs; track $index) {
-                <app-tree [fsItem]="doc"></app-tree>
+                <li>{{ doc.id }}</li> (document)
             }
         </ul>
     </details>

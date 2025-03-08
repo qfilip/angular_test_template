@@ -35,15 +35,28 @@ export class FsItemCreateDialog {
 
   edit() {
     const name = this.fsItemName.nativeElement.value;
-    const fsItem = FsItemUtils.createFsItem(name, 'directory');
-    const errors = FsItemUtils.validate(fsItem);
+    const fsItemRes = FsItemUtils.createFsItem(name, this.$fsType());
     
-    if(errors.length > 0) {
-      Utils.printErrors(this.popupService, errors);
+    if(fsItemRes.errors.length > 0) {
+      Utils.printErrors(this.popupService, fsItemRes.errors);
       return;
     }
+    
+    const addedItem = this.fsItemStateService.add(this.parentId, fsItemRes.data!);
+    if(!addedItem) {
+      this.popupService.push({
+        color: 'red',
+        header: 'Error',
+        text: 'Failed to add item'
+      });
+    }
 
-    const addedToTree = this.fsItemStateService.add(this.parentId, fsItem);
+    this.clearDialogData();
     this.wrapper.close();
+  }
+
+  private clearDialogData() {
+    this._$fsType.set('document');
+    this.parentId = '';
   }
 }

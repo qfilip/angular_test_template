@@ -1,6 +1,7 @@
-import { Component, computed, effect, ElementRef, inject, Renderer2, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Popup } from './popup.model';
 import { PopupService } from './popup.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-popup',
@@ -8,16 +9,19 @@ import { PopupService } from './popup.service';
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.css'
 })
-export class PopupComponent {
+export class PopupComponent implements OnInit {
   @ViewChild('popupContainer') private popupContainer!: ElementRef<HTMLElement>;
 
   private renderer = inject(Renderer2);
   private service = inject(PopupService);
 
-  constructor() {
-    effect(() => {
-      const payload = this.service.$popup();
-      payload ? this.render(payload.x, payload.duration) : () => { };
+  ngOnInit(): void {
+    this.service.popup$
+      .pipe(
+        filter(x => !!x)
+      )
+      .subscribe({
+        next: payload => this.render(payload.x, payload.duration)
     })
   }
 
