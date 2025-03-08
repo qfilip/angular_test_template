@@ -1,0 +1,18 @@
+<!-- @let _ = selected$ | async; -->
+@if(fsItem) {
+    <details #dt (toggle)="log($event, dt)">
+        <summary>{{ fsItem.name }}</summary>
+        <ul>
+            @for (dir of items.dirs; track $index) {
+                <li>
+                    <app-tree [fsItem]="dir"></app-tree>
+                </li>
+            }
+        </ul>
+        <ul>
+            @for (doc of items.docs; track $index) {
+                <app-tree [fsItem]="doc"></app-tree>
+            }
+        </ul>
+    </details>
+}

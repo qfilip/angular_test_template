@@ -1,0 +1,32 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>Item</h2>
+    
+    <div body>
+        <fieldset>
+            <legend>Create Form</legend>
+            <form>
+                <div>
+                    <label>
+                        <span>Type:</span>
+                        <select #fsItemType (change)="setType(fsItemType.value)">
+                            @for (x of types; track $index) {
+                                <option [value]="x">{{ x }}</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Name:</span> <input #fsItemName type="text" />
+                    </label>
+                    <div class="error"></div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    
+    <div footer>
+        <button (click)="edit()">Create</button>
+        <button (click)="wrapper.close()">Close</button>
+    </div>
+</app-dialog-wrapper>

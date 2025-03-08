@@ -1,0 +1,24 @@
+<section>
+    <h2>Filesystem tracker</h2>
+    <div class="fs-sections">
+        <section>
+            <h3>Tracker</h3>
+            <app-tracker></app-tracker>
+        </section>
+        <section>
+            <h3>Tree</h3>
+            @if(root$ | async; as root) {
+                <app-fs-toolbar [fsItem]="root"></app-fs-toolbar>
+                @for (item of items.dirs; track $index) {
+                    <app-tree [fsItem]="item"></app-tree>
+                }
+                @for (item of items.docs; track $index) {
+                    <app-tree [fsItem]="item"></app-tree>
+                }
+            }
+        </section>
+        <section>
+            <h3>File Preview</h3>
+        </section>
+    </div>
+</section>

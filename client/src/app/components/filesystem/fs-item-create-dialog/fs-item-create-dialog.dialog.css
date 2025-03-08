@@ -1,0 +1,18 @@
+label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    & span {
+        flex: 1;
+    }
+
+    & > *:not(span) {
+        flex: 1
+    }
+}
+
+.error {
+    text-align: end;
+    color: var(--c-red);
+}

@@ -1,0 +1,9 @@
+<!-- @let fsItem = $fsItem(); -->
+<app-fs-item-create-dialog #createDialog></app-fs-item-create-dialog>
+<div>
+    <span>{{ fsItem.name }}</span>
+    <div class="actions">
+        <button (click)="openCreateDialog()">+</button>
+        <button>x</button>
+    </div>
+</div>

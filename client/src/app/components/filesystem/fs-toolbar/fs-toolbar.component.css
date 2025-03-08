@@ -1,0 +1,13 @@
+div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: var(--rem-xxxs) solid var(--c-black);
+
+    font-size: var(--rem);
+    
+    & span {
+        padding: 0rem var(--rem-xs);
+    }
+}

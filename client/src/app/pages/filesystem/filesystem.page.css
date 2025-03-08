@@ -1,0 +1,12 @@
+.fs-sections {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & section {
+        flex: 1;
+        min-height: 80vh;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
