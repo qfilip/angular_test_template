@@ -1,4 +1,9 @@
 {
   "todo-events": [],
-  "filesystem": []
+  "filesystem": [{
+		"id": "root",
+		"path": "/",
+		"type": "directory",
+		"items": []
+	}]
 }
