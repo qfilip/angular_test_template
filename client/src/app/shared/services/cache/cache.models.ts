@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 
 export interface CachedData {
     data: unknown;
-    expiresAt: number;
+    expiresAt?: number;
 }
 
 export type CacheFunctions<T> = {

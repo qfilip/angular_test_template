@@ -25,11 +25,8 @@ ul {
 li {
     width: 100%;
     
-    & a {
-        display: block;
+    & button {
         font-size: var(--rem-xl);
         width: 100%;
-        text-align: center;
-        cursor: pointer;
     }
 }

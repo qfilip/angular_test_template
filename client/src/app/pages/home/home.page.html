@@ -1,3 +1,4 @@
+<app-info-dialog #infoDialog></app-info-dialog>
 <section>
     <div>
         <h1>Pick your poison</h1>
@@ -5,13 +6,13 @@
         <nav>
             <ul>
                 <li>
-                    <a (click)="goto('todo')">Example todo app</a>
+                    <button (click)="goto('todo')" class="green">Example todo app</button>
                 </li>
                 <li>
-                    <a (click)="goto('fs')">Example FS app</a>
+                    <button (click)="goto('filesystem')" class="green">Example FS app</button>
                 </li>
                 <li>
-                    <a (click)="goto('scratch')">Scratchpad</a>
+                    <button (click)="goto('scratchpad')" class="green">Scratchpad</button>
                 </li>
             </ul>
         </nav>

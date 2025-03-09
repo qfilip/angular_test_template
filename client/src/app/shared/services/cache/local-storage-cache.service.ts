@@ -8,21 +8,25 @@ import { CachedData, CacheFunctions } from "./cache.models";
 })
 export class LocalstorageCacheService extends CacheService {
     private _cacheKeys = new Set<string>();
+    
+    hasKey = (key: string) => this._cacheKeys.has(key);
 
-    register<T>(key: string, fetchFn: () => Observable<T>, expiresAfter: number): CacheFunctions<T> {
+    public override register<T>(key: string, fetchFn: () => Observable<T>, expiresAfter?: number, unsafe?: boolean): CacheFunctions<T> {
         if(this._cacheKeys.has(key)) {
-            throw `Localstorage cache key ${key} already exists`;
+            if(!unsafe) {
+                throw `Localstorage cache key ${key} already exists`
+            }
         }
 
         this._cacheKeys.add(key);
 
         if(!localStorage.getItem(key)) {
-            this.setCache<T>(key, {} as T, 0);
+            this.setCache<T>(key, null as T, 0);
         }
 
         return {
             retrieve: () => {
-                return this.retrieve<T>(key, expiresAfter, fetchFn);
+                return this.retrieve<T>(key, fetchFn, expiresAfter);
             },
             getCache: () => {
                 return this.getCache(key);
@@ -36,7 +40,7 @@ export class LocalstorageCacheService extends CacheService {
         }
     }
 
-    protected retrieve<T>(key: string, expiresAfter: number, fetchFn: () => Observable<T>): Observable<T> {
+    protected retrieve<T>(key: string, fetchFn: () => Observable<T>, expiresAfter?: number): Observable<T> {
         const expired = this.hasExpired(key);
 
         return expired
@@ -52,11 +56,15 @@ export class LocalstorageCacheService extends CacheService {
         return JSON.parse(cacheString) as CachedData;
     }
 
-    protected override setCache<T>(key: string, data: T, expiresAfter: number) {
+    protected override setCache<T>(key: string, data: T, expiresAfter?: number) {
         const now = new Date().getTime();
+        const expiresAt = expiresAfter
+            ? new Date(now + expiresAfter).getTime()
+            : undefined;
+
         const cachedData: CachedData = {
             data: data,
-            expiresAt: new Date(now + expiresAfter).getTime()
+            expiresAt: expiresAt
         }
         localStorage.setItem(key, JSON.stringify(cachedData));
     }

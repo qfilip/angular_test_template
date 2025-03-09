@@ -1,0 +1,16 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>About project</h2>
+    
+    <div body>
+        @let ps = $paragraphs();
+        @for (p of ps; track $index) {
+            <p>{{ p }}</p>
+        }
+    </div>
+    
+    <div footer>
+        <button (click)="close(true, true)">Go</button>
+        <button (click)="close(true, false)">Don't show again</button>
+        <button (click)="close(false, false)">Cancel</button>
+    </div>
+</app-dialog-wrapper>

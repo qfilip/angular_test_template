@@ -7,6 +7,6 @@ import { FilesystemPage } from './pages/filesystem/filesystem.page';
 export const routes: Routes = [
     { path: '', component: HomePage },
     { path: 'todo', component: TodosPage },
-    { path: 'fs', component: FilesystemPage },
-    { path: 'scratch', component: ScratchpadPage }
+    { path: 'filesystem', component: FilesystemPage },
+    { path: 'scratchpad', component: ScratchpadPage }
 ];

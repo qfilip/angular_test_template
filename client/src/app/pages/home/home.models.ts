@@ -1,0 +1,1 @@
+export type Project = 'todo' | 'filesystem' | 'scratchpad';
