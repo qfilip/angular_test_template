@@ -28,7 +28,7 @@ export class FsToolbarComponent {
   }
 
   selectRoot() {
-    this.fsItemStateService.setSelected(ROOT);
+    this.fsItemStateService.setSelected(ROOT, true);
   }
 
   openCreateDialog(fsi: FsItem) {

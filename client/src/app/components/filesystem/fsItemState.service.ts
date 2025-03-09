@@ -27,10 +27,12 @@ export class FsItemStateService {
         })
     }
 
-    setSelected(item: FsItem) {
+    setSelected(item: FsItem, expand: boolean) {
         this._selected$.next({ item: item, root: this._root$.getValue()!});
         const paths = FsItemUtils.findAllPaths(item);
-        this._expanded$.next({ paths: paths, root: this._root$.getValue()! });
+        if(expand) {
+            this._expanded$.next({ paths: paths, root: this._root$.getValue()! });
+        }
     }
 
     add(parent: FsItem, x: FsItem) {
@@ -43,7 +45,7 @@ export class FsItemStateService {
             this.fsItemApiService.updateRoot(root).subscribe({
                 next: updatedRoot => {
                     this._root$.next(updatedRoot);
-                    this.setSelected(parent);
+                    this.setSelected(parent, true);
                 }
             });
         }
