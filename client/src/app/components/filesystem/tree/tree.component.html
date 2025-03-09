@@ -1,5 +1,5 @@
 @if(item) {
-    <details #fsDetails (toggle)="setSelected(item)">
+    <details [open]="open" #fsDetails (toggle)="setSelected(item)">
         <summary>{{ item.id | fsItemName }}</summary>
         <ul>
             @for (dir of items.dirs; track $index) {

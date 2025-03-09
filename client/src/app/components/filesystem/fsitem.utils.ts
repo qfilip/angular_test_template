@@ -35,10 +35,20 @@ export class FsItemUtils {
         if(id === root.id)
             return id;
         
-        const arr = id.match(/[^\/]+\/?|\//g)?.filter(x => !!x) as string[];
+        const arr = this.getPathParts(id);
         const last = arr[arr.length - 1];
         
         return last.substring(0, last.length - 1);
+    }
+
+    static findAllPaths(id: string) {
+        const arr = this.getPathParts(id);
+        return arr.reduce((acc, x) => {
+            const last = acc[acc.length - 1];
+            return last
+            ? acc.concat(last + x)
+            : [x];
+        }, [] as string[]);
     }
 
     private static validateName(name: string) {
@@ -54,5 +64,10 @@ export class FsItemUtils {
         return validators
             .reduce((acc, fn) => acc.concat(fn()), [] as (string | null)[])
             .filter(x => !!x) as string[];
+    }
+
+    private static getPathParts(id: string) {
+        const pathRegex = /[^\/]+\/?|\//g;
+        return id.match(pathRegex)?.filter(x => !!x) as string[];
     }
 }
