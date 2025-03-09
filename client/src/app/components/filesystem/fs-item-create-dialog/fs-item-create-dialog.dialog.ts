@@ -34,7 +34,6 @@ export class FsItemCreateDialog {
   setType = (x: string) => this._$fsType.set(x as FsItemType);
 
   edit() {
-    debugger
     const name = this.fsItemName.nativeElement.value;
     const fsItemRes = FsItemUtils.createFsItem(this.parentId, name, this.$fsType());
     

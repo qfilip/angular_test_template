@@ -36,7 +36,6 @@ export class FsItemStateService {
     }
 
     private addToTree(parentId: string, parent: FsItem, x: FsItem): FsItem | null {
-        debugger
         if(parent.id === parentId) {
             (parent as FsDirectory).items.push(x);
             return parent;
