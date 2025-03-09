@@ -36,7 +36,7 @@ export class TreeComponent implements OnInit, OnDestroy {
 
     this.fsItemStateService.shouldOpen$.pipe(
       takeUntil(this.unsub),
-      filter(xs => xs.includes(this.fsItem.id)),
+      filter(xs => xs.includes(this.item.id)),
       tap(_ => this.open = true)
     ).subscribe();
   }

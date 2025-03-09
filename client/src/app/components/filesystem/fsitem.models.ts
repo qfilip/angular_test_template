@@ -1,8 +1,3 @@
-type FsEntity = {
-    id: string;
-    type: FsItemType;
-}
-
 export type FsItemType = 'directory' | 'document';
 
 export type FsDirectory = {
@@ -13,7 +8,11 @@ export type FsDocument = {
     content: string;
 }
 
-export type FsItem = FsEntity & (FsDirectory | FsDocument);
+export type FsItem = {
+    id: string,
+    type: FsItemType,
+    path: string
+} & (FsDirectory | FsDocument);
 
 export type Commit = {
     id: string;

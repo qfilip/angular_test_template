@@ -1,35 +1,51 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { FsDirectory, FsItem } from "./fsitem.models";
 import { FsItemUtils } from "./fsitem.utils";
 import { BehaviorSubject, Subject } from "rxjs";
-import { root } from "./fsConstants";
+import { FsItemApiService } from "./fsItemApi.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FsItemStateService {
-    private _root$ = new BehaviorSubject<FsItem>(root);
-    private _selected$ = new BehaviorSubject<FsItem>(root);
-    private _updated$ = new Subject<FsItem>();
+    private fsItemApiService = inject(FsItemApiService);
+
+    private _root$ = new BehaviorSubject<FsItem | null>(null);
+    private _selected$ = new Subject<FsItem>();
     private _shouldOpen$ = new Subject<string[]>();
 
     root$ = this._root$.asObservable();
     selected$ = this._selected$.asObservable();
-    updated$ = this._updated$.asObservable();
-    shouldOpen$ = this._shouldOpen$.asObservable(); 
+    shouldOpen$ = this._shouldOpen$.asObservable();
+
+    loadRoot() {
+        this.fsItemApiService.getRoot()
+            .subscribe({ next: root => {
+                console.log(root);
+                this._root$.next(root);
+                this._selected$.next(root);
+            }
+        })
+    }
 
     setSelected(item: FsItem) {
         this._selected$.next(item);
-        const paths = FsItemUtils.findAllPaths(item.id);
+        const paths = FsItemUtils.findAllPaths(item);
         this._shouldOpen$.next(paths);
     }
 
-    add(parentId: string, x: FsItem) {
-        const item = this._root$.getValue();
-        const addedToTree = this.addToTree(parentId, item, x);
+    add(parent: FsItem, x: FsItem) {
+        const root = this._root$.getValue();
+        if(!root) {
+            throw 'Root not loaded during add operation';
+        }
+        const addedToTree = this.addToTree(parent.id, root, x);
         if(addedToTree) {
-            this._root$.next(item);
-            this._updated$.next(addedToTree);
+            this.fsItemApiService.updateRoot(root).subscribe({
+                next: updatedRoot => {
+                    this._root$.next(updatedRoot);
+                }
+            });
         }
 
         return addedToTree;
@@ -44,7 +60,7 @@ export class FsItemStateService {
         const childDirs = FsItemUtils.getDirsAndDocs(parent).dirs;
 
         const updated =  childDirs
-            .map(dir => this.addToTree(dir.id, dir, x))
+            .map(dir => this.addToTree(parentId, dir, x))
             .filter(x => !!x);
 
         if(updated.length > 1) {

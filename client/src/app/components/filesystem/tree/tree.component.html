@@ -1,17 +1,19 @@
 @if(item) {
     <details [open]="open" #fsDetails (toggle)="setSelected(item)">
-        <summary>{{ item.id | fsItemName }}</summary>
-        <ul>
-            @for (dir of items.dirs; track $index) {
-                <li>
-                    <app-tree [fsItem]="dir"></app-tree>
-                </li>
-            }
-        </ul>
-        <ul>
-            @for (doc of items.docs; track $index) {
-                <li>{{ doc.id | fsItemName }}</li>
-            }
-        </ul>
+        <summary>{{ item.path | fsItemName }}</summary>
+        <div class="children">
+            <ul>
+                @for (dir of items.dirs; track $index) {
+                    <li>
+                        <app-tree [fsItem]="dir"></app-tree>
+                    </li>
+                }
+            </ul>
+            <ul>
+                @for (doc of items.docs; track $index) {
+                    <li>{{ doc.path | fsItemName }}</li>
+                }
+            </ul>
+        </div>
     </details>
 }

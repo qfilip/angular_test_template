@@ -4,7 +4,7 @@ import { TreeComponent } from "../../components/filesystem/tree/tree.component";
 import { FsToolbarComponent } from "../../components/filesystem/fs-toolbar/fs-toolbar.component";
 import { FsItem } from '../../components/filesystem/fsitem.models';
 import { FsItemStateService } from '../../components/filesystem/fsItemState.service';
-import { Observable, tap } from 'rxjs';
+import { filter, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../../components/filesystem/fsitem.utils';
 import { FilePreviewComponent } from "../../components/filesystem/file-preview/file-preview.component";
@@ -21,9 +21,12 @@ export class FilesystemPage implements OnInit {
   root$!: Observable<FsItem>;
   items = { dirs: [] as FsItem[], docs: [] as FsItem[] };
   
-  ngOnInit(): void {
+  ngOnInit() {
+    this.fsItemStateService.loadRoot();
+    
     this.root$ = this.fsItemStateService.root$
       .pipe(
+        filter(x => !!x),
         tap(x => this.items = FsItemUtils.getDirsAndDocs(x))
       );
   }

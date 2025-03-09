@@ -2,7 +2,7 @@ import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core'
 import { DialogWrapperComponent } from "../../common-ui/dialog-wrapper/dialog-wrapper.component";
 import { PopupService } from '../../common-ui/popup/popup.service';
 import { FsItemUtils } from '../fsitem.utils';
-import { FsItemType } from '../fsitem.models';
+import { FsItem, FsItemType } from '../fsitem.models';
 import { Utils } from '../../../shared/services/utils';
 import { FsItemStateService } from '../fsItemState.service';
 
@@ -20,12 +20,12 @@ export class FsItemCreateDialog {
   private popupService = inject(PopupService);
   private fsItemStateService = inject(FsItemStateService);
   private _$fsType = signal<FsItemType>(this.types[0]);
-  private parentId = '';
+  private parent!: FsItem;
   
   $fsType = this._$fsType.asReadonly();
 
-  open(parentId: string) {
-    this.parentId = parentId;
+  open(parent: FsItem) {
+    this.parent = parent;
     this.wrapper.open();
   };
 
@@ -35,14 +35,14 @@ export class FsItemCreateDialog {
 
   edit() {
     const name = this.fsItemName.nativeElement.value;
-    const fsItemRes = FsItemUtils.createFsItem(this.parentId, name, this.$fsType());
+    const fsItemRes = FsItemUtils.createFsItem(this.parent, name, this.$fsType());
     
     if(fsItemRes.errors.length > 0) {
       Utils.printErrors(this.popupService, fsItemRes.errors);
       return;
     }
     
-    const addedItem = this.fsItemStateService.add(this.parentId, fsItemRes.data!);
+    const addedItem = this.fsItemStateService.add(this.parent, fsItemRes.data!);
     if(!addedItem) {
       this.popupService.push({
         color: 'red',
@@ -59,6 +59,5 @@ export class FsItemCreateDialog {
 
   private clearDialogData() {
     this._$fsType.set('document');
-    this.parentId = '';
   }
 }
