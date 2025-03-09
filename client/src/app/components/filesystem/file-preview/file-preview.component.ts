@@ -5,10 +5,11 @@ import { FsDocument, FsItem } from '../fsitem.models';
 import { TreeComponent } from "../tree/tree.component";
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../fsitem.utils';
+import { FsItemNamePipe } from "../fsitem.pipes";
 
 @Component({
   selector: 'app-file-preview',
-  imports: [CommonModule],
+  imports: [CommonModule, FsItemNamePipe],
   templateUrl: './file-preview.component.html',
   styleUrl: './file-preview.component.css'
 })

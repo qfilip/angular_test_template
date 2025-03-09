@@ -8,10 +8,10 @@
     @else {
         <ul>
             @for (item of preview.dirs; track $index) {
-                <li (click)="setSelected(item)">{{ item.id }}</li>
+                <li (click)="setSelected(item)">{{ item.path | fsItemName }}</li>
             }
             @for (item of preview.docs; track $index) {
-                <li (click)="setSelected(item)">{{ item.id }}</li>
+                <li (click)="setSelected(item)">{{ item.path | fsItemName }}</li>
             }
         </ul>
     }
