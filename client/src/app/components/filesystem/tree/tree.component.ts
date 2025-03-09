@@ -4,16 +4,16 @@ import { FsItem, FsItemType } from '../fsitem.models';
 import { FsItemStateService } from '../fsItemState.service';
 import { filter, map, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FsItemNamePipe } from '../fsitem.pipes';
 
 @Component({
   selector: 'app-tree',
-  imports: [CommonModule],
+  imports: [CommonModule, FsItemNamePipe],
   templateUrl: './tree.component.html',
   styleUrl: './tree.component.css'
 })
 export class TreeComponent implements OnInit {
   @Input({ required: true }) set fsItem(x: FsItem) {
-    this.name = FsItemUtils.getName(x.id);
     this.item = x;
   }
   @ViewChild('fsDetails') fsDetails!: HTMLDetailsElement;
@@ -22,7 +22,6 @@ export class TreeComponent implements OnInit {
   selected$!: Observable<FsItem>;
   
   items: {dirs: FsItem[], docs: FsItem[]} = { dirs: [], docs: [] };
-  name!: string;
   item!: FsItem;
 
   ngOnInit(): void {

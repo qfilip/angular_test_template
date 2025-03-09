@@ -31,14 +31,10 @@ export class FsItemStateService {
         return addedToTree;
     }
 
-    getPath(fsItem: FsItem) {
-        
-    }
-
     private addToTree(parentId: string, parent: FsItem, x: FsItem): FsItem | null {
         if(parent.id === parentId) {
             (parent as FsDirectory).items.push(x);
-            return parent;
+            return x;
         }
 
         const childDirs = FsItemUtils.getDirsAndDocs(parent).dirs;

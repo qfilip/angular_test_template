@@ -1,6 +1,6 @@
 @if(item) {
     <details #fsDetails (toggle)="setSelected(item)">
-        <summary>{{ name }}</summary>
+        <summary>{{ item.id | fsItemName }}</summary>
         <ul>
             @for (dir of items.dirs; track $index) {
                 <li>
@@ -10,7 +10,7 @@
         </ul>
         <ul>
             @for (doc of items.docs; track $index) {
-                <li>{{ doc.id }}</li> (document)
+                <li>{{ doc.id | fsItemName }}</li>
             }
         </ul>
     </details>
