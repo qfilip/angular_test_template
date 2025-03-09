@@ -1,5 +1,5 @@
 @if(item) {
-    <details [open]="$open()" #fsDetails (toggle)="setSelected(item)">
+    <details [open]="$open()" #fsDetails (toggle)="setSelected(item, $event)">
         <summary>{{ item.path | fsItemName }}</summary>
         <div class="children">
             @let items = $items();

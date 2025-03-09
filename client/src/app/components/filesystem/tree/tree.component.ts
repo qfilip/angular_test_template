@@ -48,8 +48,11 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.unsub.complete();
   }
 
-  setSelected(x: FsItem) {
-    this.fsItemStateService.setSelected(x);
+  setSelected(x: FsItem, ev: Event) {
+    const tev = ev as ToggleEvent;
+    if(tev.newState === 'open') {
+      this.fsItemStateService.setSelected(x);
+    }
   }
 
   toggleOpened() {

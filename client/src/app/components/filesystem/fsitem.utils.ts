@@ -9,7 +9,7 @@ export class FsItemUtils {
         if(target.length !== 1) {
             throw 'Child directory not found';
         }
-        console.log(target[0].path);
+
         return this.getChildren(target[0]);
     }
 
