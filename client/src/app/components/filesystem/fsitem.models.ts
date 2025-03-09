@@ -14,6 +14,8 @@ export type FsItem = {
     path: string
 } & (FsDirectory | FsDocument);
 
+export type DirsAndDocs = { dirs: FsItem[], docs: FsItem[] };
+
 export type Commit = {
     id: string;
 }

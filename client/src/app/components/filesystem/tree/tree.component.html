@@ -1,7 +1,8 @@
 @if(item) {
-    <details [open]="open" #fsDetails (toggle)="setSelected(item)">
+    <details [open]="$open()" #fsDetails (toggle)="setSelected(item)">
         <summary>{{ item.path | fsItemName }}</summary>
         <div class="children">
+            @let items = $items();
             <ul>
                 @for (dir of items.dirs; track $index) {
                     <li>

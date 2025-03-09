@@ -49,8 +49,6 @@ export class FsItemCreateDialog {
         header: 'Error',
         text: 'Failed to add item'
       });
-    } else {
-      this.fsItemStateService.setSelected(addedItem);
     }
 
     this.clearDialogData();

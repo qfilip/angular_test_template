@@ -1,21 +1,28 @@
 import { makeResult, Utils } from "../../shared/services/utils";
-import { FsDirectory, FsItem, FsItemType } from "./fsitem.models";
+import { DirsAndDocs, FsDirectory, FsItem, FsItemType } from "./fsitem.models";
 
 export class FsItemUtils {
-    static getDirsAndDocs = (item: FsItem) => {
-        let dirs: FsItem[] = [];
-        let docs: FsItem[] = [];
+    // always start this function from root for fresh data
+    static getDirsAndDocs(item: FsItem, root: FsItem) {
+        const target = this.findChildDir(item, root);
         
-        if(item.type === 'document') {
-            return { dirs, docs }
+        if(target.length !== 1) {
+            throw 'Child directory not found';
         }
-        
-        const dir = item as FsDirectory;
-        dirs = dir.items.filter(x => x.type === 'directory');
-        docs = dir.items.filter(x => x.type === 'document');
-    
-        return { dirs, docs };
-      }
+        console.log(target[0].path);
+        return this.getChildren(target[0]);
+    }
+
+    private static findChildDir(target: FsItem, root: FsItem): FsItem[] {
+        if(target.id === root.id) {
+            return [root];
+        }
+
+        const children = this.getChildren(root).dirs;
+        const found = children.map(x => this.findChildDir(target, x))
+
+        return found.flat();
+    }
 
     static createFsItem(parent: FsItem, name: string, type: FsItemType) {
         if(!name) return makeResult<FsItem>(['Name cannot be empty']);
@@ -67,5 +74,22 @@ export class FsItemUtils {
     private static getPathParts(path: string) {
         const pathRegex = /[^\/]+\/?|\//g;
         return path.match(pathRegex)?.filter(x => !!x) as string[];
+    }
+
+    private static getChildren = (item: FsItem) => {
+        let dds: DirsAndDocs = {
+            dirs: [],
+            docs: []
+        }
+        
+        if(item.type === 'document') {
+            return dds;
+        }
+        
+        const dir = item as FsDirectory;
+        dds.dirs = dir.items.filter(x => x.type === 'directory');
+        dds.docs = dir.items.filter(x => x.type === 'document');
+    
+        return dds;
     }
 }

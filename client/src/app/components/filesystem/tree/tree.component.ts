@@ -1,6 +1,6 @@
-import { Component, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { FsItemUtils } from '../fsitem.utils';
-import { FsItem } from '../fsitem.models';
+import { DirsAndDocs, FsItem } from '../fsitem.models';
 import { FsItemStateService } from '../fsItemState.service';
 import { filter, Observable, Subject, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -23,21 +23,23 @@ export class TreeComponent implements OnInit, OnDestroy {
 
   selected$!: Observable<FsItem>;
   
-  items: {dirs: FsItem[], docs: FsItem[]} = { dirs: [], docs: [] };
+  $items = signal<DirsAndDocs>({ dirs: [], docs: [] }, {equal: _ => false });
   item!: FsItem;
-  open = false;
+  $open = signal<boolean>(false, {equal: _=> false});
 
   ngOnInit(): void {
     this.fsItemStateService.selected$.pipe(
       takeUntil(this.unsub),
-      filter(x => x.id === this.item.id),
-      tap(x => this.items = FsItemUtils.getDirsAndDocs(x))
+      filter(x => x.item.id === this.item.id),
+      tap(x => this.$items.set(FsItemUtils.getDirsAndDocs(x.item, x.root)))
     ).subscribe();
 
-    this.fsItemStateService.shouldOpen$.pipe(
+    this.fsItemStateService.expanded$.pipe(
       takeUntil(this.unsub),
-      filter(xs => xs.includes(this.item.id)),
-      tap(_ => this.open = true)
+      filter(x => x.paths.includes(this.item.path)),
+      tap(_ => {
+        this.$open.set(true);
+      })
     ).subscribe();
   }
 
@@ -51,6 +53,6 @@ export class TreeComponent implements OnInit, OnDestroy {
   }
 
   toggleOpened() {
-    this.open = true;
+    this.$open.set(true);
   }
 }

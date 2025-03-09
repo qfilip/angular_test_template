@@ -26,11 +26,11 @@ export class FilePreviewComponent implements OnInit {
     this.preview$ = this.fsItemStateService.selected$
       .pipe(
         map(x => {
-          const previewDoc = x.type === 'document';
-          const dirsAndDocs = FsItemUtils.getDirsAndDocs(x);
+          const previewDoc = x.item.type === 'document';
+          const dirsAndDocs = FsItemUtils.getDirsAndDocs(x.item, x.root);
           return {
             previewDoc: previewDoc,
-            content: (x as FsDocument).content,
+            content: (x.item as FsDocument).content,
             dirs: previewDoc ? [] : dirsAndDocs.dirs,
             docs: previewDoc ? [] : dirsAndDocs.docs 
           };

@@ -23,7 +23,7 @@ export class FsToolbarComponent {
   ngOnInit(): void {
     this.selected$ = this.fsItemStateService.selected$
       .pipe(
-        map(x => ({ item: x, name: FsItemUtils.getName(x.path) }))
+        map(x => ({ item: x.item, name: FsItemUtils.getName(x.item.path) }))
       );
   }
 

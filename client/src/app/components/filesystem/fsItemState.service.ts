@@ -11,27 +11,26 @@ export class FsItemStateService {
     private fsItemApiService = inject(FsItemApiService);
 
     private _root$ = new BehaviorSubject<FsItem | null>(null);
-    private _selected$ = new Subject<FsItem>();
-    private _shouldOpen$ = new Subject<string[]>();
+    private _selected$ = new Subject<{ item: FsItem, root: FsItem }>();
+    private _expanded$ = new Subject<{ paths: string[], root: FsItem }>();
 
     root$ = this._root$.asObservable();
     selected$ = this._selected$.asObservable();
-    shouldOpen$ = this._shouldOpen$.asObservable();
+    expanded$ = this._expanded$.asObservable();
 
     loadRoot() {
         this.fsItemApiService.getRoot()
             .subscribe({ next: root => {
-                console.log(root);
                 this._root$.next(root);
-                this._selected$.next(root);
+                this._selected$.next({ item: root, root: root });
             }
         })
     }
 
     setSelected(item: FsItem) {
-        this._selected$.next(item);
+        this._selected$.next({ item: item, root: this._root$.getValue()!});
         const paths = FsItemUtils.findAllPaths(item);
-        this._shouldOpen$.next(paths);
+        this._expanded$.next({ paths: paths, root: this._root$.getValue()! });
     }
 
     add(parent: FsItem, x: FsItem) {
@@ -44,6 +43,7 @@ export class FsItemStateService {
             this.fsItemApiService.updateRoot(root).subscribe({
                 next: updatedRoot => {
                     this._root$.next(updatedRoot);
+                    this.setSelected(parent);
                 }
             });
         }
@@ -57,9 +57,9 @@ export class FsItemStateService {
             return x;
         }
 
-        const childDirs = FsItemUtils.getDirsAndDocs(parent).dirs;
+        const childDirs = FsItemUtils.getDirsAndDocs(parent, this._root$.getValue()!).dirs;
 
-        const updated =  childDirs
+        const updated = childDirs
             .map(dir => this.addToTree(parentId, dir, x))
             .filter(x => !!x);
 
