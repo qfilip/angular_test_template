@@ -16,11 +16,11 @@ export class FsItemCreateDialog {
   @ViewChild('wrapper') private wrapper!: DialogWrapperComponent;
   @ViewChild('fsItemName') private fsItemName!: ElementRef<HTMLInputElement>;
 
+  readonly types: FsItemType[] = ['directory', 'document'];
   private popupService = inject(PopupService);
   private fsItemStateService = inject(FsItemStateService);
-  private _$fsType = signal<FsItemType>('document');
+  private _$fsType = signal<FsItemType>(this.types[0]);
   private parentId = '';
-  readonly types: FsItemType[] = ['directory', 'document'];
   
   $fsType = this._$fsType.asReadonly();
 
@@ -34,8 +34,9 @@ export class FsItemCreateDialog {
   setType = (x: string) => this._$fsType.set(x as FsItemType);
 
   edit() {
+    debugger
     const name = this.fsItemName.nativeElement.value;
-    const fsItemRes = FsItemUtils.createFsItem(name, this.$fsType());
+    const fsItemRes = FsItemUtils.createFsItem(this.parentId, name, this.$fsType());
     
     if(fsItemRes.errors.length > 0) {
       Utils.printErrors(this.popupService, fsItemRes.errors);

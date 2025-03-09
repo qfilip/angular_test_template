@@ -18,11 +18,11 @@ export class FsItemUtils {
         return { dirs, docs };
       }
 
-    static createFsItem(name: string, type: FsItemType) {
+    static createFsItem(parentId: string, name: string, type: FsItemType) {
         if(!name) return makeResult<FsItem>(['Name cannot be empty']);
         const errors = this.validateName(name);
         const fsi: FsItem = {
-            id: name + '/',
+            id: parentId + name + '/',
             type: type,
             content: '',
             items: []
