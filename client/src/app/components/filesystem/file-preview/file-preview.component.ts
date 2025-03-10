@@ -44,4 +44,8 @@ export class FilePreviewComponent implements OnInit {
   setSelected(x: FsItem) {
     this.fsItemStateService.setSelected(x, true);
   }
+
+  log(msg: string) {
+    console.log(msg);
+  }
 }

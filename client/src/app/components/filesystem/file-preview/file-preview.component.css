@@ -5,3 +5,9 @@ li {
 li:hover {
     background-color: var(--c-green);
 }
+
+textarea {
+    width: 100%;
+    min-height: 30vh;
+}
+

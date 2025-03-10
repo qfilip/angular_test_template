@@ -14,7 +14,7 @@ import { FsItemNamePipe } from '../fsitem.pipes';
 })
 export class TreeComponent implements OnInit, OnDestroy {
   @Input({ required: true }) set fsItem(x: FsItem) {
-    this._$item.set(x)
+    this._$item.set(x);
   }
   @ViewChild('fsDetails') fsDetails!: HTMLDetailsElement;
   
@@ -37,7 +37,7 @@ export class TreeComponent implements OnInit, OnDestroy {
       filter(x => x.id === this.$item()!.id),
       switchMap(_ => this.fsItemStateService.root$),
     ).subscribe({
-      next: x => 
+      next: x =>
         this._$items.set(FsItemUtils.getDirsAndDocs(this.$item()!, x!))
     });
 

@@ -1,21 +1,26 @@
 @let item = $item();
 @if(item) {
-    <details [open]="$open()" #fsDetails (toggle)="selectDir(item, $event)">
-        <summary>{{ item.path | fsItemName }}</summary>
-        <div class="children">
-            @let items = $items();
-            <ul>
-                @for (dir of items.dirs; track $index) {
-                    <li>
-                        <app-tree [fsItem]="dir"></app-tree>
-                    </li>
-                }
-            </ul>
-            <ul>
-                @for (doc of items.docs; track $index) {
-                    <li (click)="selectItem(doc, true)">{{ doc.path | fsItemName }}</li>
-                }
-            </ul>
-        </div>
-    </details>
+    @if(item.type === 'directory') {
+        <details [open]="$open()" #fsDetails (toggle)="selectDir(item, $event)">
+            <summary>{{ item.path | fsItemName }}</summary>
+            <div class="children">
+                @let items = $items();
+                <ul>
+                    @for (dir of items.dirs; track $index) {
+                        <li>
+                            <app-tree [fsItem]="dir"></app-tree>
+                        </li>
+                    }
+                </ul>
+                <ul>
+                    @for (doc of items.docs; track $index) {
+                        <li (click)="selectItem(doc, true)">{{ doc.path | fsItemName }}</li>
+                    }
+                </ul>
+            </div>
+        </details>
+    }
+    @else {
+        <div (click)="selectItem(item, true)" class="clickable">{{ item.path | fsItemName }}</div>
+    }
 }

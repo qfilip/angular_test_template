@@ -29,7 +29,7 @@ export class FilesystemPage implements OnInit {
       .pipe(
         filter(x => !!x),
         tap(x => {
-          console.log('loading new root');
+          console.log('loading new root: ', x);
           this._$items.set(FsItemUtils.getDirsAndDocs(x, x))
         })
       );

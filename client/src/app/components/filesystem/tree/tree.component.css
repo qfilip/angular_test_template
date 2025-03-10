@@ -1,8 +1,8 @@
-summary, li {
+summary, li, .clickable {
     cursor: pointer;
 }
 
-summary:hover, li:hover {
+summary:hover, li:hover, .clickable:hover {
     background-color: var(--c-green);
 }
 
