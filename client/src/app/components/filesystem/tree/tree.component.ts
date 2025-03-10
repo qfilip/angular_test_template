@@ -37,7 +37,8 @@ export class TreeComponent implements OnInit, OnDestroy {
       filter(x => x.id === this.$item()!.id),
       switchMap(_ => this.fsItemStateService.root$),
     ).subscribe({
-      next: x => this._$items.set(FsItemUtils.getDirsAndDocs(this.$item()!, x!))
+      next: x => 
+        this._$items.set(FsItemUtils.getDirsAndDocs(this.$item()!, x!))
     });
 
     this.fsItemStateService.expanded$.pipe(
@@ -51,11 +52,14 @@ export class TreeComponent implements OnInit, OnDestroy {
     this.unsub.complete();
   }
 
-  setSelected(x: FsItem, ev: Event) {
+  selectItem = (x: FsItem, expand: boolean) => 
+    this.fsItemStateService.setSelected(x, expand);
+  
+  selectDir(x: FsItem, ev: Event) {
     const tev = ev as ToggleEvent;
     const expand = tev.newState === 'open';
     
-    this.fsItemStateService.setSelected(x, expand);
+    this.selectItem(x, expand);
   }
 
   toggleOpened() {

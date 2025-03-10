@@ -1,3 +1,11 @@
+summary, li {
+    cursor: pointer;
+}
+
+summary:hover, li:hover {
+    background-color: var(--c-green);
+}
+
 .children {
     margin-left: var(--rem);
 }

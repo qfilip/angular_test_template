@@ -4,6 +4,11 @@ import { DirsAndDocs, FsDirectory, FsItem, FsItemType } from "./fsitem.models";
 export class FsItemUtils {
     // always start this function from root for fresh data
     static getDirsAndDocs(item: FsItem, root: FsItem) {
+        if(item.type === 'document') {
+            const dds: DirsAndDocs = { dirs: [], docs: [] }
+            return dds;
+        }
+        
         const target = this.findChildDir(item, root);
         
         if(target.length !== 1) {

@@ -4,9 +4,14 @@
     align-items: center;
 
     & section {
+        padding: var(--rem);
         flex: 1;
         min-height: 80vh;
         max-height: 80vh;
         overflow-y: auto;
+    }
+
+    & .fs-tree {
+        flex: 2;
     }
 }
