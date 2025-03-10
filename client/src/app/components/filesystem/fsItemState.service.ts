@@ -40,7 +40,7 @@ export class FsItemStateService {
         if(!root) {
             throw 'Root not loaded during add operation';
         }
-        const addedToTree = this.addToTree(parent.id, root, x);
+        const addedToTree = this.addToTree(parent.id, root, x, root);
         if(addedToTree) {
             this.fsItemApiService.updateRoot(root).subscribe({
                 next: updatedRoot => {
@@ -53,16 +53,16 @@ export class FsItemStateService {
         return addedToTree;
     }
 
-    private addToTree(parentId: string, parent: FsItem, x: FsItem): FsItem | null {
+    private addToTree(parentId: string, parent: FsItem, x: FsItem, root: FsItem): FsItem | null {
         if(parent.id === parentId) {
             (parent as FsDirectory).items.push(x);
             return x;
         }
 
-        const childDirs = FsItemUtils.getDirsAndDocs(parent, this._root$.getValue()!).dirs;
+        const childDirs = FsItemUtils.getDirsAndDocs(parent, root).dirs;
 
         const updated = childDirs
-            .map(dir => this.addToTree(parentId, dir, x))
+            .map(dir => this.addToTree(parentId, dir, x, root))
             .filter(x => !!x);
 
         if(updated.length > 1) {

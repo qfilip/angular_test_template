@@ -1,12 +1,12 @@
-import { Component, inject, Input, ViewChild } from '@angular/core';
-import { FsItem } from '../fsitem.models';
-import { FsItemCreateDialog } from "../fs-item-create-dialog/fs-item-create-dialog.dialog";
-import { FsItemStateService } from '../fsItemState.service';
-import { map, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { FsItemUtils } from '../fsitem.utils';
+import { Component, inject, ViewChild } from '@angular/core';
+import { firstValueFrom, Observable } from 'rxjs';
+
+import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { ROOT } from '../fsConstants';
+import { FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
+import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
   selector: 'app-fs-toolbar',
@@ -29,7 +29,8 @@ export class FsToolbarComponent {
     this.fsItemStateService.setSelected(ROOT, true);
   }
 
-  openCreateDialog(fsi: FsItem) {
-    this.createDialog.open(fsi);
+  async openCreateDialog(fsi: FsItem) {
+    const root = await firstValueFrom(this.fsItemStateService.root$);
+    this.createDialog.open(fsi, root!);
   }
 }

@@ -24,10 +24,11 @@ export class FsItemUtils {
         return found.flat();
     }
 
-    static createFsItem(parent: FsItem, name: string, type: FsItemType) {
+    static createFsItem(root: FsItem, parent: FsItem, name: string, type: FsItemType) {
         if(!name) return makeResult<FsItem>(['Name cannot be empty']);
         
-        const errors = this.validateName(name);
+        const errors = this.validateName(name, root, parent);
+        
         const fsi: FsItem = {
             id: Utils.makeId(),
             type: type,
@@ -56,14 +57,22 @@ export class FsItemUtils {
         }, [] as string[]);
     }
 
-    private static validateName(name: string) {
+    private static validateName(name: string, root: FsItem, parent: FsItem) {
         if(!name) return ['Name cannot be empty'];
+
+        const duplicateNameCheck = () => {
+            const dds = this.getDirsAndDocs(parent, root);
+            const sameNameItem = dds.dirs.concat(dds.docs).find(x => this.getName(x.path) === name);
+            
+            return !!sameNameItem;
+        }
         
         const validators = 
         [
             () => name.length === 0 ? 'Name cannot be empty' : null,
             () => name.startsWith('/') ? 'Name cannot start with forward slash' : null,
-            () => name.endsWith('/') ? 'Name cannot end with forward slash' : null
+            () => name.endsWith('/') ? 'Name cannot end with forward slash' : null,
+            () => duplicateNameCheck() ? 'Name already exists in this directory' : null
         ];
         
         return validators
