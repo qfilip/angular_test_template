@@ -9,7 +9,7 @@
     @else {
         <ul>
             @for (item of preview.dirsAndDocs.dirs; track $index) {
-                <li (click)="setSelected(item)">&#9655; {{ item.path | fsItemName }}</li>
+                <li (click)="setSelected(item)">&#9654; {{ item.path | fsItemName }}</li>
             }
             @for (item of preview.dirsAndDocs.docs; track $index) {
                 <li (click)="setSelected(item)">{{ item.path | fsItemName }}</li>
