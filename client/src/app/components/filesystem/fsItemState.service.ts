@@ -11,8 +11,8 @@ export class FsItemStateService {
     private fsItemApiService = inject(FsItemApiService);
 
     private _root$ = new BehaviorSubject<FsItem | null>(null);
-    private _selected$ = new Subject<{ item: FsItem, root: FsItem }>();
-    private _expanded$ = new Subject<{ paths: string[], root: FsItem }>();
+    private _selected$ = new Subject<FsItem>();
+    private _expanded$ = new Subject<string[]>();
 
     root$ = this._root$.asObservable();
     selected$ = this._selected$.asObservable();
@@ -22,16 +22,16 @@ export class FsItemStateService {
         this.fsItemApiService.getRoot()
             .subscribe({ next: root => {
                 this._root$.next(root);
-                this._selected$.next({ item: root, root: root });
+                this._selected$.next(root);
             }
         })
     }
 
     setSelected(item: FsItem, expand: boolean) {
-        this._selected$.next({ item: item, root: this._root$.getValue()!});
+        this._selected$.next(item);
         const paths = FsItemUtils.findAllPaths(item);
         if(expand) {
-            this._expanded$.next({ paths: paths, root: this._root$.getValue()! });
+            this._expanded$.next(paths);
         }
     }
 

@@ -6,10 +6,11 @@ import { map, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../fsitem.utils';
 import { ROOT } from '../fsConstants';
+import { FsItemNamePipe } from '../fsitem.pipes';
 
 @Component({
   selector: 'app-fs-toolbar',
-  imports: [CommonModule, FsItemCreateDialog],
+  imports: [CommonModule, FsItemCreateDialog, FsItemNamePipe],
   templateUrl: './fs-toolbar.component.html',
   styleUrl: './fs-toolbar.component.css'
 })
@@ -18,13 +19,10 @@ export class FsToolbarComponent {
   
   private fsItemStateService = inject(FsItemStateService);
   
-  selected$!: Observable<{ item: FsItem, name: string }>;
+  selected$!: Observable<FsItem>;
 
   ngOnInit(): void {
-    this.selected$ = this.fsItemStateService.selected$
-      .pipe(
-        map(x => ({ item: x.item, name: FsItemUtils.getName(x.item.path) }))
-      );
+    this.selected$ = this.fsItemStateService.selected$;
   }
 
   selectRoot() {

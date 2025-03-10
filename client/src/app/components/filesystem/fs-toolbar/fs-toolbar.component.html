@@ -2,10 +2,10 @@
 <app-fs-item-create-dialog #createDialog></app-fs-item-create-dialog>
 @if(selected) {
     <div>
-        <span>{{ selected.name }}</span>
+        <span>{{ selected.path | fsItemName }}</span>
         <div class="actions">
             <button (click)="selectRoot()">root</button>
-            <button (click)="openCreateDialog(selected.item)">+</button>
+            <button (click)="openCreateDialog(selected)">+</button>
             <button>x</button>
         </div>
     </div>

@@ -2,7 +2,7 @@ import { Component, inject, Input, OnDestroy, OnInit, signal, ViewChild } from '
 import { FsItemUtils } from '../fsitem.utils';
 import { DirsAndDocs, FsItem } from '../fsitem.models';
 import { FsItemStateService } from '../fsItemState.service';
-import { filter, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { filter, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FsItemNamePipe } from '../fsitem.pipes';
 
@@ -30,17 +30,16 @@ export class TreeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fsItemStateService.selected$.pipe(
       takeUntil(this.unsub),
-      filter(x => x.item.id === this.item.id),
-      tap(x => this.$items.set(FsItemUtils.getDirsAndDocs(x.item, x.root)))
-    ).subscribe();
+      filter(x => x.id === this.item.id),
+      switchMap(_ => this.fsItemStateService.root$),
+    ).subscribe({
+      next: x => this.$items.set(FsItemUtils.getDirsAndDocs(this.item, x!))
+    });
 
     this.fsItemStateService.expanded$.pipe(
       takeUntil(this.unsub),
-      filter(x => x.paths.includes(this.item.path)),
-      tap(_ => {
-        this.$open.set(true);
-      })
-    ).subscribe();
+      filter(x => x.includes(this.item.path)),
+    ).subscribe({ next: _ => this.$open.set(true)});
   }
 
   ngOnDestroy(): void {

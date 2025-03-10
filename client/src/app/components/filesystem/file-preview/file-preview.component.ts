@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FsItemStateService } from '../fsItemState.service';
-import { map, Observable } from 'rxjs';
-import { FsDocument, FsItem } from '../fsitem.models';
+import { map, Observable, switchMap, tap } from 'rxjs';
+import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
 import { TreeComponent } from "../tree/tree.component";
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../fsitem.utils';
@@ -16,24 +16,26 @@ import { FsItemNamePipe } from "../fsitem.pipes";
 export class FilePreviewComponent implements OnInit {
   private fsItemStateService = inject(FsItemStateService);
   
+  private item!: FsItem;
+
   preview$!: Observable<{
     previewDoc: boolean,
     content: string, 
-    dirs: FsItem[],
-    docs: FsItem[]
+    dirsAndDocs: DirsAndDocs
    }>;
 
   ngOnInit(): void {
     this.preview$ = this.fsItemStateService.selected$
       .pipe(
+        tap(x => this.item = x),
+        switchMap(_ => this.fsItemStateService.root$),
         map(x => {
-          const previewDoc = x.item.type === 'document';
-          const dirsAndDocs = FsItemUtils.getDirsAndDocs(x.item, x.root);
+          const previewDoc = this.item.type === 'document';
+          const dirsAndDocs = FsItemUtils.getDirsAndDocs(this.item, x!);
           return {
             previewDoc: previewDoc,
-            content: (x.item as FsDocument).content,
-            dirs: previewDoc ? [] : dirsAndDocs.dirs,
-            docs: previewDoc ? [] : dirsAndDocs.docs 
+            content: (this.item as FsDocument).content,
+            dirsAndDocs: dirsAndDocs
           };
         })
       );
