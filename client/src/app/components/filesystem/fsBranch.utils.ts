@@ -1,14 +1,27 @@
 import { makeResult, Utils } from "../../shared/services/utils";
-import { Branch } from "./fsitem.models";
+import { ROOT } from "./fsConstants";
+import { Branch, FsItemCreatedEvent } from "./fsitem.models";
 
 export class FsBranchUtils {
     static createBranch(name: string, allBranches: Branch[]) {
         const errors = this.validateName(name, allBranches);
         
+        const now = new Date();
+        const createRootDirectoryEvent: FsItemCreatedEvent = {
+            created: ROOT,
+            createdAt: now
+        };
+
         const branch: Branch = {
             id: Utils.makeId(),
             name: name,
-            commits: []
+            commits: [
+                {
+                    id: Utils.makeId(),
+                    createdAt: new Date(),
+                    events: [createRootDirectoryEvent]
+                }
+            ]
         };
         
         return makeResult<Branch>(errors, branch);
