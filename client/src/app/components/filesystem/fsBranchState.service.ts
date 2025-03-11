@@ -25,6 +25,7 @@ export class FsBranchStateService {
         .subscribe({ next: x => {
             const xs = this._branches$.getValue().concat(x);
             this._branches$.next(xs);
+            this._selectedBranch$.next(x);
         }});
     }
 }

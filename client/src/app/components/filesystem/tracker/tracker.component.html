@@ -1,15 +1,18 @@
+<app-branch-create-dialog #createDialog></app-branch-create-dialog>
+
+@let branches = branches$ | async;
+@let selectedBranch = selectedBranch$ | async;
+
 <div>
     <section>
         <div>
             <h4>Branch</h4>
-            <hr />
-            @let branches = branches$ | async;
             <dl [ngClass]="{'disabled': branches?.length === 0}">
                 <div>
                     <dt>Selected branch</dt>
                     <dd>
-                        @if(selectedBranch$ | async; as selected) {
-                            {{ selected.name }}
+                        @if(selectedBranch) {
+                            {{ selectedBranch.name }}
                         }
                         @else {
                             <span class="no-branch">no branch selected</span>
@@ -34,14 +37,10 @@
         <div>
             <h4>Actions</h4>
             <div class="actions-list">
-                <button>Create branch</button>
-                <button>Clone branch</button>
-            </div>
-            <hr />
-            <div class="actions-list">
-                <button>Pull</button>
-                <button>Commit</button>
-                <button>Push</button>
+                <button (click)="createBranch()" class="blue">Create branch</button>
+                <button class="green">Clone branch</button>
+                <button class="orange">Pull</button>
+                <button class="red">Commit</button>
             </div>
         </div>
     </section>
