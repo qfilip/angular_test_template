@@ -16,8 +16,18 @@ export type FsItem = {
 
 export type DirsAndDocs = { dirs: FsItem[], docs: FsItem[] };
 
+type FsEvent = { createdAt: Date }
+
+export type FsItemCreatedEvent = { created: FsItem } & FsEvent;
+export type FsItemUpdatedEvent = { updated: FsItem } & FsEvent;
+export type FsItemDeletedEvent = { deleted: FsItem } & FsEvent;
+
+export type FsItemEvent = FsItemCreatedEvent | FsItemUpdatedEvent | FsItemDeletedEvent;
+
 export type Commit = {
     id: string;
+    events: FsItemEvent[];
+    createdAt: Date;
 }
 
 export type Branch = {

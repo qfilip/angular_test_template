@@ -3,10 +3,12 @@
     <div class="fs-sections">
         <section>
             <h3>Tracker</h3>
+            <hr />
             <app-tracker></app-tracker>
         </section>
         <section class="fs-tree">
             <h3>Tree</h3>
+            <hr />
             <app-fs-toolbar></app-fs-toolbar>
             @if(root$ | async; as root) {
                 @let items = $items();
@@ -26,6 +28,7 @@
         </section>
         <section>
             <h3>File Preview</h3>
+            <hr />
             <app-file-preview></app-file-preview>
         </section>
     </div>

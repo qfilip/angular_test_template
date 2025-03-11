@@ -1,9 +1,27 @@
 {
   "todo-events": [],
-  "filesystem": [{
-		"id": "root",
-		"path": "/",
-		"type": "directory",
-		"items": []
-	}]
+  "filesystem": [
+    {
+      "id": "root",
+      "path": "/",
+      "type": "directory",
+      "items": [
+        {
+          "id": "e2eb8981",
+          "type": "directory",
+          "path": "/mierda/",
+          "content": "",
+          "items": []
+        },
+        {
+          "id": "2b0e4712",
+          "type": "document",
+          "path": "/some_doc/",
+          "content": "",
+          "items": []
+        }
+      ]
+    }
+  ],
+  "branches": []
 }

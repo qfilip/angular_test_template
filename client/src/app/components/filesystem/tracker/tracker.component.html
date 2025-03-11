@@ -1,11 +1,49 @@
 <div>
-    <h4>Branch</h4>
+    <section>
+        <div>
+            <h4>Branch</h4>
+            <hr />
+            @let branches = branches$ | async;
+            <dl [ngClass]="{'disabled': branches?.length === 0}">
+                <div>
+                    <dt>Selected branch</dt>
+                    <dd>
+                        @if(selectedBranch$ | async; as selected) {
+                            {{ selected.name }}
+                        }
+                        @else {
+                            <span class="no-branch">no branch selected</span>
+                        }
+                    </dd>
+                </div>
+                <div>
+                    <dt>Branches</dt>
+                    <dd>
+                        <select>
+                            @for(b of branches; track $index) {
+                                <option [value]="b">{{ b.name }}</option>
+                            }    
+                        </select>
+                    </dd>
+                </div>
+            </dl>
+        </div>
 
-    <div>
-        <h4>Actions</h4>
-        <button>Pull</button>
-        <button>Commit</button>
-        <button>Push</button>
-    </div>
+    </section>
+    <section>
+        <div>
+            <h4>Actions</h4>
+            <div class="actions-list">
+                <button>Create branch</button>
+                <button>Clone branch</button>
+            </div>
+            <hr />
+            <div class="actions-list">
+                <button>Pull</button>
+                <button>Commit</button>
+                <button>Push</button>
+            </div>
+        </div>
+    </section>
 
 </div>
