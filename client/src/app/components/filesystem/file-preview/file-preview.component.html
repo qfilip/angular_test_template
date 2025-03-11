@@ -2,8 +2,7 @@
 @if(preview) {
     @if(preview.previewDoc) {
         <div>
-            <!-- {{ preview.content }} -->
-            <textarea [value]="preview.content" (keypress)="log('pressed')" (change)="log('changed')"></textarea>
+            <textarea #docContent [value]="preview.content" (keypress)="onFileContentChange(docContent.value)"></textarea>
         </div>
     }
     @else {
@@ -15,5 +14,9 @@
                 <li (click)="setSelected(item)">{{ item.path | fsItemName }}</li>
             }
         </ul>
+    }
+
+    @if($canEdit()) {
+        <button (click)="saveChanges()" class="edit-btn">Save Changes</button>
     }
 }

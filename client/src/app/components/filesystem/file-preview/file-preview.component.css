@@ -1,3 +1,7 @@
+textarea {
+    resize: none;
+}
+
 li {
     cursor: pointer;
 }
@@ -9,5 +13,9 @@ li:hover {
 textarea {
     width: 100%;
     min-height: 30vh;
+}
+
+.edit-btn {
+    width: 100%;
 }
 

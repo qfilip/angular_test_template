@@ -14,6 +14,19 @@ export class Utils {
             });
         })
     }
+
+    static deepClone(x: any) {
+        if(typeof x !== 'object' || x === null) return x;
+    
+        const clone: any = Array.isArray(x) ? [] : {};
+    
+        for(let key in x) {
+          const value = x[key];
+          clone[key] = this.deepClone(value);
+        }
+    
+        return clone;
+    }
 }
 
 export function makeResult<T>(errs: string[], data?: T) {

@@ -1,5 +1,5 @@
 import { makeResult, Utils } from "../../shared/services/utils";
-import { DirsAndDocs, FsDirectory, FsItem, FsItemType } from "./fsitem.models";
+import { DirsAndDocs, FsDirectory, FsDocument, FsItem, FsItemType } from "./fsitem.models";
 
 export class FsItemUtils {
     // always start this function from root for fresh data
@@ -16,6 +16,28 @@ export class FsItemUtils {
         }
 
         return this.getChildren(target[0]);
+    }
+
+    static findChildDoc(targetId: string, root: FsItem): FsItem {
+        if(targetId === root.id) {
+            return root;
+        }
+        const { dirs, docs } = this.getChildren(root);
+        const foundDoc = docs.find(x => x.id === targetId);
+        
+        if(foundDoc) {
+            return foundDoc;
+        }
+
+        const children = dirs
+            .map(x => this.findChildDoc(targetId, x))
+            .filter(x => !!x);
+
+        if(children.length === 0) {
+            console.error('No child found at: ', root.path);
+        }
+
+        return children[0];
     }
 
     private static findChildDir(target: FsItem, root: FsItem): FsItem[] {

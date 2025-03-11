@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { FsDirectory, FsItem } from "./fsitem.models";
+import { FsDirectory, FsDocument, FsItem } from "./fsitem.models";
 import { FsItemUtils } from "./fsitem.utils";
 import { BehaviorSubject, Subject } from "rxjs";
 import { FsItemApiService } from "./fsItemApi.service";
@@ -51,6 +51,18 @@ export class FsItemStateService {
         }
 
         return addedToTree;
+    }
+
+    updateContent(doc: FsItem, newContent: string) {
+        const root = this._root$.getValue()!;
+        const foundDoc = FsItemUtils.findChildDoc(doc.id, root);
+        (foundDoc as FsDocument).content = newContent;
+
+        this.fsItemApiService.updateRoot(root).subscribe({
+            next: updatedRoot => {
+                this._root$.next(updatedRoot);
+            }
+        });
     }
 
     private addToTree(parentId: string, parent: FsItem, x: FsItem, root: FsItem): FsItem | null {
