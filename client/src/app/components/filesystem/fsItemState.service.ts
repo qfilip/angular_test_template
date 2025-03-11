@@ -3,12 +3,19 @@ import { FsDirectory, FsDocument, FsItem } from "./fsitem.models";
 import { FsItemUtils } from "./fsitem.utils";
 import { BehaviorSubject, Subject } from "rxjs";
 import { FsItemApiService } from "./fsItemApi.service";
+import { FsBranchStateService } from "./fsBranchState.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FsItemStateService {
     private fsItemApiService = inject(FsItemApiService);
+    private fsBranchStateService = inject(FsBranchStateService);
+
+    rooot$ = this.fsBranchStateService.selectedBranch$
+        .pipe(
+            map(sb => )
+        )
 
     private _root$ = new BehaviorSubject<FsItem | null>(null);
     private _selected$ = new Subject<FsItem>();

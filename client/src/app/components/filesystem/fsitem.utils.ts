@@ -1,7 +1,17 @@
 import { makeResult, Utils } from "../../shared/services/utils";
-import { DirsAndDocs, FsDirectory, FsDocument, FsItem, FsItemType } from "./fsitem.models";
+import { Branch, DirsAndDocs, FsDirectory, FsDocument, FsItem, FsItemCreatedEvent, FsItemDeletedEvent, FsItemEvent, FsItemType, FsItemUpdatedEvent } from "./fsitem.models";
 
 export class FsItemUtils {
+    static mapRootFromBranch(b: Branch) {
+        const events = b.commits
+            .map(x => x.events)
+            .flat()
+            .sort((a, b) => Utils.timeSort(a.createdAt, b.createdAt));
+
+        const onCreated = (ev: FsItemCreatedEvent) => {
+            
+        }
+    }
     // always start this function from root for fresh data
     static getDirsAndDocs(item: FsItem, root: FsItem) {
         if(item.type === 'document') {
@@ -128,4 +138,17 @@ export class FsItemUtils {
     
         return dds;
     }
+
+    private static doOnEvent<T>(
+        ev: FsItemEvent,
+        forCreated: (e: FsItemCreatedEvent) => T,
+        forUpdated: (e: FsItemUpdatedEvent) => T,
+        forDeleted: (e: FsItemDeletedEvent) => T) {
+            switch(ev.type) {
+                case 'created': return forCreated(ev as FsItemCreatedEvent);
+                case 'updated': return forUpdated(ev as FsItemUpdatedEvent);
+                case 'deleted': return forDeleted(ev as FsItemDeletedEvent);
+                default: throw `Event of type ${ev.type} not handled`
+            }
+        }
 }

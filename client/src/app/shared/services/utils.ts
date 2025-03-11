@@ -27,6 +27,9 @@ export class Utils {
     
         return clone;
     }
+
+    static timeSort = (a: Date, b: Date) => 
+        new Date(a).getTime() > new Date(b).getTime() ? 1 : -1
 }
 
 export function makeResult<T>(errs: string[], data?: T) {
