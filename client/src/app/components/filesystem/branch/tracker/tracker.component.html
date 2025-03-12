@@ -32,8 +32,8 @@
     </section>
     <section>
         <h3>Changes</h3>
-        <details>
-            <summary>Uncommited</summary>
+        <details [open]="uncommited.length > 0">
+            <summary>Uncommited: {{ uncommited.length }}</summary>
             <ul class="change-list">
                 @for (item of uncommited; track $index) {
                     <li>

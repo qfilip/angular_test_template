@@ -4,12 +4,11 @@ import { Component, computed, inject, ViewChild } from '@angular/core';
 import { ROOT } from '../../fsConstants';
 import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { FsItem } from '../fsitem.models';
-import { FsItemNamePipe } from '../fsitem.pipes';
 import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
   selector: 'app-fs-toolbar',
-  imports: [CommonModule, FsItemCreateDialog, FsItemNamePipe],
+  imports: [CommonModule, FsItemCreateDialog],
   templateUrl: './fs-toolbar.component.html',
   styleUrl: './fs-toolbar.component.css'
 })
