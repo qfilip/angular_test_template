@@ -11,6 +11,7 @@ import { ROOT } from '../fsConstants';
 export class FsItemStateService {
     private fsBranchStateService = inject(FsBranchStateService);
 
+    private _$rootCache = signal<FsItem>(ROOT, { equal: _ => false });
     private _$selected = signal<FsItem | null>(null, { equal: _ => false });
     private _$expanded = signal<string[]>([], { equal: _ => false});
     private _$root = signal<FsItem | null>(null, { equal: _ => false });
@@ -22,15 +23,25 @@ export class FsItemStateService {
     constructor() {
         effect(() => {
             const branch = this.fsBranchStateService.$selectedBranch();
-            const uncommited = this.fsBranchStateService.$uncommited();
-
             if(!branch) return;
-            const commited = branch!.commits.map(x => x.events).flat();
-            const events = commited.concat(uncommited);
-            
+
+            const events = branch.commits.map(x => x.events).flat();
             const root = FsItemUtils.mapRootFromEvents(events);
+            this._$rootCache.set(root);
+        });
+
+        effect(() => {
+            const branch = this.fsBranchStateService.$selectedBranch();
+            const events = this.fsBranchStateService.$uncommited();
+            if(!branch) return;
+
+            const rootCache = this._$rootCache();
+            const root = FsItemUtils.mapRootFromEvents(events, rootCache);
             this._$root.set(root);
-            this.toggleDirectory(events[events.length - 1], root);
+
+            events.length > 0
+            ? this.toggleDirectory(events[events.length - 1], root)
+            : this.setSelected(root, false);
         });
     }
 

@@ -13,7 +13,9 @@ import {
 } from './fsitem.models';
 
 export class FsItemUtils {
-    static mapRootFromEvents(events: FsItemEvent[]) {
+    static mapRootFromEvents(events: FsItemEvent[], root?: FsItem) {
+        if(events.length === 0) return Utils.deepClone(root ?? ROOT);
+
         const sorted = events.sort((a, b) => Utils.timeSort(a.createdAt, b.createdAt));
 
         const onCreated = (ev: FsItemCreatedEvent, root: FsItem) => {
@@ -46,6 +48,8 @@ export class FsItemUtils {
             dir.items = dir.items.filter(x => x.id !== ev.deleted.id);
         }
 
+        const initial = Utils.deepClone(root ?? ROOT);
+
         return sorted.reduce((root, ev) => {
             const clonedEv = Utils.deepClone(ev);
             this.doOnEvent(
@@ -55,7 +59,7 @@ export class FsItemUtils {
                 e => onDeleted(e, root));
             
             return root;
-        }, Utils.deepClone(ROOT) as FsItem);
+        }, initial);
     }
 
     static getParent(fsi: FsItem, root: FsItem) {
