@@ -16,6 +16,17 @@ export class PopupService {
             duration: duration
         });
 
+    info(message: string, header = 'Info') {
+        this._popup$.next({
+            x: {
+                color: 'blue',
+                header: header,
+                text: message
+            },
+            duration: this.defaultDuration
+        });
+    }
+
     warn(message: string, header = 'Warning') {
         this._popup$.next({
             x: {

@@ -1,12 +1,12 @@
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FsItemStateService } from '../fsItemState.service';
-import { filter, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
-import { TreeComponent } from "../tree/tree.component";
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../fsitem.utils';
 import { FsItemNamePipe } from "../fsitem.pipes";
 import { Utils } from '../../../../shared/services/utils';
+import { FsBranchStateService } from '../../branch/fsBranchState.service';
 
 @Component({
   selector: 'app-file-preview',
@@ -17,6 +17,7 @@ import { Utils } from '../../../../shared/services/utils';
 export class FilePreviewComponent implements OnInit {
   @ViewChild('docContent') private docContent!: ElementRef<HTMLTextAreaElement>;
   private fsItemStateService = inject(FsItemStateService);
+  private fsBranchStateService = inject(FsBranchStateService);
   
   private item!: FsItem;
   private _$canEdit = signal<boolean>(false);
@@ -59,9 +60,11 @@ export class FilePreviewComponent implements OnInit {
   }
 
   saveChanges() {
-    const clone = Utils.deepClone(this.item) as FsItem;
+    const clone = Utils.deepClone(this.item) as FsDocument;
     const newContent = this.docContent.nativeElement.value;
 
-    this.fsItemStateService.updateContent(clone, newContent);
+    clone.content = newContent;
+    const event = FsItemUtils.createFsItemEvent('updated', clone as FsItem);
+    this.fsBranchStateService.addEvent(event);
   }
 }

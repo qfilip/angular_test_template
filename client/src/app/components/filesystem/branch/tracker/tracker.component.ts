@@ -52,7 +52,5 @@ export class TrackerComponent implements OnInit {
     
   }
 
-  commit() {
-    
-  }
+  commit = () => this.branchService.commit();
 }

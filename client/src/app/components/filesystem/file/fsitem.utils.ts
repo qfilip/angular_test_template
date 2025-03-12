@@ -3,6 +3,7 @@ import { ROOT } from '../fsConstants';
 import {
     DirsAndDocs,
     FsDirectory,
+    FsEventType,
     FsItem,
     FsItemCreatedEvent,
     FsItemDeletedEvent,
@@ -128,6 +129,25 @@ export class FsItemUtils {
         };
         
         return makeResult<FsItem>(errors, fsi);
+    }
+
+    static createFsItemEvent(type: FsEventType, fsi: FsItem) {
+        const now = new Date();
+        if(type === 'created') {
+            const r: FsItemCreatedEvent = { created: fsi, type: type, createdAt: now }
+            return r;
+        }
+        else if(type === 'updated') {
+            const r: FsItemUpdatedEvent = { updated: fsi, type: type, createdAt: now }
+            return r;
+        }
+        else if(type === 'deleted') {
+            const r: FsItemDeletedEvent = { deleted: fsi, type: type, createdAt: now }
+            return r;
+        }
+        else {
+            throw `Unsupported FsEvent of type ${type}`;
+        }
     }
 
     static getName(path: string) {

@@ -10,4 +10,5 @@ export class FsBranchApiService extends BaseApiService {
 
     getAll = () => this.http.get<Branch[]>(this.url);
     post = (b: Branch) => this.http.post<Branch>(this.url, b);
+    put = (b: Branch) => this.http.put<Branch>(this.url, b);
 }

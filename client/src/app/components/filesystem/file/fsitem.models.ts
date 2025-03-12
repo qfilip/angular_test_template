@@ -16,7 +16,7 @@ export type FsItem = {
 
 export type DirsAndDocs = { dirs: FsItem[], docs: FsItem[] };
 
-type FsEventType = 'created' | 'updated' | 'deleted';
+export type FsEventType = 'created' | 'updated' | 'deleted';
 
 type FsEvent = { type: FsEventType, createdAt: Date }
 

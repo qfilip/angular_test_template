@@ -1,11 +1,12 @@
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
-import { FsItemUtils } from '../fsitem.utils';
-import { FsItem, FsItemType } from '../fsitem.models';
-import { FsItemStateService } from '../fsItemState.service';
+
 import { Utils } from '../../../../shared/services/utils';
 import { DialogWrapperComponent } from '../../../common-ui/dialog-wrapper/dialog-wrapper.component';
 import { LoaderService } from '../../../common-ui/loader/loader.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
+import { FsBranchStateService } from '../../branch/fsBranchState.service';
+import { FsItem, FsItemType } from '../fsitem.models';
+import { FsItemUtils } from '../fsitem.utils';
 
 @Component({
   selector: 'app-fs-item-create-dialog',
@@ -21,7 +22,7 @@ export class FsItemCreateDialog {
   
   private popupService = inject(PopupService);
   private loaderService = inject(LoaderService);
-  private fsItemStateService = inject(FsItemStateService);
+  private fsBranchStateService = inject(FsBranchStateService);
   
   private _$fsType = signal<FsItemType>(this.types[0]);
   private parent!: FsItem;
@@ -34,7 +35,6 @@ export class FsItemCreateDialog {
     this.root = root;
     this.wrapper.open();
   };
-
   
   setType = (x: string) => this._$fsType.set(x as FsItemType);
   
@@ -49,17 +49,10 @@ export class FsItemCreateDialog {
       return;
     }
     
-    const addedItem = this.fsItemStateService.add(this.parent, fsItemRes.data!);
+    const event = FsItemUtils.createFsItemEvent('created', fsItemRes.data!);
+    this.fsBranchStateService.addEvent(event);
 
     this.loaderService.hide();
-    if(!addedItem) {
-      this.popupService.push({
-        color: 'red',
-        header: 'Error',
-        text: 'Failed to add item'
-      });
-    }
-    
     this.close();
   }
   

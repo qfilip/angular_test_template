@@ -1,18 +1,16 @@
-import { inject, Injectable } from "@angular/core";
-import { FsDirectory, FsDocument, FsItem } from "./fsitem.models";
-import { FsItemUtils } from "./fsitem.utils";
-import { BehaviorSubject, combineLatest, map, Observable, Subject, tap } from "rxjs";
-import { FsItemApiService } from "./fsItemApi.service";
-import { FsBranchStateService } from "../branch/fsBranchState.service";
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, tap } from 'rxjs';
+
+import { FsBranchStateService } from '../branch/fsBranchState.service';
+import { FsItem } from './fsitem.models';
+import { FsItemUtils } from './fsitem.utils';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FsItemStateService {
-    private fsItemApiService = inject(FsItemApiService);
     private fsBranchStateService = inject(FsBranchStateService);
 
-    private _root$ = new BehaviorSubject<FsItem | null>(null);
     private _selected$ = new BehaviorSubject<FsItem | null>(null);
     private _expanded$ = new Subject<string[]>();
 
@@ -23,30 +21,15 @@ export class FsItemStateService {
         branch: this.fsBranchStateService.selectedBranch$,
         uncommited: this.fsBranchStateService.uncommited$
     }).pipe(
+        filter(x => !!x.branch),
         map(x => {
-            if(!x.branch) {
-                return null;
-            }
-            const commited = x.branch.commits.map(x => x.events).flat();
+            const commited = x.branch!.commits.map(x => x.events).flat();
             const events = commited.concat(x.uncommited);
 
             return FsItemUtils.mapRootFromEvents(events);
         }),
-        tap(x => {
-            if(!x) return;
-            this.setSelected(x, true);
-        })
+        tap(x => this.setSelected(x, true))
     );
-    
-
-    loadRoot() {
-        this.fsItemApiService.getRoot()
-            .subscribe({ next: root => {
-                this._root$.next(root);
-                this._selected$.next(root);
-            }
-        })
-    }
 
     setSelected(item: FsItem, expand: boolean) {
         this._selected$.next(item);
@@ -54,54 +37,5 @@ export class FsItemStateService {
         if(expand) {
             this._expanded$.next(paths);
         }
-    }
-
-    add(parent: FsItem, x: FsItem) {
-        const root = this._root$.getValue();
-        if(!root) {
-            throw 'Root not loaded during add operation';
-        }
-        const addedToTree = this.addToTree(parent.id, root, x, root);
-        if(addedToTree) {
-            this.fsItemApiService.updateRoot(root).subscribe({
-                next: updatedRoot => {
-                    this._root$.next(updatedRoot);
-                    this.setSelected(parent, true);
-                }
-            });
-        }
-
-        return addedToTree;
-    }
-
-    updateContent(doc: FsItem, newContent: string) {
-        const root = this._root$.getValue()!;
-        const foundDoc = FsItemUtils.findChildDoc(doc.id, root);
-        (foundDoc as FsDocument).content = newContent;
-
-        this.fsItemApiService.updateRoot(root).subscribe({
-            next: updatedRoot => {
-                this._root$.next(updatedRoot);
-            }
-        });
-    }
-
-    private addToTree(parentId: string, parent: FsItem, x: FsItem, root: FsItem): FsItem | null {
-        if(parent.id === parentId) {
-            (parent as FsDirectory).items.push(x);
-            return x;
-        }
-
-        const childDirs = FsItemUtils.getDirsAndDocs(parent, root).dirs;
-
-        const updated = childDirs
-            .map(dir => this.addToTree(parentId, dir, x, root))
-            .filter(x => !!x);
-
-        if(updated.length > 1) {
-            console.error('more than one item updated');
-        }
-
-        return updated[0];
     }
 }

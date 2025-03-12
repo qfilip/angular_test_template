@@ -25,7 +25,6 @@ export class TreeComponent implements OnInit, OnDestroy {
   private unsub = new Subject();
 
   selected$!: Observable<FsItem>;
-  
 
   $items = this._$items.asReadonly();
   $item = this._$item.asReadonly();
