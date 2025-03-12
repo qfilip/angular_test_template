@@ -3,6 +3,7 @@ import { ROOT } from '../fsConstants';
 import {
     DirsAndDocs,
     FsDirectory,
+    FsDocument,
     FsEventType,
     FsItem,
     FsItemCreatedEvent,
@@ -30,12 +31,10 @@ export class FsItemUtils {
         }
 
         const onUpdated = (ev: FsItemUpdatedEvent, root: FsItem) => {
-            let target = this.findChildDir(ev.updated.path, root);
-            if(!target) {
-                throw `FsItem not found for ${ev.updated.id} - ${ev.updated.path}`
+            const updated = this.updateChild(ev.updated.id, root, ev.updated)
+            if(!updated) {
+                throw `Child not found for ${ev.updated.id} - ${ev.updated.path}`
             }
-
-            target = ev.updated;
         }
 
         const onDeleted = (ev: FsItemDeletedEvent, root: FsItem) => {
@@ -85,15 +84,33 @@ export class FsItemUtils {
         return this.getChildren(target);
     }
 
+    static updateChild(targetId: string, current: FsItem, newVersion: FsItem): boolean {
+        if(targetId === current.id) {
+            Object.assign(current, newVersion);
+            return true;
+        }
+
+        let updated = false;
+        if(current.type === 'directory') {
+            const dir = current as FsDirectory;
+            dir.items.forEach(dir => {
+                const res = this.updateChild(targetId, dir, newVersion);
+                updated = updated || res; 
+            });
+        }
+
+        return updated;
+    }
+
     static findChildDoc(targetId: string, root: FsItem): FsItem {
         if(targetId === root.id) {
             return root;
         }
         const { dirs, docs } = this.getChildren(root);
-        const foundDoc = docs.find(x => x.id === targetId);
+        const idx = docs.findIndex(x => x.id === targetId);
         
-        if(foundDoc) {
-            return foundDoc;
+        if(idx !== -1) {
+            return docs[idx];
         }
 
         const children = dirs
@@ -101,7 +118,7 @@ export class FsItemUtils {
             .filter(x => !!x);
 
         if(children.length === 0) {
-            console.error('No child found at: ', root.path);
+            throw `No child found at: ${root.path}`;
         }
 
         return children[0];
