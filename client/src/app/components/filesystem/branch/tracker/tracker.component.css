@@ -36,3 +36,10 @@ label {
     max-width: 12rem;
     width: 12rem;
 }
+
+.change-list > li > button {
+    background-color: transparent;
+    &:hover {
+        background-color: var(--c-black);
+    }
+}

@@ -35,6 +35,14 @@ a {
     color: var(--c-green);
 }
 
+summary, li, .clickable {
+    cursor: pointer;
+}
+
+summary:hover, li:hover, .clickable:hover {
+    background-color: var(--c-green);
+}
+
 a:hover {
     color: var(--c-white);
     background-color: var(--c-green);
