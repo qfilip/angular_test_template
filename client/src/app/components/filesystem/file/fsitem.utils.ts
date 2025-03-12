@@ -48,7 +48,6 @@ export class FsItemUtils {
         }
 
         const initial = Utils.deepClone(root ?? ROOT);
-
         return sorted.reduce((root, ev) => {
             const clonedEv = Utils.deepClone(ev);
             this.doOnEvent(
@@ -155,16 +154,18 @@ export class FsItemUtils {
 
     static createFsItemEvent(type: FsEventType, fsi: FsItem) {
         const now = new Date();
+        const fsic = Utils.deepClone(fsi);
+        
         if(type === 'created') {
-            const r: FsItemCreatedEvent = { created: fsi, type: type, createdAt: now }
+            const r: FsItemCreatedEvent = { created: fsic, type: type, createdAt: now }
             return r;
         }
         else if(type === 'updated') {
-            const r: FsItemUpdatedEvent = { updated: fsi, type: type, createdAt: now }
+            const r: FsItemUpdatedEvent = { updated: fsic, type: type, createdAt: now }
             return r;
         }
         else if(type === 'deleted') {
-            const r: FsItemDeletedEvent = { deleted: fsi, type: type, createdAt: now }
+            const r: FsItemDeletedEvent = { deleted: fsic, type: type, createdAt: now }
             return r;
         }
         else {
@@ -218,7 +219,7 @@ export class FsItemUtils {
         return path.match(pathRegex)?.filter(x => !!x) as string[];
     }
 
-    private static getChildren = (item: FsItem) => {
+    static getChildren = (item: FsItem) => {
         let dds: DirsAndDocs = {
             dirs: [],
             docs: []

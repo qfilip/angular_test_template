@@ -13,6 +13,11 @@ export class DialogService {
         this._$dialogOptions.set(o);
     }
 
+    openInfo(message: string) {
+        const o = { message: message } as DialogOptions;
+        this.open(o);
+    }
+
     openCheck(message: string, yesAction: () => void) {
         const o = {
             message: message,

@@ -6,7 +6,7 @@
         <span>{{ item.path | fsItemName }}</span>
         <span>
             <button class="orange">Rename</button>
-            <button class="red">Delete</button>
+            <button (click)="delete()" class="red">Delete</button>
         </span>
     </div>
     @if(preview.previewDoc) {

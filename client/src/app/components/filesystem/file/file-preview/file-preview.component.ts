@@ -8,6 +8,8 @@ import { FsItemNamePipe } from '../fsitem.pipes';
 import { FsItemUtils } from '../fsitem.utils';
 import { FsItemStateService } from '../fsItemState.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
+import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
+import { ROOT } from '../../fsConstants';
 
 @Component({
   selector: 'app-file-preview',
@@ -18,6 +20,7 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
 export class FilePreviewComponent {
   @ViewChild('docContent') private docContent!: ElementRef<HTMLTextAreaElement>;
   private popup = inject(PopupService);
+  private dialogService = inject(DialogService);
   private fsItemStateService = inject(FsItemStateService);
   private fsBranchStateService = inject(FsBranchStateService);
   
@@ -64,5 +67,30 @@ export class FilePreviewComponent {
     this.fsBranchStateService.addEvent(event);
     this.popup.ok('File changed');
     this._$canEdit.set(false);
+  }
+
+  delete() {
+    const item = this._$item()!;
+
+    if(item.id === ROOT.id) {
+      this.dialogService.openInfo('Root directory cannot be deleted');
+      return;
+    }
+    
+    const dds = FsItemUtils.getChildren(item);
+    const message = `
+      This action will delete selected item and all of its children:
+      directories: ${dds.dirs.length},
+      documents: ${dds.docs.length},
+      Do you wish to proceed?
+    `;
+
+    this.dialogService.openCheck(message, () => this.executeDelete(item));
+  }
+
+  private executeDelete(item: FsItem) {
+    const event = FsItemUtils.createFsItemEvent('deleted', item as FsItem);
+    this.fsBranchStateService.addEvent(event);
+    this.popup.ok('File changed');
   }
 }

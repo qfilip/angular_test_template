@@ -64,7 +64,10 @@ export class FsItemStateService {
                 this.setSelected(parent!, true);
             },
             _ => {},
-            _ => {}
+            e => {
+                const parent = FsItemUtils.getParent(e.deleted, root);
+                this.setSelected(parent!, true);
+            }
         );
     }
 }
