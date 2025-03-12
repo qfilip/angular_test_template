@@ -1,10 +1,14 @@
+h2 {
+    margin: var(--rem);
+}
+
 .fs-sections {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     & section {
-        padding: var(--rem);
+        padding: 0rem var(--rem);
         flex: 1;
         min-height: 80vh;
         max-height: 80vh;

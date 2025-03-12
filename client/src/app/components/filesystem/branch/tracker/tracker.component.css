@@ -1,9 +1,9 @@
-section {
-    margin-bottom: var(--rem);
-}
-
 label {
+    font-size: var(--rem);
     display: flex;
+    & span {
+        margin-right: var(--rem);
+    }
     & select {
         width: 100%;
     }
