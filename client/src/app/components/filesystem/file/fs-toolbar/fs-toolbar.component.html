@@ -2,11 +2,11 @@
 @let selected = $selected();
 @if(selected) {
     <div>
-        <span>{{ selected.path | fsItemName }}</span>
+        <span>{{ selected.path }}</span>
         <div class="actions">
-            <button (click)="selectRoot()">root</button>
-            <button (click)="openCreateDialog(selected)">+</button>
-            <button>x</button>
+            <button (click)="selectRoot()" class="blue">root</button>
+            <button (click)="openCreateDialog(selected)" class="green">+</button>
+            <button class="red">x</button>
         </div>
     </div>
 }

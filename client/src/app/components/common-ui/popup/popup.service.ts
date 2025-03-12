@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { Popup } from "./popup.model";
+import { Popup, PopupColor } from "./popup.model";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
@@ -16,21 +16,19 @@ export class PopupService {
             duration: duration
         });
 
-    info(message: string, header = 'Info') {
-        this._popup$.next({
-            x: {
-                color: 'blue',
-                header: header,
-                text: message
-            },
-            duration: this.defaultDuration
-        });
-    }
+    info = (message: string, header = 'Info') =>
+        this.pushItem(message, 'blue', header);
 
-    warn(message: string, header = 'Warning') {
+    ok = (message: string, header = 'Ok') =>
+        this.pushItem(message, 'green', header);
+
+    warn = (message: string, header = 'Warning') =>
+        this.pushItem(message, 'orange', header); 
+
+    private pushItem(message: string, color: PopupColor, header: string) {
         this._popup$.next({
             x: {
-                color: 'orange',
+                color: color,
                 header: header,
                 text: message
             },

@@ -1,5 +1,14 @@
 @let preview = $preview();
-@if(preview) {
+@let item = $item();
+
+@if(preview && item) {
+    <div class="actions">
+        <span>{{ item.path | fsItemName }}</span>
+        <span>
+            <button class="orange">Rename</button>
+            <button class="red">Delete</button>
+        </span>
+    </div>
     @if(preview.previewDoc) {
         <div>
             <textarea #docContent [value]="preview.content" (keypress)="onFileContentChange(docContent.value)"></textarea>

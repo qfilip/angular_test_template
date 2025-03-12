@@ -1,5 +1,7 @@
+export type PopupColor = 'blue' | 'green' | 'orange' | 'red';
+
 export type Popup = {
-    color: 'blue' | 'green' | 'orange' | 'red';
+    color: PopupColor;
     header: string;
     text: string;
 }

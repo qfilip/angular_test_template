@@ -7,6 +7,7 @@ import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
 import { FsItemUtils } from '../fsitem.utils';
 import { FsItemStateService } from '../fsItemState.service';
+import { PopupService } from '../../../common-ui/popup/popup.service';
 
 @Component({
   selector: 'app-file-preview',
@@ -16,6 +17,7 @@ import { FsItemStateService } from '../fsItemState.service';
 })
 export class FilePreviewComponent {
   @ViewChild('docContent') private docContent!: ElementRef<HTMLTextAreaElement>;
+  private popup = inject(PopupService);
   private fsItemStateService = inject(FsItemStateService);
   private fsBranchStateService = inject(FsBranchStateService);
   
@@ -23,6 +25,7 @@ export class FilePreviewComponent {
   private _$canEdit = signal<boolean>(false);
   private _$preview = signal<{ previewDoc: boolean, content: string, dirsAndDocs: DirsAndDocs } | null>(null, { equal: _ => false});
   
+  $item = this._$item.asReadonly();
   $canEdit = this._$canEdit.asReadonly();
   $preview = this._$preview.asReadonly();
 
@@ -59,5 +62,7 @@ export class FilePreviewComponent {
     clone.content = newContent;
     const event = FsItemUtils.createFsItemEvent('updated', clone as FsItem);
     this.fsBranchStateService.addEvent(event);
+    this.popup.ok('File changed');
+    this._$canEdit.set(false);
   }
 }

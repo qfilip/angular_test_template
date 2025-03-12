@@ -175,8 +175,9 @@ export class FsItemUtils {
     static getName(path: string) {
         const arr = this.getPathParts(path);
         const last = arr[arr.length - 1];
+        const name = last.substring(0, last.length - 1);
         
-        return last.substring(0, last.length - 1);
+        return name.length === 0 ? ROOT.path : name;
     }
 
     static findAllPaths(item: FsItem) {
