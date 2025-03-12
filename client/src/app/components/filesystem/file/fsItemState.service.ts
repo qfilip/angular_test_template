@@ -25,7 +25,7 @@ export class FsItemStateService {
         map(x => {
             const commited = x.branch!.commits.map(x => x.events).flat();
             const events = commited.concat(x.uncommited);
-            
+
             return FsItemUtils.mapRootFromEvents(events);
         }),
         tap(x => this.setSelected(x, true))

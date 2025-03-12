@@ -6,6 +6,7 @@ import { BranchCreateDialog } from "../branch-create.dialog/branch-create.dialog
 import { Branch, FsItemEvent } from '../../file/fsitem.models';
 import { PopupService } from '../../../common-ui/popup/popup.service';
 import { FsItemEventPipe } from "../fsEvent.pipe";
+import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 
 @Component({
   selector: 'app-tracker',
@@ -17,6 +18,7 @@ export class TrackerComponent implements OnInit {
   @ViewChild('createDialog') createDialog!: BranchCreateDialog;
   
   private popupService = inject(PopupService);
+  private dialogService = inject(DialogService);
   private branchService = inject(FsBranchStateService);
 
   private $branches = signal<Branch[]>([]);
@@ -53,5 +55,14 @@ export class TrackerComponent implements OnInit {
     
   }
 
-  commit = () => this.branchService.commit();
+  commit(numOfChanges: number) {
+    this.dialogService.openCheck(
+      `Commit ${numOfChanges} changes?`,
+      () => this.branchService.commit()
+    );
+    
+
+  }
+
+  revertTo = (idx: number) => this.branchService.revertTo(idx + 1);
 }

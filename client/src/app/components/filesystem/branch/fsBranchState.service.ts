@@ -76,9 +76,17 @@ export class FsBranchStateService {
                     .concat(b);
 
                 this._branches$.next(xs);
+                this._uncommited$.next([]);
                 this._selectedBranch$.next(b);
+                this.popupService.info('Changes commited.');
             }
         });
 
+    }
+
+    revertTo(index: number) {
+        const uncommited = this._uncommited$.getValue();
+        const next = uncommited.slice(0, index);
+        this._uncommited$.next(next);
     }
 }

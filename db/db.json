@@ -4,24 +4,7 @@
     {
       "id": "a9267bc4",
       "name": "master",
-      "commits": [
-        {
-          "id": "ddb2f675",
-          "createdAt": "2025-03-12T12:44:21.766Z",
-          "events": [
-            {
-              "type": "created",
-              "created": {
-                "id": "root",
-                "path": "/",
-                "type": "directory",
-                "items": []
-              },
-              "createdAt": "2025-03-12T12:44:21.766Z"
-            }
-          ]
-        }
+      "commits": []
+	}
       ]
-    }
-  ]
 }

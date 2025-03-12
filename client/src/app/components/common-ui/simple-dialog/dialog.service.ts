@@ -13,6 +13,18 @@ export class DialogService {
         this._$dialogOptions.set(o);
     }
 
+    openCheck(message: string, yesAction: () => void) {
+        const o = {
+            message: message,
+            buttons: [
+                { label: 'Yes', action: () => yesAction() },
+                { label: 'No', action: () => this.noop() },
+            ]
+        } as DialogOptions;
+
+        this.open(o);
+    }
+
     close() {
         this._$dialogOptions.set(null);
     }
@@ -36,4 +48,6 @@ export class DialogService {
 
         return o;
     }
+
+    private noop() {}
 }
