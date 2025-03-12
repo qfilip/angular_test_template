@@ -2,23 +2,22 @@
   "todo-events": [],
   "branches": [
     {
-      "id": "a9267bc4",
+      "id": "67e5c833",
       "name": "master",
       "commits": [
         {
-          "id": "b942ec5b",
-          "createdAt": "2025-03-12T16:19:36.268Z",
+          "id": "1205a121",
+          "createdAt": "2025-03-12T20:07:22.425Z",
           "events": [
             {
+              "type": "created",
               "created": {
-                "id": "3f337b56",
+                "id": "root",
+                "path": "/",
                 "type": "directory",
-                "path": "/crap/",
-                "content": "",
                 "items": []
               },
-              "type": "created",
-              "createdAt": "2025-03-12T16:16:34.503Z"
+              "createdAt": "2025-03-12T20:07:22.425Z"
             }
           ]
         }
