@@ -4,6 +4,9 @@ form button {
 
 label {
     font-size: var(--rem-s);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 label.disabled > * {

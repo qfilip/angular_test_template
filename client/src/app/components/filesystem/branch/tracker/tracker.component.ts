@@ -1,5 +1,4 @@
 import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { Observable, tap } from 'rxjs';
 import { FsBranchStateService } from '../fsBranchState.service';
 import { CommonModule } from '@angular/common';
 import { BranchCreateDialog } from "../branch-create.dialog/branch-create.dialog";
@@ -7,15 +6,17 @@ import { Branch, FsItemEvent } from '../../file/fsitem.models';
 import { PopupService } from '../../../common-ui/popup/popup.service';
 import { FsItemEventPipe } from "../fsEvent.pipe";
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
+import { BranchCloneDialog } from "../branch-clone-dialog/branch-clone.dialog";
 
 @Component({
   selector: 'app-tracker',
-  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe],
+  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog],
   templateUrl: './tracker.component.html',
   styleUrl: './tracker.component.css'
 })
 export class TrackerComponent implements OnInit {
   @ViewChild('createDialog') createDialog!: BranchCreateDialog;
+  @ViewChild('cloneDialog') cloneDialog!: BranchCloneDialog;
   
   private popupService = inject(PopupService);
   private dialogService = inject(DialogService);
@@ -58,9 +59,7 @@ export class TrackerComponent implements OnInit {
     this.createDialog.open(this.$branches());
   }
 
-  cloneBranch() {
-    
-  }
+  cloneBranch = () => this.cloneDialog.open();
 
   pull() {
     
