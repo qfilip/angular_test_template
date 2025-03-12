@@ -1,3 +1,4 @@
+<app-fs-item-rename-dialog #renameDialog></app-fs-item-rename-dialog>
 @let preview = $preview();
 @let item = $item();
 
@@ -5,7 +6,7 @@
     <div class="actions">
         <span>{{ item.path | fsItemName }}</span>
         <span>
-            <button class="orange">Rename</button>
+            <button (click)="rename()" class="orange">Rename</button>
             <button (click)="delete()" class="red">Delete</button>
         </span>
     </div>

@@ -1,0 +1,22 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>Item</h2>
+    
+    <div body>
+        <fieldset>
+            <legend>Rename Form</legend>
+            <form>
+                <div>
+                    <label>
+                        <span>Name:</span> <input #fsItemName [value]="$name()" type="text" />
+                    </label>
+                    <div class="error"></div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+    
+    <div footer>
+        <button (click)="rename()">Rename</button>
+        <button (click)="close()">Close</button>
+    </div>
+</app-dialog-wrapper>

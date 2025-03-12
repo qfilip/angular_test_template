@@ -44,6 +44,11 @@ export class FsBranchStateService {
         this._$uncommited.set(current.concat(event));
     }
 
+    addEvents(events: FsItemEvent[]) {
+        const current = this._$uncommited()
+        this._$uncommited.set(current.concat(events));
+    }
+
     commit() {
         const events = this._$uncommited();
         if(events.length === 0) {

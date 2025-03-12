@@ -10,15 +10,18 @@ import { FsItemStateService } from '../fsItemState.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 import { ROOT } from '../../fsConstants';
+import { FsItemRenameDialog } from "../fs-item-rename-dialog/fs-item-rename.dialog";
 
 @Component({
   selector: 'app-file-preview',
-  imports: [CommonModule, FsItemNamePipe],
+  imports: [CommonModule, FsItemNamePipe, FsItemRenameDialog],
   templateUrl: './file-preview.component.html',
   styleUrl: './file-preview.component.css'
 })
 export class FilePreviewComponent {
   @ViewChild('docContent') private docContent!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('renameDialog') private renameDialog!: FsItemRenameDialog;
+  
   private popup = inject(PopupService);
   private dialogService = inject(DialogService);
   private fsItemStateService = inject(FsItemStateService);
@@ -69,6 +72,10 @@ export class FilePreviewComponent {
     this._$canEdit.set(false);
   }
 
+  rename() {
+    this.renameDialog.open();
+  }
+
   delete() {
     const item = this._$item()!;
 
@@ -85,12 +92,12 @@ export class FilePreviewComponent {
       Do you wish to proceed?
     `;
 
-    this.dialogService.openCheck(message, () => this.executeDelete(item));
-  }
+    const execute = () => {
+      const event = FsItemUtils.createFsItemEvent('deleted', item as FsItem);
+      this.fsBranchStateService.addEvent(event);
+      this.popup.ok('File changed');
+    }
 
-  private executeDelete(item: FsItem) {
-    const event = FsItemUtils.createFsItemEvent('deleted', item as FsItem);
-    this.fsBranchStateService.addEvent(event);
-    this.popup.ok('File changed');
+    this.dialogService.openCheck(message, () => execute());
   }
 }

@@ -55,19 +55,18 @@ export class FsItemStateService {
     }
 
     private toggleDirectory(lastEvent: FsItemEvent, root: FsItem) {
+        const updateSelected = (fsi: FsItem) => {
+            if(fsi.id === ROOT.id) return;
+
+            const parent = FsItemUtils.getParent(fsi, root);
+            this.setSelected(parent!, true);
+        }
+
         FsItemUtils.doOnEvent(
             lastEvent,
-            e => {
-                if(e.created.id === ROOT.id) return;
-
-                const parent = FsItemUtils.getParent(e.created, root);
-                this.setSelected(parent!, true);
-            },
-            _ => {},
-            e => {
-                const parent = FsItemUtils.getParent(e.deleted, root);
-                this.setSelected(parent!, true);
-            }
+            e => updateSelected(e.created),
+            e => updateSelected(e.updated),
+            e => updateSelected(e.deleted)
         );
     }
 }

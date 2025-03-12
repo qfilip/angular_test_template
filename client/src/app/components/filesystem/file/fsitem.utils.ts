@@ -83,6 +83,21 @@ export class FsItemUtils {
         return this.getChildren(target);
     }
 
+    static cloneWithUpdatedChildPaths(fsi: FsItem, newPath: string) {
+        const clone = Utils.deepClone(fsi);
+        clone.path = newPath;
+        if(clone.type === 'document') return clone;
+
+        const dir = (clone as FsDirectory);
+        dir.items = dir.items.map(x => {
+            const name = this.getName(x.path);
+            const newChildPath = newPath + name;
+            return this.cloneWithUpdatedChildPaths(x, newChildPath);
+        })
+
+        return clone;
+    }
+
     static updateChild(targetId: string, current: FsItem, newVersion: FsItem): boolean {
         if(targetId === current.id) {
             Object.assign(current, newVersion);
