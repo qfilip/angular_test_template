@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 
 import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { ROOT } from '../../fsConstants';
@@ -14,16 +14,17 @@ import { FsItemStateService } from '../fsItemState.service';
   templateUrl: './fs-toolbar.component.html',
   styleUrl: './fs-toolbar.component.css'
 })
-export class FsToolbarComponent {
+export class FsToolbarComponent implements OnInit {
   @ViewChild('createDialog') private createDialog!: FsItemCreateDialog;
   
   private fsItemStateService = inject(FsItemStateService);
   
-  selected$!: Observable<FsItem>;
-
+  selected$!: Observable<FsItem | null>;
+  
   ngOnInit(): void {
     this.selected$ = this.fsItemStateService.selected$;
   }
+
 
   selectRoot() {
     this.fsItemStateService.setSelected(ROOT, true);

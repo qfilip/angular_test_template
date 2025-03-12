@@ -23,8 +23,6 @@ export class FilesystemPage implements OnInit {
   $items = this._$items.asReadonly();
   
   ngOnInit() {
-    this.fsItemStateService.loadRoot();
-    
     this.root$ = this.fsItemStateService.root$
       .pipe(
         filter(x => !!x),

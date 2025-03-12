@@ -1,14 +1,24 @@
 section {
+    margin-bottom: var(--rem);
+}
+
+label {
+    display: flex;
+    & select {
+        width: 100%;
+    }
+}
+
+.action-section {
     display: flex;
     align-items: center;
 }
 
-section > div {
+.action-section > div {
     margin: auto;
 }
 
-h4, dt, dd {
-    margin: 0;
+h4 {
     text-align: center;
 }
 
@@ -16,22 +26,8 @@ h4, dt, dd {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
-dl {
-    margin: 0;
-    padding: 0;
-}
-
-.disabled > * {
-    pointer-events: none;
-    color: var(--c-grey);
-}
-
-.no-branch {
-    font-style: italic;
-}
-
-select {
-    width: 100%;
+    & button {
+        width: 100%;
+    }
 }

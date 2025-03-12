@@ -9,8 +9,8 @@
         <section class="fs-tree">
             <h3>Tree</h3>
             <hr />
-            <app-fs-toolbar></app-fs-toolbar>
             @if(root$ | async; as root) {
+                <app-fs-toolbar></app-fs-toolbar>
                 @let items = $items();
                 <ul>
                     @for (item of items.dirs; track $index) {

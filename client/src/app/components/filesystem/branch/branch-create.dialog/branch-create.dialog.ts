@@ -52,5 +52,7 @@ export class BranchCreateDialog {
     this.close();
   }
   
-  close = () => this.wrapper.close();
+  close = () => {
+    this.wrapper.close();
+  }
 }

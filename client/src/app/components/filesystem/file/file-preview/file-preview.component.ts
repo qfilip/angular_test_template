@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FsItemStateService } from '../fsItemState.service';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { filter, map, Observable, switchMap, tap } from 'rxjs';
 import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
 import { TreeComponent } from "../tree/tree.component";
 import { CommonModule } from '@angular/common';
@@ -31,6 +31,7 @@ export class FilePreviewComponent implements OnInit {
   ngOnInit(): void {
     this.preview$ = this.fsItemStateService.selected$
       .pipe(
+        filter(x => !!x),
         tap(x => {
           this.item = x;
           this._$canEdit.set(false);

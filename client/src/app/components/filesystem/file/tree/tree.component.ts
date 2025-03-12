@@ -34,7 +34,7 @@ export class TreeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fsItemStateService.selected$.pipe(
       takeUntil(this.unsub),
-      filter(x => x.id === this.$item()!.id),
+      filter(x => x?.id === this.$item()!.id),
       switchMap(_ => this.fsItemStateService.root$),
     ).subscribe({
       next: x =>

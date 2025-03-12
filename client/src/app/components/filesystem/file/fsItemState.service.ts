@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { FsDirectory, FsDocument, FsItem } from "./fsitem.models";
 import { FsItemUtils } from "./fsitem.utils";
-import { BehaviorSubject, combineLatest, map, Observable, Subject } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, Subject, tap } from "rxjs";
 import { FsItemApiService } from "./fsItemApi.service";
 import { FsBranchStateService } from "../branch/fsBranchState.service";
 
@@ -11,6 +11,13 @@ import { FsBranchStateService } from "../branch/fsBranchState.service";
 export class FsItemStateService {
     private fsItemApiService = inject(FsItemApiService);
     private fsBranchStateService = inject(FsBranchStateService);
+
+    private _root$ = new BehaviorSubject<FsItem | null>(null);
+    private _selected$ = new BehaviorSubject<FsItem | null>(null);
+    private _expanded$ = new Subject<string[]>();
+
+    selected$ = this._selected$.asObservable();
+    expanded$ = this._expanded$.asObservable();
 
     root$: Observable<FsItem | null> = combineLatest({
         branch: this.fsBranchStateService.selectedBranch$,
@@ -24,16 +31,13 @@ export class FsItemStateService {
             const events = commited.concat(x.uncommited);
 
             return FsItemUtils.mapRootFromEvents(events);
+        }),
+        tap(x => {
+            if(!x) return;
+            this.setSelected(x, true);
         })
     );
     
-
-    private _root$ = new BehaviorSubject<FsItem | null>(null);
-    private _selected$ = new Subject<FsItem>();
-    private _expanded$ = new Subject<string[]>();
-
-    selected$ = this._selected$.asObservable();
-    expanded$ = this._expanded$.asObservable();
 
     loadRoot() {
         this.fsItemApiService.getRoot()

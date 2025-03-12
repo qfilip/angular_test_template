@@ -19,7 +19,12 @@ export class FsBranchStateService {
 
     loadBranches() {
         this.fsBranchApiService.getAll()
-        .subscribe({ next: xs => this._branches$.next(xs)});
+        .subscribe({ next: xs => {
+            if(xs.length === 0) return;
+
+            this._branches$.next(xs);
+            this._selectedBranch$.next(xs[0]);
+        }});
     }
 
     createBranch(b: Branch) {
