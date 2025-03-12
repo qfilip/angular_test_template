@@ -4,9 +4,9 @@ import { firstValueFrom, Observable } from 'rxjs';
 
 import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { ROOT } from '../../fsConstants';
-import { FsItem } from '../../fsitem.models';
-import { FsItemNamePipe } from '../../fsitem.pipes';
-import { FsItemStateService } from '../../fsItemState.service';
+import { FsItem } from '../fsitem.models';
+import { FsItemNamePipe } from '../fsitem.pipes';
+import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
   selector: 'app-fs-toolbar',

@@ -1,4 +1,4 @@
-import { FsItem } from "./fsitem.models";
+import { FsItem } from "./file/fsitem.models";
 
 export const ROOT: FsItem = {
     id: 'root',

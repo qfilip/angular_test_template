@@ -45,12 +45,15 @@ export class FsItemUtils {
             dir.items = dir.items.filter(x => x.id !== ev.deleted.id);
         }
 
-        return sorted.reduce((root, ev) => 
-            this.doOnEvent<void>(
+        return sorted.reduce((root, ev) => {
+            this.doOnEvent(
                 ev,
                 e => onCreated(e, root),
                 e => onUpdated(e, root),
-                e => onDeleted(e, root)), ROOT);
+                e => onDeleted(e, root));
+            
+            return root;
+        }, ROOT);
     }
 
     private static getParent(fsi: FsItem, root: FsItem) {

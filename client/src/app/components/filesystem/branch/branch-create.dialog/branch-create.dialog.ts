@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FsBranchStateService } from '../fsBranchState.service';
-import { LoaderService } from '../../common-ui/loader/loader.service';
-import { Branch } from '../fsitem.models';
-import { DialogWrapperComponent } from '../../common-ui/dialog-wrapper/dialog-wrapper.component';
-import { PopupService } from '../../common-ui/popup/popup.service';
+import { Utils } from '../../../../shared/services/utils';
+import { DialogWrapperComponent } from '../../../common-ui/dialog-wrapper/dialog-wrapper.component';
+import { LoaderService } from '../../../common-ui/loader/loader.service';
+import { PopupService } from '../../../common-ui/popup/popup.service';
+import { Branch } from '../../file/fsitem.models';
 import { FsBranchUtils } from '../fsBranch.utils';
-import { Utils } from '../../../shared/services/utils';
 
 @Component({
   selector: 'app-branch-create-dialog',

@@ -1,9 +1,9 @@
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { Branch } from '../fsitem.models';
 import { FsBranchStateService } from '../fsBranchState.service';
 import { CommonModule } from '@angular/common';
 import { BranchCreateDialog } from "../branch-create.dialog/branch-create.dialog";
+import { Branch } from '../../file/fsitem.models';
 
 @Component({
   selector: 'app-tracker',

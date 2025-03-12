@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
-import { DialogWrapperComponent } from "../../common-ui/dialog-wrapper/dialog-wrapper.component";
-import { PopupService } from '../../common-ui/popup/popup.service';
 import { FsItemUtils } from '../fsitem.utils';
 import { FsItem, FsItemType } from '../fsitem.models';
-import { Utils } from '../../../shared/services/utils';
 import { FsItemStateService } from '../fsItemState.service';
-import { LoaderService } from '../../common-ui/loader/loader.service';
+import { Utils } from '../../../../shared/services/utils';
+import { DialogWrapperComponent } from '../../../common-ui/dialog-wrapper/dialog-wrapper.component';
+import { LoaderService } from '../../../common-ui/loader/loader.service';
+import { PopupService } from '../../../common-ui/popup/popup.service';
 
 @Component({
   selector: 'app-fs-item-create-dialog',

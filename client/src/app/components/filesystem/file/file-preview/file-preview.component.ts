@@ -6,7 +6,7 @@ import { TreeComponent } from "../tree/tree.component";
 import { CommonModule } from '@angular/common';
 import { FsItemUtils } from '../fsitem.utils';
 import { FsItemNamePipe } from "../fsitem.pipes";
-import { Utils } from '../../../shared/services/utils';
+import { Utils } from '../../../../shared/services/utils';
 
 @Component({
   selector: 'app-file-preview',

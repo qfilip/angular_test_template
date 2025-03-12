@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { TrackerComponent } from "../../components/filesystem/tracker/tracker.component";
-import { TreeComponent } from "../../components/filesystem/tree/tree.component";
-import { FsToolbarComponent } from "../../components/filesystem/files/fs-toolbar/fs-toolbar.component";
-import { DirsAndDocs, FsItem } from '../../components/filesystem/fsitem.models';
-import { FsItemStateService } from '../../components/filesystem/fsItemState.service';
 import { filter, Observable, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { FsItemUtils } from '../../components/filesystem/fsitem.utils';
-import { FilePreviewComponent } from "../../components/filesystem/file-preview/file-preview.component";
+import { TreeComponent } from '../../components/filesystem/file/tree/tree.component';
+import { TrackerComponent } from '../../components/filesystem/branch/tracker/tracker.component';
+import { FilePreviewComponent } from '../../components/filesystem/file/file-preview/file-preview.component';
+import { FsToolbarComponent } from '../../components/filesystem/file/fs-toolbar/fs-toolbar.component';
+import { FsItem, DirsAndDocs } from '../../components/filesystem/file/fsitem.models';
+import { FsItemUtils } from '../../components/filesystem/file/fsitem.utils';
+import { FsItemStateService } from '../../components/filesystem/file/fsItemState.service';
 
 @Component({
   selector: 'app-filesystem',

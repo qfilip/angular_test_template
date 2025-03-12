@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BaseApiService } from "../../../shared/services/base-api.service";
-import { Branch } from "./fsitem.models";
+import { Branch } from "../file/fsitem.models";
 
 @Injectable({
     providedIn: 'root'
