@@ -47,8 +47,9 @@ export class FsItemUtils {
         }
 
         return sorted.reduce((root, ev) => {
+            const clonedEv = Utils.deepClone(ev);
             this.doOnEvent(
-                ev,
+                clonedEv,
                 e => onCreated(e, root),
                 e => onUpdated(e, root),
                 e => onDeleted(e, root));

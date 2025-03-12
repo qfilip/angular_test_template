@@ -19,7 +19,7 @@ export class FilePreviewComponent {
   private fsItemStateService = inject(FsItemStateService);
   private fsBranchStateService = inject(FsBranchStateService);
   
-  private $item = signal<FsItem | null>(null);
+  private _$item = signal<FsItem | null>(null);
   private _$canEdit = signal<boolean>(false);
   private _$preview = signal<{ previewDoc: boolean, content: string, dirsAndDocs: DirsAndDocs } | null>(null, { equal: _ => false});
   
@@ -28,15 +28,16 @@ export class FilePreviewComponent {
 
    constructor() {
     effect(() => {
-      const item = this.$item();
+      const selected = this.fsItemStateService.$selected();
       const root = this.fsItemStateService.$root();
       
-      if(!item || !root) return;
+      if(!selected || !root) return;
 
-      const dds = FsItemUtils.getDirsAndDocs(item, root);
+      this._$item.set(selected);
+      const dds = FsItemUtils.getDirsAndDocs(selected, root);
       this._$preview.set({
-        previewDoc: item.type === 'document',
-        content: (item as FsDocument).content,
+        previewDoc: selected.type === 'document',
+        content: (selected as FsDocument).content,
         dirsAndDocs: dds
       });
     })
@@ -47,12 +48,12 @@ export class FilePreviewComponent {
   }
 
   onFileContentChange(content: string) {
-    const itemContent = (this.$item() as FsDocument).content;
+    const itemContent = (this._$item() as FsDocument).content;
     this._$canEdit.set(content !== itemContent);
   }
 
   saveChanges() {
-    const clone = Utils.deepClone(this.$item()) as FsDocument;
+    const clone = Utils.deepClone(this._$item()) as FsDocument;
     const newContent = this.docContent.nativeElement.value;
 
     clone.content = newContent;

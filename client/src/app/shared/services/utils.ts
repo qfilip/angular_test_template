@@ -15,7 +15,7 @@ export class Utils {
         })
     }
 
-    static deepClone(x: any) {
+    static deepClone<T>(x: T) {
         if(typeof x !== 'object' || x === null) return x;
     
         const clone: any = Array.isArray(x) ? [] : {};
@@ -25,7 +25,7 @@ export class Utils {
           clone[key] = this.deepClone(value);
         }
     
-        return clone;
+        return clone as T;
     }
 
     static timeSort = (a: Date, b: Date) => 
