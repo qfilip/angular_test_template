@@ -45,6 +45,7 @@ export class TreeComponent {
       const item = this.$item()!;
 
       if(expanded.includes(item.path)) {
+        console.log('setting to expand: ', item);
         this._$open.set(true);
       }
     });

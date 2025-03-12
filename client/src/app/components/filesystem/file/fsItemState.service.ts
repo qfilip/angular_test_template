@@ -20,8 +20,8 @@ export class FsItemStateService {
 
     constructor() {
         effect(() => {
-            const branch = this.fsBranchStateService.selectedBranch$();
-            const uncommited = this.fsBranchStateService.uncommited$();
+            const branch = this.fsBranchStateService.$selectedBranch();
+            const uncommited = this.fsBranchStateService.$uncommited();
 
             if(!branch) return;
             const commited = branch!.commits.map(x => x.events).flat();

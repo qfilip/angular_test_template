@@ -21,38 +21,33 @@ export class TrackerComponent implements OnInit {
   private dialogService = inject(DialogService);
   private branchService = inject(FsBranchStateService);
 
-  private $branches = signal<Branch[]>([]);
   
-  branches$ = signal<Branch[]>([]);
-  selectedBranch$ = signal<Branch | null>(null);
-  uncommited$ = signal<FsItemEvent[]>([]);
+  private _$branches = signal<Branch[]>([]);
+  private _$selectedBranch = signal<Branch | null>(null);
+  private _$uncommited = signal<FsItemEvent[]>([]);
+
+  $branches = this._$branches.asReadonly();
+  $selectedBranch = this._$selectedBranch.asReadonly();
+  $uncommited = this._$uncommited.asReadonly();
 
   constructor() {
     effect(() => {
-      const x = this.branchService.branches$();
-      this.branches$.set(x);
+      const x = this.branchService.$branches();
+      this._$branches.set(x);
     });
 
     effect(() => {
-      const x = this.branchService.selectedBranch$();
-      this.selectedBranch$.set(x);
+      const x = this.branchService.$selectedBranch();
+      this._$selectedBranch.set(x);
     });
 
     effect(() => {
-      const x = this.branchService.uncommited$();
-      this.uncommited$.set(x);
+      const x = this.branchService.$uncommited();
+      this._$uncommited.set(x);
     });
   }
   ngOnInit(): void {
     this.branchService.loadBranches();
-    
-    // this.branches$ = this.branchService.branches$
-    // .pipe(
-    //   tap(xs => this.$branches.set(xs))
-    // );
-
-    // this.selectedBranch$ = this.branchService.selectedBranch$;
-    // this.uncommited$ = this.branchService.uncommited$;
   }
 
   createBranch(uncommited: FsItemEvent[]) {

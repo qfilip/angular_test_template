@@ -22,7 +22,7 @@ export class FilesystemPage {
   private _$items = signal<DirsAndDocs>({ dirs: [], docs: []}, { equal: _ => false});
   $items = this._$items.asReadonly();
   
-  root$ = computed(() => {
+  $root = computed(() => {
     return this.fsItemStateService.$root();
   });
   

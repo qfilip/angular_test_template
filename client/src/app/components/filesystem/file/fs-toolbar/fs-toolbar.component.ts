@@ -18,11 +18,7 @@ export class FsToolbarComponent {
   
   private fsItemStateService = inject(FsItemStateService);
   
-  $selected = computed(() => {
-    const s = this.fsItemStateService.$selected();
-    console.log('selected', s)
-    return s;
-  });
+  $selected = computed(() => this.fsItemStateService.$selected());
   
   selectRoot() {
     this.fsItemStateService.setSelected(ROOT, true);
