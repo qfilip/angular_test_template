@@ -1,3 +1,4 @@
+@let root = root$ | async;
 <section>
     <h2>Filesystem tracker</h2>
     <div class="fs-sections">
@@ -9,7 +10,7 @@
         <section class="fs-tree">
             <h3>Tree</h3>
             <hr />
-            @if(root$ | async; as root) {
+            @if(root) {
                 <app-fs-toolbar></app-fs-toolbar>
                 @let items = $items();
                 <ul>

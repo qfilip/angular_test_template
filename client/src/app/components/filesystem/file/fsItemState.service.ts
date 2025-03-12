@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, Observable, Subject, tap } from 'rxjs';
 
 import { FsBranchStateService } from '../branch/fsBranchState.service';
 import { FsItem } from './fsitem.models';
@@ -25,7 +25,7 @@ export class FsItemStateService {
         map(x => {
             const commited = x.branch!.commits.map(x => x.events).flat();
             const events = commited.concat(x.uncommited);
-
+            
             return FsItemUtils.mapRootFromEvents(events);
         }),
         tap(x => this.setSelected(x, true))

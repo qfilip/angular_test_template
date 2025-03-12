@@ -1,10 +1,10 @@
-import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
-import { FsBranchApiService } from "./fsBranchApi.service";
-import { Branch, Commit, FsItemEvent } from "../file/fsitem.models";
-import { LoaderService } from "../../common-ui/loader/loader.service";
-import { PopupService } from "../../common-ui/popup/popup.service";
-import { Utils } from "../../../shared/services/utils";
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+import { Utils } from '../../../shared/services/utils';
+import { PopupService } from '../../common-ui/popup/popup.service';
+import { Branch, Commit, FsItemEvent } from '../file/fsitem.models';
+import { FsBranchApiService } from './fsBranchApi.service';
 
 @Injectable({
     providedIn: 'root'

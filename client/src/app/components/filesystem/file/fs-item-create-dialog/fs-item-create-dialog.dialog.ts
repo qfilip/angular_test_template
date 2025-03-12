@@ -58,6 +58,7 @@ export class FsItemCreateDialog {
   
   close = () => {
     this._$fsType.set(this.types[0]);
+    this.fsItemName.nativeElement.value = '';
     this.wrapper.close();
   }
 }

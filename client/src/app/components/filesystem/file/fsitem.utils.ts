@@ -54,7 +54,7 @@ export class FsItemUtils {
                 e => onDeleted(e, root));
             
             return root;
-        }, ROOT);
+        }, Utils.deepClone(ROOT) as FsItem);
     }
 
     private static getParent(fsi: FsItem, root: FsItem) {
