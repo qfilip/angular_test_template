@@ -71,9 +71,12 @@ export class TrackerComponent implements OnInit {
       `Commit ${numOfChanges} changes?`,
       () => this.branchService.commit()
     );
-    
-
   }
 
-  revertTo = (idx: number) => this.branchService.revertTo(idx + 1);
+  revertTo(idx: number) {
+    this.dialogService.openCheck(
+      'All changes after (including this one) will be lost. Continue?',
+      () => this.branchService.revertTo(idx)
+    );
+  }
 }

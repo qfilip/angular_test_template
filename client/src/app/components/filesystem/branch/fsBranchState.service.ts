@@ -84,7 +84,10 @@ export class FsBranchStateService {
 
     revertTo(index: number) {
         const uncommited = this._$uncommited();
-        const next = uncommited.slice(0, index);
-        this._$uncommited.set(next);
+        const reverted = [];
+        for(let i = 0; i < index; i++) {
+            reverted.push(uncommited[i]);
+        }
+        this._$uncommited.set(reverted);
     }
 }

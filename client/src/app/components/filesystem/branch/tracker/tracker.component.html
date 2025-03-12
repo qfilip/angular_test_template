@@ -40,9 +40,7 @@
                         <span>
                             {{ item | fsItemEvent }}
                         </span>
-                        @if($index !== uncommited!.length - 1) {
-                            <button (click)="revertTo($index)">revert to this</button>
-                        }
+                        <button (click)="revertTo($index)">Revert</button>
                     </li>
                 }
             </ul>
