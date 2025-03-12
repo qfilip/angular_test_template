@@ -19,3 +19,15 @@ h2 {
         flex: 2;
     }
 }
+
+@media screen and (max-width: 1200px) {
+    .fs-sections {
+        flex-flow: column;
+        padding: 0rem var(--rem);
+        
+        & section {
+            width: 100%;
+            max-height: none;
+        }
+    }
+  }
