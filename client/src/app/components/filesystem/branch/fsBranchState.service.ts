@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { Utils } from '../../../shared/services/utils';
@@ -13,46 +13,47 @@ export class FsBranchStateService {
     private popupService = inject(PopupService);
     private apiService = inject(FsBranchApiService);
     
-    private _branches$ = new BehaviorSubject<Branch[]>([]);
-    private _selectedBranch$ = new BehaviorSubject<Branch | null>(null);
-    private _uncommited$ = new BehaviorSubject<FsItemEvent[]>([]);
+    private _branches$ = signal<Branch[]>([], { equal: _ => false});
+    private _selectedBranch$ = signal<Branch | null>(null, { equal: _ => false});
+    private _uncommited$ = signal<FsItemEvent[]>([], { equal: _ => false});
 
-    branches$ = this._branches$.asObservable();
-    selectedBranch$ = this._selectedBranch$.asObservable();
-    uncommited$ = this._uncommited$.asObservable();
+    branches$ = this._branches$.asReadonly();
+    selectedBranch$ = this._selectedBranch$.asReadonly();
+    uncommited$ = this._uncommited$.asReadonly();
 
     loadBranches() {
         this.apiService.getAll()
         .subscribe({ next: xs => {
             if(xs.length === 0) return;
 
-            this._branches$.next(xs);
-            this._selectedBranch$.next(xs[0]);
+            console.log('setting branch')
+            this._branches$.set(xs);
+            this._selectedBranch$.set(xs[0]);
         }});
     }
 
     createBranch(b: Branch) {
         this.apiService.post(b)
         .subscribe({ next: x => {
-            const xs = this._branches$.getValue().concat(x);
-            this._branches$.next(xs);
-            this._selectedBranch$.next(x);
+            const xs = this._branches$().concat(x);
+            this._branches$.set(xs);
+            this._selectedBranch$.set(x);
         }});
     }
 
     addEvent(event: FsItemEvent) {
-        const current = this._uncommited$.getValue();
-        this._uncommited$.next(current.concat(event));
+        const current = this._uncommited$()
+        this._uncommited$.set(current.concat(event));
     }
 
     commit() {
-        const events = this._uncommited$.getValue();
+        const events = this._uncommited$();
         if(events.length === 0) {
             this.popupService.info('No changes present. Nothing to commit.');
             return;
         }
 
-        const branch = this._selectedBranch$.getValue();
+        const branch = this._selectedBranch$();
         if(!branch) {
             this.popupService.warn('Branch must be selected before commiting changes');
             return;
@@ -70,14 +71,13 @@ export class FsBranchStateService {
 
         this.apiService.put(clone).subscribe({
             next: b => {
-                const xs = this._branches$
-                    .getValue()
+                const xs = this._branches$()
                     .filter(x => x.id !== b.id)
                     .concat(b);
 
-                this._branches$.next(xs);
-                this._uncommited$.next([]);
-                this._selectedBranch$.next(b);
+                this._branches$.set(xs);
+                this._uncommited$.set([]);
+                this._selectedBranch$.set(b);
                 this.popupService.info('Changes commited.');
             }
         });
@@ -85,8 +85,8 @@ export class FsBranchStateService {
     }
 
     revertTo(index: number) {
-        const uncommited = this._uncommited$.getValue();
+        const uncommited = this._uncommited$();
         const next = uncommited.slice(0, index);
-        this._uncommited$.next(next);
+        this._uncommited$.set(next);
     }
 }

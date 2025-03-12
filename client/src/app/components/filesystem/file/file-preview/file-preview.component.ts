@@ -1,12 +1,12 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { FsItemStateService } from '../fsItemState.service';
-import { BehaviorSubject, filter, map, Observable, switchMap, tap } from 'rxjs';
-import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
 import { CommonModule } from '@angular/common';
-import { FsItemUtils } from '../fsitem.utils';
-import { FsItemNamePipe } from "../fsitem.pipes";
+import { Component, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
+
 import { Utils } from '../../../../shared/services/utils';
 import { FsBranchStateService } from '../../branch/fsBranchState.service';
+import { DirsAndDocs, FsDocument, FsItem } from '../fsitem.models';
+import { FsItemNamePipe } from '../fsitem.pipes';
+import { FsItemUtils } from '../fsitem.utils';
+import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
   selector: 'app-file-preview',
@@ -14,53 +14,45 @@ import { FsBranchStateService } from '../../branch/fsBranchState.service';
   templateUrl: './file-preview.component.html',
   styleUrl: './file-preview.component.css'
 })
-export class FilePreviewComponent implements OnInit {
+export class FilePreviewComponent {
   @ViewChild('docContent') private docContent!: ElementRef<HTMLTextAreaElement>;
   private fsItemStateService = inject(FsItemStateService);
   private fsBranchStateService = inject(FsBranchStateService);
   
-  private item!: FsItem;
+  private $item = signal<FsItem | null>(null);
   private _$canEdit = signal<boolean>(false);
+  private _$preview = signal<{ previewDoc: boolean, content: string, dirsAndDocs: DirsAndDocs } | null>(null, { equal: _ => false});
   
   $canEdit = this._$canEdit.asReadonly();
-  preview$!: Observable<{
-    previewDoc: boolean,
-    content: string, 
-    dirsAndDocs: DirsAndDocs
-   }>;
+  $preview = this._$preview.asReadonly();
 
-  ngOnInit(): void {
-    this.preview$ = this.fsItemStateService.selected$
-      .pipe(
-        filter(x => !!x),
-        tap(x => {
-          this.item = x;
-          this._$canEdit.set(false);
-        }),
-        switchMap(_ => this.fsItemStateService.root$),
-        map(x => {
-          const previewDoc = this.item.type === 'document';
-          const dirsAndDocs = FsItemUtils.getDirsAndDocs(this.item, x!);
-          return {
-            previewDoc: previewDoc,
-            content: (this.item as FsDocument).content,
-            dirsAndDocs: dirsAndDocs
-          };
-        })
-      );
-  }
+   constructor() {
+    effect(() => {
+      const item = this.$item();
+      const root = this.fsItemStateService.$root();
+      
+      if(!item || !root) return;
+
+      const dds = FsItemUtils.getDirsAndDocs(item, root);
+      this._$preview.set({
+        previewDoc: item.type === 'document',
+        content: (item as FsDocument).content,
+        dirsAndDocs: dds
+      });
+    })
+   }
 
   setSelected(x: FsItem) {
     this.fsItemStateService.setSelected(x, true);
   }
 
   onFileContentChange(content: string) {
-    const itemContent = (this.item as FsDocument).content;
+    const itemContent = (this.$item() as FsDocument).content;
     this._$canEdit.set(content !== itemContent);
   }
 
   saveChanges() {
-    const clone = Utils.deepClone(this.item) as FsDocument;
+    const clone = Utils.deepClone(this.$item()) as FsDocument;
     const newContent = this.docContent.nativeElement.value;
 
     clone.content = newContent;

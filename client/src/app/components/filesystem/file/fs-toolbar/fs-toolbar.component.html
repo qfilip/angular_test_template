@@ -1,5 +1,5 @@
 <app-fs-item-create-dialog #createDialog></app-fs-item-create-dialog>
-@let selected = selected$ | async;
+@let selected = $selected();
 @if(selected) {
     <div>
         <span>{{ selected.path | fsItemName }}</span>

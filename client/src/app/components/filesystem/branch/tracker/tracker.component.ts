@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { FsBranchStateService } from '../fsBranchState.service';
 import { CommonModule } from '@angular/common';
@@ -23,20 +23,36 @@ export class TrackerComponent implements OnInit {
 
   private $branches = signal<Branch[]>([]);
   
-  branches$!: Observable<Branch[]>;
-  selectedBranch$!: Observable<Branch | null>;
-  uncommited$!: Observable<FsItemEvent[]>;
+  branches$ = signal<Branch[]>([]);
+  selectedBranch$ = signal<Branch | null>(null);
+  uncommited$ = signal<FsItemEvent[]>([]);
 
+  constructor() {
+    effect(() => {
+      const x = this.branchService.branches$();
+      this.branches$.set(x);
+    });
+
+    effect(() => {
+      const x = this.branchService.selectedBranch$();
+      this.selectedBranch$.set(x);
+    });
+
+    effect(() => {
+      const x = this.branchService.uncommited$();
+      this.uncommited$.set(x);
+    });
+  }
   ngOnInit(): void {
     this.branchService.loadBranches();
     
-    this.branches$ = this.branchService.branches$
-    .pipe(
-      tap(xs => this.$branches.set(xs))
-    );
+    // this.branches$ = this.branchService.branches$
+    // .pipe(
+    //   tap(xs => this.$branches.set(xs))
+    // );
 
-    this.selectedBranch$ = this.branchService.selectedBranch$;
-    this.uncommited$ = this.branchService.uncommited$;
+    // this.selectedBranch$ = this.branchService.selectedBranch$;
+    // this.uncommited$ = this.branchService.uncommited$;
   }
 
   createBranch(uncommited: FsItemEvent[]) {

@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, distinctUntilChanged, filter, map, Observable, Subject, tap } from 'rxjs';
+import { effect, inject, Injectable, signal } from '@angular/core';
 
 import { FsBranchStateService } from '../branch/fsBranchState.service';
 import { FsItem } from './fsitem.models';
@@ -11,31 +10,35 @@ import { FsItemUtils } from './fsitem.utils';
 export class FsItemStateService {
     private fsBranchStateService = inject(FsBranchStateService);
 
-    private _selected$ = new BehaviorSubject<FsItem | null>(null);
-    private _expanded$ = new Subject<string[]>();
+    private _$selected = signal<FsItem | null>(null, { equal: _ => false });
+    private _$expanded = signal<string[]>([], { equal: _ => false});
+    private _$root = signal<FsItem | null>(null, { equal: _ => false });
 
-    selected$ = this._selected$.asObservable();
-    expanded$ = this._expanded$.asObservable();
+    $selected = this._$selected.asReadonly();
+    $expanded = this._$expanded.asReadonly();
+    $root = this._$root.asReadonly();
 
-    root$: Observable<FsItem | null> = combineLatest({
-        branch: this.fsBranchStateService.selectedBranch$,
-        uncommited: this.fsBranchStateService.uncommited$
-    }).pipe(
-        filter(x => !!x.branch),
-        map(x => {
-            const commited = x.branch!.commits.map(x => x.events).flat();
-            const events = commited.concat(x.uncommited);
+    constructor() {
+        effect(() => {
+            const branch = this.fsBranchStateService.selectedBranch$();
+            const uncommited = this.fsBranchStateService.uncommited$();
 
-            return FsItemUtils.mapRootFromEvents(events);
-        }),
-        tap(x => this.setSelected(x, true))
-    );
+            if(!branch) return;
+            const commited = branch!.commits.map(x => x.events).flat();
+            const events = commited.concat(uncommited);
+            
+            const root = FsItemUtils.mapRootFromEvents(events);
+            this._$root.set(root);
+            this.setSelected(root, false);
+        });
+    }
 
     setSelected(item: FsItem, expand: boolean) {
-        this._selected$.next(item);
+        this._$selected.set(item);
         const paths = FsItemUtils.findAllPaths(item);
+        
         if(expand) {
-            this._expanded$.next(paths);
+            this._$expanded.set(paths);
         }
     }
 }

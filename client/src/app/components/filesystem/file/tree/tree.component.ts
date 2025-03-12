@@ -1,10 +1,11 @@
-import { Component, inject, Input, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
-import { FsItemUtils } from '../fsitem.utils';
-import { DirsAndDocs, FsItem } from '../fsitem.models';
-import { FsItemStateService } from '../fsItemState.service';
-import { filter, Observable, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, effect, inject, Input, signal, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { DirsAndDocs, FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
+import { FsItemUtils } from '../fsitem.utils';
+import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
   selector: 'app-tree',
@@ -12,43 +13,41 @@ import { FsItemNamePipe } from '../fsitem.pipes';
   templateUrl: './tree.component.html',
   styleUrl: './tree.component.css'
 })
-export class TreeComponent implements OnInit, OnDestroy {
+export class TreeComponent {
   @Input({ required: true }) set fsItem(x: FsItem) {
     this._$item.set(x);
   }
   @ViewChild('fsDetails') fsDetails!: HTMLDetailsElement;
   
   private fsItemStateService = inject(FsItemStateService);
+  
   private _$items = signal<DirsAndDocs>({ dirs: [], docs: [] }, {equal: _ => false });
   private _$item = signal<FsItem | null>(null);
-  private _$open = signal<boolean>(false, {equal: _=> false});
-  private unsub = new Subject();
-
-  selected$!: Observable<FsItem>;
+  private _$open = signal<boolean>(false, {equal: _ => false});
 
   $items = this._$items.asReadonly();
   $item = this._$item.asReadonly();
   $open = this._$open.asReadonly();
 
-  ngOnInit(): void {
-    this.fsItemStateService.selected$.pipe(
-      takeUntil(this.unsub),
-      filter(x => x?.id === this.$item()!.id),
-      switchMap(_ => this.fsItemStateService.root$),
-    ).subscribe({
-      next: x =>
-        this._$items.set(FsItemUtils.getDirsAndDocs(this.$item()!, x!))
+  constructor() {
+    effect(() => {
+      const selected = this.fsItemStateService.$selected();
+      const item = this.$item()!;
+
+      if(!selected) return;
+      if(selected.id !== item.id) return;
+
+      this._$items.set(FsItemUtils.getDirsAndDocs(item, selected));
     });
 
-    this.fsItemStateService.expanded$.pipe(
-      takeUntil(this.unsub),
-      filter(x => x.includes(this.$item()!.path)),
-    ).subscribe({ next: _ => this._$open.set(true)});
-  }
+    effect(() => {
+      const expanded = this.fsItemStateService.$expanded();
+      const item = this.$item()!;
 
-  ngOnDestroy(): void {
-    this.unsub.next(0);
-    this.unsub.complete();
+      if(expanded.includes(item.path)) {
+        this._$open.set(true);
+      }
+    });
   }
 
   selectItem = (x: FsItem, expand: boolean) => 

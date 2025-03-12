@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, Signal, signal } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
 
 import { TrackerComponent } from '../../components/filesystem/branch/tracker/tracker.component';
@@ -16,18 +16,23 @@ import { FsItemUtils } from '../../components/filesystem/file/fsitem.utils';
   templateUrl: './filesystem.page.html',
   styleUrl: './filesystem.page.css'
 })
-export class FilesystemPage implements OnInit {
+export class FilesystemPage {
   private fsItemStateService = inject(FsItemStateService);
   
-  root$!: Observable<FsItem>;
   private _$items = signal<DirsAndDocs>({ dirs: [], docs: []}, { equal: _ => false});
   $items = this._$items.asReadonly();
   
-  ngOnInit() {
-    this.root$ = this.fsItemStateService.root$
-      .pipe(
-        filter(x => !!x),
-        tap(x => this._$items.set(FsItemUtils.getDirsAndDocs(x, x)))
-      );
+  root$ = computed(() => {
+    return this.fsItemStateService.$root();
+  });
+  
+  constructor() {
+    effect(() => {
+      const root = this.fsItemStateService.$root();
+      if(!!root) {
+        const dds = FsItemUtils.getDirsAndDocs(root, root)
+        this._$items.set(dds);
+      }
+    })
   }
 }

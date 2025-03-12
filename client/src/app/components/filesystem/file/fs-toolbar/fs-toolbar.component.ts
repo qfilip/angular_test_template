@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { firstValueFrom, Observable, tap } from 'rxjs';
+import { Component, computed, inject, ViewChild } from '@angular/core';
 
-import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { ROOT } from '../../fsConstants';
+import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
 import { FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
 import { FsItemStateService } from '../fsItemState.service';
@@ -14,24 +13,23 @@ import { FsItemStateService } from '../fsItemState.service';
   templateUrl: './fs-toolbar.component.html',
   styleUrl: './fs-toolbar.component.css'
 })
-export class FsToolbarComponent implements OnInit {
+export class FsToolbarComponent {
   @ViewChild('createDialog') private createDialog!: FsItemCreateDialog;
   
   private fsItemStateService = inject(FsItemStateService);
   
-  selected$!: Observable<FsItem | null>;
+  $selected = computed(() => {
+    const s = this.fsItemStateService.$selected();
+    console.log('selected', s)
+    return s;
+  });
   
-  ngOnInit(): void {
-    this.selected$ = this.fsItemStateService.selected$;
-  }
-
-
   selectRoot() {
     this.fsItemStateService.setSelected(ROOT, true);
   }
 
   async openCreateDialog(fsi: FsItem) {
-    const root = await firstValueFrom(this.fsItemStateService.root$);
+    const root = this.fsItemStateService.$root();
     this.createDialog.open(fsi, root!);
   }
 }
