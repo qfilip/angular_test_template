@@ -57,7 +57,7 @@ export class FsItemUtils {
         }, Utils.deepClone(ROOT) as FsItem);
     }
 
-    private static getParent(fsi: FsItem, root: FsItem) {
+    static getParent(fsi: FsItem, root: FsItem) {
         const parentPath = this.getPathParts(fsi.path)
             .slice(0, -1)
             .reduce((acc, x) => acc + x, '');

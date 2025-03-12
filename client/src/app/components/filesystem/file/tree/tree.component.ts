@@ -51,8 +51,10 @@ export class TreeComponent {
     });
   }
 
-  selectItem = (x: FsItem, expand: boolean) => 
+  selectItem = (x: FsItem, expand: boolean) => {
+    this._$open.set(expand);
     this.fsItemStateService.setSelected(x, expand);
+  }
   
   selectDir(x: FsItem, ev: Event) {
     const tev = ev as ToggleEvent;

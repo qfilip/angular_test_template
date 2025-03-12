@@ -1,8 +1,9 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 
 import { FsBranchStateService } from '../branch/fsBranchState.service';
-import { FsItem } from './fsitem.models';
+import { FsItem, FsItemEvent } from './fsitem.models';
 import { FsItemUtils } from './fsitem.utils';
+import { ROOT } from '../fsConstants';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +30,7 @@ export class FsItemStateService {
             
             const root = FsItemUtils.mapRootFromEvents(events);
             this._$root.set(root);
-            this.setSelected(root, false);
+            this.toggleDirectory(events[events.length - 1], root);
         });
     }
 
@@ -40,5 +41,19 @@ export class FsItemStateService {
         if(expand) {
             this._$expanded.set(paths);
         }
+    }
+
+    private toggleDirectory(lastEvent: FsItemEvent, root: FsItem) {
+        FsItemUtils.doOnEvent(
+            lastEvent,
+            e => {
+                if(e.created.id === ROOT.id) return;
+
+                const parent = FsItemUtils.getParent(e.created, root);
+                this.setSelected(parent!, true);
+            },
+            _ => {},
+            _ => {}
+        );
     }
 }
