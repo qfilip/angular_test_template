@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { BaseApiService } from "../../shared/services/base-api.service";
 import { FsItem } from "./fsitem.models";
-import { ROOT } from "./fsConstants";
+import { BaseApiService } from "../../../shared/services/base-api.service";
+import { ROOT } from "../fsConstants";
 
 @Injectable({
     providedIn: 'root'

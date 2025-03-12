@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BaseApiService } from "../../shared/services/base-api.service";
+import { BaseApiService } from "../../../shared/services/base-api.service";
 import { Branch } from "./fsitem.models";
 
 @Injectable({

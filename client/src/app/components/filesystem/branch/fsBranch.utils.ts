@@ -1,6 +1,6 @@
-import { makeResult, Utils } from "../../shared/services/utils";
-import { ROOT } from "./fsConstants";
-import { Branch, FsItemCreatedEvent } from "./fsitem.models";
+import { makeResult, Utils } from "../../../shared/services/utils";
+import { Branch, FsItemCreatedEvent } from "../file/fsitem.models";
+import { ROOT } from "../fsConstants";
 
 export class FsBranchUtils {
     static createBranch(name: string, allBranches: Branch[]) {
@@ -8,6 +8,7 @@ export class FsBranchUtils {
         
         const now = new Date();
         const createRootDirectoryEvent: FsItemCreatedEvent = {
+            type: 'created',
             created: ROOT,
             createdAt: now
         };

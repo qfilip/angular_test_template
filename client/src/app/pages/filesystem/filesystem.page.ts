@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TrackerComponent } from "../../components/filesystem/tracker/tracker.component";
 import { TreeComponent } from "../../components/filesystem/tree/tree.component";
-import { FsToolbarComponent } from "../../components/filesystem/fs-toolbar/fs-toolbar.component";
+import { FsToolbarComponent } from "../../components/filesystem/files/fs-toolbar/fs-toolbar.component";
 import { DirsAndDocs, FsItem } from '../../components/filesystem/fsitem.models';
 import { FsItemStateService } from '../../components/filesystem/fsItemState.service';
 import { filter, Observable, tap } from 'rxjs';

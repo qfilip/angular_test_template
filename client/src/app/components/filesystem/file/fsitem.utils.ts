@@ -1,31 +1,79 @@
-import { makeResult, Utils } from "../../shared/services/utils";
-import { Branch, DirsAndDocs, FsDirectory, FsDocument, FsItem, FsItemCreatedEvent, FsItemDeletedEvent, FsItemEvent, FsItemType, FsItemUpdatedEvent } from "./fsitem.models";
+import { makeResult, Utils } from '../../../shared/services/utils';
+import { ROOT } from '../fsConstants';
+import {
+    DirsAndDocs,
+    FsDirectory,
+    FsItem,
+    FsItemCreatedEvent,
+    FsItemDeletedEvent,
+    FsItemEvent,
+    FsItemType,
+    FsItemUpdatedEvent,
+} from './fsitem.models';
 
 export class FsItemUtils {
-    static mapRootFromBranch(b: Branch) {
-        const events = b.commits
-            .map(x => x.events)
-            .flat()
-            .sort((a, b) => Utils.timeSort(a.createdAt, b.createdAt));
+    static mapRootFromEvents(events: FsItemEvent[]) {
+        const sorted = events.sort((a, b) => Utils.timeSort(a.createdAt, b.createdAt));
 
-        const onCreated = (ev: FsItemCreatedEvent) => {
+        const onCreated = (ev: FsItemCreatedEvent, root: FsItem) => {
+            if(ev.created.id === ROOT.id) return;
             
+            const parent = this.getParent(ev.created, root);
+            if(!parent) {
+                throw `Parent not found for ${ev.created.id} - ${ev.created.path}`
+            }
+            
+            (parent as FsDirectory).items.push(ev.created);
         }
+
+        const onUpdated = (ev: FsItemUpdatedEvent, root: FsItem) => {
+            let target = this.findChildDir(ev.updated.path, root);
+            if(!target) {
+                throw `FsItem not found for ${ev.updated.id} - ${ev.updated.path}`
+            }
+
+            target = ev.updated;
+        }
+
+        const onDeleted = (ev: FsItemDeletedEvent, root: FsItem) => {
+            const parent = this.getParent(ev.deleted, root);
+            if(!parent) {
+                throw `Parent not found for ${ev.deleted.id} - ${ev.deleted.path}`
+            }
+
+            const dir = (parent as FsDirectory);
+            dir.items = dir.items.filter(x => x.id !== ev.deleted.id);
+        }
+
+        return sorted.reduce((root, ev) => 
+            this.doOnEvent<void>(
+                ev,
+                e => onCreated(e, root),
+                e => onUpdated(e, root),
+                e => onDeleted(e, root)), ROOT);
     }
-    // always start this function from root for fresh data
+
+    private static getParent(fsi: FsItem, root: FsItem) {
+        const parentPath = this.getPathParts(fsi.path)
+            .slice(0, -1)
+            .reduce((acc, x) => acc + x, '');
+        
+        return this.findChildDir(parentPath, root);
+    }
+
     static getDirsAndDocs(item: FsItem, root: FsItem) {
         if(item.type === 'document') {
             const dds: DirsAndDocs = { dirs: [], docs: [] }
             return dds;
         }
         
-        const target = this.findChildDir(item, root);
+        const target = this.findChildDir(item.path, root);
         
-        if(target.length !== 1) {
+        if(!target) {
             throw 'Child directory not found';
         }
 
-        return this.getChildren(target[0]);
+        return this.getChildren(target);
     }
 
     static findChildDoc(targetId: string, root: FsItem): FsItem {
@@ -50,15 +98,17 @@ export class FsItemUtils {
         return children[0];
     }
 
-    private static findChildDir(target: FsItem, root: FsItem): FsItem[] {
-        if(target.id === root.id) {
-            return [root];
+    private static findChildDir(childPath: string, root: FsItem): FsItem | undefined {
+        if(childPath === root.path) {
+            return root;
         }
 
         const children = this.getChildren(root).dirs;
-        const found = children.map(x => this.findChildDir(target, x))
-
-        return found.flat();
+        
+        return children
+            .map(x => this.findChildDir(childPath, x))
+            .filter(x => !!x)
+            .find(x => x.path === childPath);
     }
 
     static createFsItem(root: FsItem, parent: FsItem, name: string, type: FsItemType) {
