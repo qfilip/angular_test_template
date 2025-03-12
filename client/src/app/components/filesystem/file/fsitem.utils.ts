@@ -212,7 +212,7 @@ export class FsItemUtils {
         return dds;
     }
 
-    private static doOnEvent<T>(
+    static doOnEvent<T>(
         ev: FsItemEvent,
         forCreated: (e: FsItemCreatedEvent) => T,
         forUpdated: (e: FsItemUpdatedEvent) => T,

@@ -9,17 +9,8 @@ label {
     }
 }
 
-.action-section {
-    display: flex;
-    align-items: center;
-}
-
 .action-section > div {
     margin: auto;
-}
-
-h4 {
-    text-align: center;
 }
 
 .actions-list {
@@ -30,4 +21,18 @@ h4 {
     & button {
         width: 100%;
     }
+}
+
+.change-list > li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.change-list > li > span {
+    text-wrap: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-width: 12rem;
+    width: 12rem;
 }

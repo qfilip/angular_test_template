@@ -2,7 +2,7 @@
 
 @let branches = branches$ | async;
 @let selectedBranch = selectedBranch$ | async;
-
+@let uncommited = uncommited$ | async;
 <div>
     <section>
         <div>
@@ -17,11 +17,11 @@
         </div>
 
     </section>
-    <section class="action-section">
+    <section>
         <div>
-            <h4>Actions</h4>
+            <h3>Actions</h3>
             <div class="actions-list">
-            @if(uncommited$ | async; as uncommited) {
+            @if(uncommited) {
                 <button (click)="createBranch(uncommited)" class="blue">Create branch</button>
                 <button class="green">Clone branch</button>
                 <button class="orange">Pull</button>
@@ -29,6 +29,24 @@
             }
             </div>
         </div>
+    </section>
+    <section>
+        <h3>Changes</h3>
+        <details>
+            <summary>Uncommited</summary>
+            <ul class="change-list">
+                @for (item of uncommited; track $index) {
+                    <li>
+                        <span>
+                            {{ item | fsItemEvent }}
+                        </span>
+                        @if($index !== uncommited!.length - 1) {
+                            <button>revert to this</button>
+                        }
+                    </li>
+                }
+            </ul>
+        </details>
     </section>
 
 </div>

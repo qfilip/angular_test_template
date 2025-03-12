@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { BranchCreateDialog } from "../branch-create.dialog/branch-create.dialog";
 import { Branch, FsItemEvent } from '../../file/fsitem.models';
 import { PopupService } from '../../../common-ui/popup/popup.service';
+import { FsItemEventPipe } from "../fsEvent.pipe";
 
 @Component({
   selector: 'app-tracker',
-  imports: [CommonModule, BranchCreateDialog],
+  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe],
   templateUrl: './tracker.component.html',
   styleUrl: './tracker.component.css'
 })

@@ -1,27 +1,27 @@
 {
   "todo-events": [],
-  "filesystem": [
+  "branches": [
     {
-      "id": "root",
-      "path": "/",
-      "type": "directory",
-      "items": [
+      "id": "a9267bc4",
+      "name": "master",
+      "commits": [
         {
-          "id": "e2eb8981",
-          "type": "directory",
-          "path": "/mierda/",
-          "content": "",
-          "items": []
-        },
-        {
-          "id": "2b0e4712",
-          "type": "document",
-          "path": "/some_doc/",
-          "content": "",
-          "items": []
+          "id": "ddb2f675",
+          "createdAt": "2025-03-12T12:44:21.766Z",
+          "events": [
+            {
+              "type": "created",
+              "created": {
+                "id": "root",
+                "path": "/",
+                "type": "directory",
+                "items": []
+              },
+              "createdAt": "2025-03-12T12:44:21.766Z"
+            }
+          ]
         }
       ]
     }
-  ],
-  "branches": []
+  ]
 }
