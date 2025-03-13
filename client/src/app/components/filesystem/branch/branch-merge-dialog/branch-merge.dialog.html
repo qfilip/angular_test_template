@@ -1,0 +1,23 @@
+<app-dialog-wrapper #wrapper>
+    <h2 header>Merge</h2>
+
+    <div body>
+        @let target = $target();
+        @if(target) {
+            <div class="srctarg">
+                <span>Merge</span>
+                <select #source (change)="setSource(source.value)">
+                    @for (x of $branches(); track $index) {
+                        <option [value]="x.id">{{ x.name }}</option>
+                    }
+                </select>
+                <span>into</span>
+                <span>{{ target.name }}</span>
+            </div>
+        }
+    </div>
+    
+    <div footer>
+        <button (click)="close()">Close</button>
+    </div>
+</app-dialog-wrapper>

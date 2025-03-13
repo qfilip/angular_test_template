@@ -1,0 +1,9 @@
+.srctarg {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.srctarg > * {
+    margin-right: var(--rem);
+}

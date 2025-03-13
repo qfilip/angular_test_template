@@ -7,16 +7,18 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
 import { FsItemEventPipe } from "../fsEvent.pipe";
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 import { BranchCloneDialog } from "../branch-clone-dialog/branch-clone.dialog";
+import { BranchMergeDialog } from "../branch-merge-dialog/branch-merge.dialog";
 
 @Component({
   selector: 'app-tracker',
-  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog],
+  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog, BranchMergeDialog],
   templateUrl: './tracker.component.html',
   styleUrl: './tracker.component.css'
 })
 export class TrackerComponent implements OnInit {
   @ViewChild('createDialog') createDialog!: BranchCreateDialog;
   @ViewChild('cloneDialog') cloneDialog!: BranchCloneDialog;
+  @ViewChild('mergeDialog') mergeDialog!: BranchMergeDialog;
   
   private popupService = inject(PopupService);
   private dialogService = inject(DialogService);
@@ -61,9 +63,7 @@ export class TrackerComponent implements OnInit {
 
   cloneBranch = () => this.cloneDialog.open();
 
-  pull() {
-    
-  }
+  merge = () => this.mergeDialog.open(); 
 
   commit(numOfChanges: number) {
     this.dialogService.openCheck(

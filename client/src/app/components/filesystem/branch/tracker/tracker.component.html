@@ -1,5 +1,6 @@
 <app-branch-create-dialog #createDialog></app-branch-create-dialog>
 <app-branch-clone-dialog #cloneDialog></app-branch-clone-dialog>
+<app-branch-merge-dialog #mergeDialog></app-branch-merge-dialog>
 
 @let branches = $branches();
 @let selectedBranch = $selectedBranch();
@@ -25,7 +26,7 @@
             @if(uncommited) {
                 <button (click)="createBranch(uncommited)" class="blue">Create branch</button>
                 <button (click)="cloneBranch()" class="green">Clone branch</button>
-                <button class="orange">Pull</button>
+                <button (click)="merge()" class="orange">Merge</button>
                 <button (click)="commit(uncommited.length)" class="red">Commit</button>
             }
             </div>
