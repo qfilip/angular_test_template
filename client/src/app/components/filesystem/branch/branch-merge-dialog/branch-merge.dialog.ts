@@ -31,7 +31,6 @@ export class BranchMergeDialog {
     return branches.filter(x => x.id !== target?.id);
   });
   $diffs = computed(() => {
-    debugger
     const source = this.$source();
     const target = this.$target();
     if(!source || !target) return null;
