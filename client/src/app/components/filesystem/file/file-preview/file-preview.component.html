@@ -4,7 +4,7 @@
 
 @if(preview && item) {
     <div class="actions">
-        <span>{{ item.path | fsItemName }}</span>
+        <span class="ellipsis">{{ item.path | fsItemName }}</span>
         <span>
             <button (click)="rename()" class="orange">Rename</button>
             <button (click)="delete()" class="red">Delete</button>

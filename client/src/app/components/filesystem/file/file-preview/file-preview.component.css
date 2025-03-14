@@ -4,6 +4,10 @@
     margin-bottom: var(--rem);
 }
 
+.ellipsis {
+    max-width: 40%;
+}
+
 textarea {
     resize: none;
 }

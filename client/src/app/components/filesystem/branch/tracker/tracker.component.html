@@ -39,7 +39,7 @@
             <ul class="change-list">
                 @for (item of uncommited; track $index) {
                     <li>
-                        <span>
+                        <span class="ellipsis">
                             {{ item | fsItemEvent }}
                         </span>
                         <button (click)="revertTo($index)">Revert</button>

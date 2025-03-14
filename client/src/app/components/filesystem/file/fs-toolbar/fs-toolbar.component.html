@@ -2,7 +2,7 @@
 @let selected = $selected();
 @if(selected) {
     <div>
-        <span>{{ selected.path }}</span>
+        <span class="ellipsis">{{ selected.path }}</span>
         <div class="actions">
             <button (click)="selectRoot()" class="blue">root</button>
             <button (click)="openCreateDialog(selected)" class="green">+</button>

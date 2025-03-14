@@ -34,13 +34,13 @@ label {
     cursor: default;
 }
 
-.change-list > li > span {
+/* .change-list > li > span {
     text-wrap: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
     max-width: 12rem;
     width: 12rem;
-}
+} */
 
 .change-list > li > button {
     background-color: transparent;
