@@ -40,7 +40,7 @@ summary, li, .clickable {
 }
 
 summary:hover, li:hover, .clickable:hover {
-    background-color: var(--c-green);
+    background-color: var(--c-white-d1);
 }
 
 a:hover {

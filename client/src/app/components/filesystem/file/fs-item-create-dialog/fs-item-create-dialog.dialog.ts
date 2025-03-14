@@ -31,6 +31,11 @@ export class FsItemCreateDialog {
   $fsType = this._$fsType.asReadonly();
 
   open(parent: FsItem, root: FsItem) {
+    if(parent.type === 'document') {
+      this.popupService.warn('Directory cannot be created while document is selected.');
+      return;
+    }
+
     this.parent = parent;
     this.root = root;
     this.wrapper.open();
