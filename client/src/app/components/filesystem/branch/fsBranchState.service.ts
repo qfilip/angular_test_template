@@ -42,6 +42,16 @@ export class FsBranchStateService {
         }});
     }
 
+    selectBranch(branchId: string) {
+        const branch = this.$branches().find(x => x.id === branchId);
+        if(!branch) {
+            this.popupService.error('Branch not found');
+            return;
+        }
+
+        this._$selectedBranch.set(branch);
+    }
+
     addEvent(event: FsItemEvent) {
         const current = this._$uncommitted()
         this._$uncommitted.set(current.concat(event));

@@ -1,13 +1,15 @@
 import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { DialogWrapperComponent } from "../../../common-ui/dialog-wrapper/dialog-wrapper.component";
-import { Branch } from '../../file/fsitem.models';
+import { Branch, Commit } from '../../file/fsitem.models';
 import { FsBranchStateService } from '../fsBranchState.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
 import { tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FsCommitPipe } from "../fsCommit.pipe";
 
 @Component({
   selector: 'app-branch-merge-dialog',
-  imports: [DialogWrapperComponent],
+  imports: [CommonModule, DialogWrapperComponent, FsCommitPipe],
   templateUrl: './branch-merge.dialog.html',
   styleUrl: './branch-merge.dialog.css'
 })
@@ -17,7 +19,7 @@ export class BranchMergeDialog {
   private popup = inject(PopupService);
   private branchService = inject(FsBranchStateService);
   private _$source = signal<Branch | null>(null);
-  private _$diffs = signal<string[]>([]);
+  private _$diffs = signal<{ source?: Commit, target?: Commit }[]>([]);
   
   $uncommitted = computed(() => this.branchService.$uncommitted());
   $target = computed(() => this.branchService.$selectedBranch());
@@ -28,7 +30,32 @@ export class BranchMergeDialog {
     
     return branches.filter(x => x.id !== target?.id);
   });
-  $diffs = this._$diffs.asReadonly();
+  $diffs = computed(() => {
+    debugger
+    const source = this.$source();
+    const target = this.$target();
+    if(!source || !target) return null;
+
+    const diffs: {source?: Commit, target?: Commit }[] = [];
+    const srcLen = source.commits.length;
+    const tgtLen = target.commits.length;
+    const len = srcLen > tgtLen ? srcLen : tgtLen;
+
+    for(let i = 0; i < len; i++) {
+      let scrCommit: Commit | undefined = undefined;
+      let tgtCommit: Commit | undefined = undefined;
+
+      if(srcLen > i)
+        scrCommit = source.commits[i];
+
+      if(tgtLen > i)
+        tgtCommit = target.commits[i];
+
+      diffs.push({ source: scrCommit, target: tgtCommit });
+    }
+
+    return diffs;
+  });
 
   open() {
     if(!this.canOpen()) return;
@@ -36,19 +63,11 @@ export class BranchMergeDialog {
     this.wrapper.open();
   }
 
-  getConflicts() {
-    const src = this.$source()!.commits;
-    const tgt = this.$target()!.commits;
-  }
-
   setSource(sourceId: string) {
     const source = this.$branches().find(x => x.id === sourceId)!;
     this.branchService.loadBranch(source)
       .subscribe({
-        next: x => {
-          console.log(x);
-          this._$source.set(x);
-        }
+        next: x => this._$source.set(x)
       });
   }
 

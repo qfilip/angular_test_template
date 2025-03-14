@@ -27,7 +27,8 @@
     --c-blue-d2: hsl(var(--blueHue), 90%, 34%);
     
     --c-green-l1:hsl(var(--greenHue), 39%, 59%);
-    
+    --c-green-l2:hsl(var(--greenHue), 39%, 69%);
+
     --c-green:hsl(var(--greenHue), 39%, 49%);
     --c-green-t:hsla(var(--greenHue), 39%, 49%, var(--transparency));
     
@@ -40,6 +41,9 @@
     --c-orange-d1:hsl(var(--orangeHue), 100%, 40%);
     --c-orange-d2:hsl(var(--orangeHue), 100%, 30%);
     
+    --c-red-l1: hsl(var(--redHue), 90%, 68%);
+    --c-red-l2: hsl(var(--redHue), 90%, 78%);
+
     --c-red: hsl(var(--redHue), 90%, 58%);
     --c-red-t: hsla(var(--redHue), 90%, 58%, var(--transparency));
     

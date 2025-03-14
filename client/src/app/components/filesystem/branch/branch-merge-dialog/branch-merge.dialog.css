@@ -17,12 +17,20 @@ section {
     width: 100%;
 }
 
-.diff-sections {
+li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-     & section {
-        flex: 1;
-     }
+    div:nth-child(even) { 
+        text-align: right;
+    }
+}
+
+li.commit-same {
+    flex-flow: row;
+    background-color: var(--c-green-l2);
+}
+
+li.commit-diff {
+    flex-flow: column;
+    background-color: var(--c-red-l2);
 }

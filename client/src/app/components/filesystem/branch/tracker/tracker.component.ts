@@ -49,9 +49,12 @@ export class TrackerComponent implements OnInit {
       this._$uncommitted.set(x);
     });
   }
+
   ngOnInit(): void {
     this.branchService.loadBranches();
   }
+
+  setBranch = (branchId: string) => this.branchService.selectBranch(branchId);
 
   createBranch = () => this.createDialog.open(this.$branches());
 
@@ -60,6 +63,11 @@ export class TrackerComponent implements OnInit {
   merge = () => this.mergeDialog.open(); 
 
   commit() {
+    if(!this.$selectedBranch()) {
+      this.popupService.warn('No branch selected');
+      return;
+    }
+
     const numOfChanges = this.$uncommitted().length;
     this.dialogService.openCheck(
       `Commit ${numOfChanges} changes?`,

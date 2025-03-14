@@ -11,7 +11,7 @@
         <div>
             <label>
                 <span>Branch:</span>
-                <select [disabled]="hasChanges">
+                <select #bselect [disabled]="hasChanges" (change)="setBranch(bselect.value)">
                     @for(b of branches; track $index) {
                         <option [selected]="selectedBranch?.id === b.id" [value]="b.id">
                             [{{ b.name }}]&nbsp;

@@ -4,6 +4,7 @@
     <div body>
         @let source = $source();
         @let target = $target();
+        @let diffs = $diffs();
         @if(source && target) {
             <section class="srctarg">
                 <h3>Source</h3>
@@ -15,31 +16,22 @@
                 <span>into</span>
                 <span>{{ target.name }}</span>
             </section>
-
+        }
+        @if(diffs) {
             <section class="diffs">
                 <h3>Diffs</h3>
-                <div class="diff-sections">
-                    <section>
-                        <h4>{{ source.name }} commits</h4>
-                        <ul>
-                            @for (x of source.commits; track $index) {
-                                <li>
-                                    {{ x.id }}
-                                </li>
-                            }
-                        </ul>
-                    </section>
-                    <section>
-                        <h4>{{ target.name }} commits</h4>
-                        <ul>
-                            @for (x of target.commits; track $index) {
-                                <li>
-                                    {{ x.id }}
-                                </li>
-                            }
-                        </ul>
-                    </section>
-                </div>
+                <ul>
+                    @for (x of diffs; track $index) {
+                        <li [ngClass]="x.source?.id === x.target?.id ? 'commit-same' : 'commit-diff'">
+                            <div class="source">
+                                {{ x.source | fsCommit }}
+                            </div>
+                            <div class="target">
+                                {{ x.target | fsCommit }}
+                            </div>
+                        </li>
+                    }
+                </ul>
             </section>
         }
     </div>
