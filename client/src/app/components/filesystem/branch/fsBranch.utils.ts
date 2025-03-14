@@ -51,7 +51,7 @@ export class FsBranchUtils {
             () => name.length === 0 ? 'Name cannot be empty' : null,
             () => name.startsWith('/') ? 'Name cannot start with forward slash' : null,
             () => name.endsWith('/') ? 'Name cannot end with forward slash' : null,
-            () => duplicateNameCheck() ? 'Name already exists in this directory' : null
+            () => duplicateNameCheck() ? 'Branch with the same name already exists' : null
         ];
         
         return validators
