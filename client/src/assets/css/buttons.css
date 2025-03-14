@@ -13,8 +13,14 @@ button, input[type=submit] {
     border-bottom: .1rem solid var(--c1, var(--c-black));
 }
 
+button.opaque {
+    color: var(--c1, var(--c-black));
+    background-color: var(--c2, transparent);
+}
+
 button:hover,
 button:focus,
+button.opaque:hover,
 input[type=submit]:hover,
 input[type=submit]:focus {
     color: var(--c-white);
