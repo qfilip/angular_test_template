@@ -4,10 +4,13 @@
     <ul>
         @for (item of searchResult; track $index) {
             <li>
-                <span class="type">
-                    {{ item.type }}
-                </span>
                 <span class="ellipsis">
+                    @if(item.type === 'directory') {
+                        <i class="dir"></i>
+                    }
+                    @else {
+                        <i class="doc"></i>
+                    }
                     {{ item.path }}
                 </span>
                 <button (click)="select(item)" class="opaque">Select</button>
