@@ -6,13 +6,13 @@ import { FsItemUtils } from '../file/fsitem.utils';
 })
 export class FsItemEventPipe implements PipeTransform {
   transform(value: FsItemEvent): string {
-    const { path, type } = FsItemUtils.doOnEvent<{path: string, type: string}>(
+    const { path, type, icon } = FsItemUtils.doOnEvent<{path: string, type: string, icon: string}>(
         value,
-        e => ({ path: e.created.path, type: e.created.type }),
-        e => ({ path: e.updated.path, type: e.updated.type }),
-        e => ({ path: e.deleted.path, type: e.deleted.type })
+        e => ({ path: e.created.path, type: e.created.type === 'directory' ? '📁' : '📃', icon: '➕' }),
+        e => ({ path: e.updated.path, type: e.updated.type === 'directory' ? '📁' : '📃', icon: '🎭' }),
+        e => ({ path: e.deleted.path, type: e.deleted.type === 'directory' ? '📁' : '📃', icon: '💀' })
     );
     
-    return `${value.type} ${type} ${path}`;
+    return `${icon} ${type} ${path}`;
   }
 }

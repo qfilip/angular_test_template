@@ -18,6 +18,10 @@ i.skull::before {
     content: '💀';
 }
 
+i.change::before {
+    content: '🎭';
+}
+
 i.search::before {
     content: '🔍';
 }
