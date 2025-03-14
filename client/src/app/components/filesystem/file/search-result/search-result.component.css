@@ -1,0 +1,14 @@
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+    
+    & .type, button {
+        flex: 1;
+    }
+
+    & .ellipsis {
+        flex: 5;
+    }
+}

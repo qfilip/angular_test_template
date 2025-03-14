@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, Input, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, inject, Input, signal, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DirsAndDocs, FsItem } from '../fsitem.models';
@@ -29,6 +29,8 @@ export class TreeComponent {
   $item = this._$item.asReadonly();
   $open = this._$open.asReadonly();
 
+  $searchActive = computed(() => this.fsItemStateService.$searchActive());
+  
   constructor() {
     effect(() => {
       const selected = this.fsItemStateService.$selected();

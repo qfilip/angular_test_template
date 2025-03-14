@@ -9,10 +9,11 @@ import { DirsAndDocs, FsItem } from '../../components/filesystem/file/fsitem.mod
 import { FsItemStateService } from '../../components/filesystem/file/fsItemState.service';
 import { TreeComponent } from '../../components/filesystem/file/tree/tree.component';
 import { FsItemUtils } from '../../components/filesystem/file/fsitem.utils';
+import { SearchResultComponent } from "../../components/filesystem/file/search-result/search-result.component";
 
 @Component({
   selector: 'app-filesystem',
-  imports: [CommonModule, TrackerComponent, TreeComponent, FsToolbarComponent, FilePreviewComponent],
+  imports: [CommonModule, TrackerComponent, TreeComponent, FsToolbarComponent, FilePreviewComponent, SearchResultComponent],
   templateUrl: './filesystem.page.html',
   styleUrl: './filesystem.page.css'
 })
@@ -21,7 +22,8 @@ export class FilesystemPage {
   
   private _$items = signal<DirsAndDocs>({ dirs: [], docs: []}, { equal: _ => false});
   $items = this._$items.asReadonly();
-  
+  $searchActive = computed(() => this.fsItemStateService.$searchActive());
+
   $root = computed(() => {
     return this.fsItemStateService.$root();
   });

@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 
 import { FsBranchStateService } from '../branch/fsBranchState.service';
-import { FsItem, FsItemEvent } from './fsitem.models';
+import { FsDirectory, FsItem, FsItemEvent } from './fsitem.models';
 import { FsItemUtils } from './fsitem.utils';
 import { ROOT } from '../fsConstants';
 
@@ -15,10 +15,14 @@ export class FsItemStateService {
     private _$selected = signal<FsItem | null>(null, { equal: _ => false });
     private _$expanded = signal<string[]>([], { equal: _ => false});
     private _$root = signal<FsItem | null>(null, { equal: _ => false });
+    private _$searchActive = signal<boolean>(false);
+    private _$searchResult = signal<FsItem[] | null>(null);
 
     $selected = this._$selected.asReadonly();
     $expanded = this._$expanded.asReadonly();
     $root = this._$root.asReadonly();
+    $searchActive = this._$searchActive.asReadonly();
+    $searchResult = this._$searchResult.asReadonly();
 
     constructor() {
         effect(() => {
@@ -52,6 +56,21 @@ export class FsItemStateService {
         if(expand) {
             this._$expanded.set(paths);
         }
+    }
+
+    toggleSearch() {
+        const searchActive = this._$searchActive();
+        
+        if(!searchActive)
+            this._$searchResult.set(null);
+        
+        this._$searchActive.update(x => !x);
+    }
+
+    search(query: string) {
+        const root = this.$root()! as FsDirectory;
+        const xs = FsItemUtils.findItems(query, root);
+        this._$searchResult.set(xs);
     }
 
     private toggleDirectory(lastEvent: FsItemEvent, root: FsItem) {

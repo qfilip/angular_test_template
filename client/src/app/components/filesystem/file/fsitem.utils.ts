@@ -251,6 +251,18 @@ export class FsItemUtils {
         return dds;
     }
 
+    static findItems(query: string, parent: FsDirectory): FsItem[] {
+        const dds = this.getChildren(parent as FsItem);
+        const parentRes = dds.dirs.concat(dds.docs)
+            .filter(x => x.path.includes(query));
+
+        const childRes = dds.dirs
+            .map(x => this.findItems(query, x as FsDirectory))
+            .flat();
+
+        return parentRes.concat(childRes);
+    }
+
     static doOnEvent<T>(
         ev: FsItemEvent,
         forCreated: (e: FsItemCreatedEvent) => T,

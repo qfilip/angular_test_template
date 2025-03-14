@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { ROOT } from '../../fsConstants';
 import { FsItemCreateDialog } from '../fs-item-create-dialog/fs-item-create-dialog.dialog';
@@ -9,6 +9,7 @@ import { FsItemUtils } from '../fsitem.utils';
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 import { FsBranchStateService } from '../../branch/fsBranchState.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-fs-toolbar',
@@ -16,7 +17,7 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
   templateUrl: './fs-toolbar.component.html',
   styleUrl: './fs-toolbar.component.css'
 })
-export class FsToolbarComponent {
+export class FsToolbarComponent implements OnInit, OnDestroy {
   @ViewChild('createDialog') private createDialog!: FsItemCreateDialog;
   
   private popup = inject(PopupService);
@@ -25,10 +26,33 @@ export class FsToolbarComponent {
   private fsBranchStateService = inject(FsBranchStateService);
   
   $selected = computed(() => this.fsItemStateService.$selected());
-  
+  $searchActive = computed(() => this.fsItemStateService.$searchActive());
+
+  private unsub$ = new Subject();
+  private searchQuery$ = new Subject<string>();
+
+  ngOnInit() {
+    this.searchQuery$.pipe(
+      takeUntil(this.unsub$),
+      debounceTime(200),
+      distinctUntilChanged(),
+    ).subscribe({
+      next: x => this.fsItemStateService.search(x)
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsub$.next(1);
+    this.unsub$.complete();
+  }
+
   selectRoot() {
     this.fsItemStateService.setSelected(ROOT, true);
   }
+
+  toggleSearch = () => this.fsItemStateService.toggleSearch();
+
+  setQuery = (q: string) => this.searchQuery$.next(q); 
 
   async openCreateDialog(fsi: FsItem) {
     const root = this.fsItemStateService.$root();

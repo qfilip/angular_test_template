@@ -1,0 +1,20 @@
+@let searchResult = $searchResult();
+@if(!searchResult) {}
+@else if(searchResult.length > 0) {
+    <ul>
+        @for (item of searchResult; track $index) {
+            <li>
+                <span class="type">
+                    {{ item.type }}
+                </span>
+                <span class="ellipsis">
+                    {{ item.path }}
+                </span>
+                <button (click)="select(item)">Select</button>
+            </li>
+        }
+    </ul>
+}
+@else {
+    <p>😥</p>
+}

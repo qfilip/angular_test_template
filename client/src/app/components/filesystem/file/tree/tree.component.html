@@ -1,5 +1,7 @@
 @let item = $item();
-@if(item) {
+@let searchActive = $searchActive();
+
+@if(item && !searchActive) {
     @if(item.type === 'directory') {
         <details [open]="$open()" #fsDetails (toggle)="selectDir(item, $event)">
             <summary class="ellipsis">{{ item.path | fsItemName }}</summary>

@@ -8,23 +8,32 @@
             <app-tracker></app-tracker>
         </section>
         <section class="fs-tree">
-            <h3>Tree</h3>
+            @let searchActive = $searchActive();
+            <h3>
+                @let header = searchActive ? 'Search Tree' : 'Tree';
+                {{ header }}
+            </h3>
             <hr />
             @if(root) {
                 <app-fs-toolbar></app-fs-toolbar>
-                @let items = $items();
-                <ul>
-                    @for (item of items.dirs; track $index) {
-                        <li>
-                            <app-tree [fsItem]="item"></app-tree>
-                        </li>
-                    }
-                    @for (item of items.docs; track $index) {
-                        <li>
-                            <app-tree [fsItem]="item"></app-tree>
-                        </li>
-                    }
-                </ul>
+                @if(searchActive) {
+                    <app-search-result></app-search-result>
+                }
+                @else {
+                    @let items = $items();
+                    <ul>
+                        @for (item of items.dirs; track $index) {
+                            <li>
+                                <app-tree [fsItem]="item"></app-tree>
+                            </li>
+                        }
+                        @for (item of items.docs; track $index) {
+                            <li>
+                                <app-tree [fsItem]="item"></app-tree>
+                            </li>
+                        }
+                    </ul>
+                }
             }
         </section>
         <section>
