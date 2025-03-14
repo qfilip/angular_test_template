@@ -33,7 +33,7 @@ export class FsBranchUtils {
         
         const branch: Branch = {
             id: Utils.makeId(),
-            name: Utils.deepClone(original.name),
+            name: name,
             commits: Utils.deepClone(original.commits)
         };
 
