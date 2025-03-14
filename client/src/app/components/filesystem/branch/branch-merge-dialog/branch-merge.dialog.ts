@@ -18,7 +18,7 @@ export class BranchMergeDialog {
   private _$source = signal<Branch | null>(null);
   private _$diffs = signal<string[]>([]);
   
-  $uncommited = computed(() => this.branchService.$uncommited());
+  $uncommitted = computed(() => this.branchService.$uncommitted());
   $target = computed(() => this.branchService.$selectedBranch());
   $source = this._$source.asReadonly();
   $branches = computed(() => {
@@ -48,7 +48,7 @@ export class BranchMergeDialog {
   private canOpen() {
     const enoughBranches = this.$branches().length > 0;
     const targetSelected = !!this.$target();
-    const noChanges = this.$uncommited.length === 0;
+    const noChanges = this.$uncommitted.length === 0;
     
     if(!enoughBranches)
       this.popup.warn(`${this.$branches().length} branches available. Cannot perform merge`);
@@ -57,7 +57,7 @@ export class BranchMergeDialog {
       this.popup.warn(`Target branch not selected. Cannot perform merge`);
 
     if(!noChanges)
-      this.popup.warn(`Cannot merge with uncommited changes`);
+      this.popup.warn(`Cannot merge with uncommitted changes`);
 
     return enoughBranches && targetSelected && noChanges;
   }

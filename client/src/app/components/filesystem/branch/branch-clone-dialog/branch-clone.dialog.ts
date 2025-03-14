@@ -54,7 +54,7 @@ export class BranchCloneDialog {
 
   private canClone() {
     const branch = this.fsBranchStateService.$selectedBranch();
-    const changes = this.fsBranchStateService.$uncommited();
+    const changes = this.fsBranchStateService.$uncommitted();
     
     const branchSelected = !!branch;
     const noChanges = changes.length === 0; 
@@ -65,7 +65,7 @@ export class BranchCloneDialog {
       this._$name.set(`${branch.name}-clone`);
 
     if(!noChanges)
-      this.popupService.warn('All changes must be commited or cleared before cloning the branch');
+      this.popupService.warn('All changes must be committed or cleared before cloning the branch');
 
     return branchSelected && noChanges;
   }

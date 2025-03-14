@@ -4,13 +4,13 @@
 
 @let branches = $branches();
 @let selectedBranch = $selectedBranch();
-@let uncommited = $uncommited();
+@let uncommitted = $uncommitted();
 <div>
     <section>
         <div>
             <label>
                 <span>Branch:</span>
-                <select [disabled]="uncommited.length > 0">
+                <select [disabled]="uncommitted.length > 0">
                     @for(b of branches; track $index) {
                         <option [selected]="selectedBranch?.id === b.id" [value]="b.id">{{ b.name }}</option>
                     }    
@@ -23,21 +23,21 @@
         <div>
             <h3>Actions</h3>
             <div class="actions-list">
-            @if(uncommited) {
-                <button (click)="createBranch(uncommited)" class="blue">Create branch</button>
+            @if(uncommitted) {
+                <button (click)="createBranch(uncommitted)" class="blue">Create branch</button>
                 <button (click)="cloneBranch()" class="green">Clone branch</button>
                 <button (click)="merge()" class="orange">Merge</button>
-                <button (click)="commit(uncommited.length)" class="red">Commit</button>
+                <button (click)="commit(uncommitted.length)" class="red">Commit</button>
             }
             </div>
         </div>
     </section>
     <section>
         <h3>Changes</h3>
-        <details [open]="uncommited.length > 0">
-            <summary>Uncommited: {{ uncommited.length }}</summary>
+        <details [open]="uncommitted.length > 0">
+            <summary>Uncommitted: {{ uncommitted.length }}</summary>
             <ul class="change-list">
-                @for (item of uncommited; track $index) {
+                @for (item of uncommitted; track $index) {
                     <li>
                         <span class="ellipsis">
                             {{ item | fsItemEvent }}

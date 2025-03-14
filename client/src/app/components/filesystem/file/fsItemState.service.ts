@@ -36,7 +36,7 @@ export class FsItemStateService {
 
         effect(() => {
             const branch = this.fsBranchStateService.$selectedBranch();
-            const events = this.fsBranchStateService.$uncommited();
+            const events = this.fsBranchStateService.$uncommitted();
             if(!branch) return;
 
             const rootCache = this._$rootCache();

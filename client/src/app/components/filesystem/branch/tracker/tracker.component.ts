@@ -27,11 +27,11 @@ export class TrackerComponent implements OnInit {
   
   private _$branches = signal<Branch[]>([]);
   private _$selectedBranch = signal<Branch | null>(null);
-  private _$uncommited = signal<FsItemEvent[]>([]);
+  private _$uncommitted = signal<FsItemEvent[]>([]);
 
   $branches = this._$branches.asReadonly();
   $selectedBranch = this._$selectedBranch.asReadonly();
-  $uncommited = this._$uncommited.asReadonly();
+  $uncommitted = this._$uncommitted.asReadonly();
 
   constructor() {
     effect(() => {
@@ -45,17 +45,17 @@ export class TrackerComponent implements OnInit {
     });
 
     effect(() => {
-      const x = this.branchService.$uncommited();
-      this._$uncommited.set(x);
+      const x = this.branchService.$uncommitted();
+      this._$uncommitted.set(x);
     });
   }
   ngOnInit(): void {
     this.branchService.loadBranches();
   }
 
-  createBranch(uncommited: FsItemEvent[]) {
-    if(uncommited.length > 0) {
-      this.popupService.warn('Cannot create new branch until all changes are commited');
+  createBranch(uncommitted: FsItemEvent[]) {
+    if(uncommitted.length > 0) {
+      this.popupService.warn('Cannot create new branch until all changes are committed');
       return;
     }
     this.createDialog.open(this.$branches());

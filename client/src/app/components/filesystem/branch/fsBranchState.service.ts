@@ -14,11 +14,11 @@ export class FsBranchStateService {
     
     private _$branches = signal<Branch[]>([], { equal: _ => false});
     private _$selectedBranch = signal<Branch | null>(null, { equal: _ => false});
-    private _$uncommited = signal<FsItemEvent[]>([], { equal: _ => false});
+    private _$uncommitted = signal<FsItemEvent[]>([], { equal: _ => false});
 
     $branches = this._$branches.asReadonly();
     $selectedBranch = this._$selectedBranch.asReadonly();
-    $uncommited = this._$uncommited.asReadonly();
+    $uncommitted = this._$uncommitted.asReadonly();
 
     loadBranches() {
         this.apiService.getAll()
@@ -40,17 +40,17 @@ export class FsBranchStateService {
     }
 
     addEvent(event: FsItemEvent) {
-        const current = this._$uncommited()
-        this._$uncommited.set(current.concat(event));
+        const current = this._$uncommitted()
+        this._$uncommitted.set(current.concat(event));
     }
 
     addEvents(events: FsItemEvent[]) {
-        const current = this._$uncommited()
-        this._$uncommited.set(current.concat(events));
+        const current = this._$uncommitted()
+        this._$uncommitted.set(current.concat(events));
     }
 
     commit() {
-        const events = this._$uncommited();
+        const events = this._$uncommitted();
         if(events.length === 0) {
             this.popupService.info('No changes present. Nothing to commit.');
             return;
@@ -79,20 +79,20 @@ export class FsBranchStateService {
                     .concat(b);
 
                 this._$branches.set(xs);
-                this._$uncommited.set([]);
+                this._$uncommitted.set([]);
                 this._$selectedBranch.set(b);
-                this.popupService.info('Changes commited.');
+                this.popupService.info('Changes committed.');
             }
         });
 
     }
 
     revertTo(index: number) {
-        const uncommited = this._$uncommited();
+        const uncommitted = this._$uncommitted();
         const reverted = [];
         for(let i = 0; i < index; i++) {
-            reverted.push(uncommited[i]);
+            reverted.push(uncommitted[i]);
         }
-        this._$uncommited.set(reverted);
+        this._$uncommitted.set(reverted);
     }
 }
