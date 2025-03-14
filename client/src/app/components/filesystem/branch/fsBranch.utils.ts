@@ -28,6 +28,18 @@ export class FsBranchUtils {
         return makeResult<Branch>(errors, branch);
     }
 
+    static cloneBranch(name: string, original: Branch, all: Branch[]) {
+        const errors = this.validateName(name, all);
+        
+        const branch: Branch = {
+            id: Utils.makeId(),
+            name: Utils.deepClone(original.name),
+            commits: Utils.deepClone(original.commits)
+        };
+
+        return makeResult<Branch>(errors, branch);
+    }
+
     private static validateName(name: string, allBranches: Branch[]) {
         if(!name) return ['Name cannot be empty'];
 

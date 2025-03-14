@@ -28,9 +28,10 @@ export class BranchCloneDialog {
   }
   
   clone() {
-    const branches = this.fsBranchStateService.$branches();
     const name = this.name.nativeElement.value;
-    const res = FsBranchUtils.createBranch(name, branches);
+    const all = this.fsBranchStateService.$branches();
+    const original = this.fsBranchStateService.$selectedBranch()!;
+    const res = FsBranchUtils.cloneBranch(name, original, all);
     
     if(res.errors.length > 0) {
       Utils.printErrors(this.popupService, res.errors);

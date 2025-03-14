@@ -2,18 +2,45 @@
     <h2 header>Merge</h2>
 
     <div body>
+        @let source = $source();
         @let target = $target();
-        @if(target) {
-            <div class="srctarg">
-                <span>Merge</span>
-                <select #source (change)="setSource(source.value)">
+        @if(source && target) {
+            <section class="srctarg">
+                <h3>Source</h3>
+                <select #src (change)="setSource(src.value)">
                     @for (x of $branches(); track $index) {
                         <option [value]="x.id">{{ x.name }}</option>
                     }
                 </select>
                 <span>into</span>
                 <span>{{ target.name }}</span>
-            </div>
+            </section>
+
+            <section class="diffs">
+                <h3>Diffs</h3>
+                <div class="diff-sections">
+                    <section>
+                        <h4>{{ source.name }} commits</h4>
+                        <ul>
+                            @for (x of source.commits; track $index) {
+                                <li>
+                                    {{ x.id }}
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>{{ target.name }} commits</h4>
+                        <ul>
+                            @for (x of target.commits; track $index) {
+                                <li>
+                                    {{ x.id }}
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                </div>
+            </section>
         }
     </div>
     

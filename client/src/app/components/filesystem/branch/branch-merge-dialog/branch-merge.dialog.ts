@@ -3,6 +3,7 @@ import { DialogWrapperComponent } from "../../../common-ui/dialog-wrapper/dialog
 import { Branch } from '../../file/fsitem.models';
 import { FsBranchStateService } from '../fsBranchState.service';
 import { PopupService } from '../../../common-ui/popup/popup.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-branch-merge-dialog',
@@ -31,7 +32,7 @@ export class BranchMergeDialog {
 
   open() {
     if(!this.canOpen()) return;
-    this.getConflicts();
+    this.setSource(this.$branches()[0].id);
     this.wrapper.open();
   }
 
@@ -42,7 +43,13 @@ export class BranchMergeDialog {
 
   setSource(sourceId: string) {
     const source = this.$branches().find(x => x.id === sourceId)!;
-    this._$source.set(source);
+    this.branchService.loadBranch(source)
+      .subscribe({
+        next: x => {
+          console.log(x);
+          this._$source.set(x);
+        }
+      });
   }
 
   private canOpen() {

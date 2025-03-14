@@ -4,6 +4,7 @@ import { Utils } from '../../../shared/services/utils';
 import { PopupService } from '../../common-ui/popup/popup.service';
 import { Branch, Commit, FsItemEvent } from '../file/fsitem.models';
 import { FsBranchApiService } from './fsBranchApi.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,8 @@ export class FsBranchStateService {
             this._$selectedBranch.set(xs[0]);
         }});
     }
+
+    loadBranch = (b: Branch) => this.apiService.get(b);
 
     createBranch(b: Branch) {
         this.apiService.post(b)
