@@ -31,10 +31,9 @@ export class ScratchpadPage {
   }
 
   addPopup() {
-    this.popupService.push({
-      color: 'blue',
-      header: 'Test',
-      text: 'Popup works',
-    })
+    this.popupService.info('Blue jeans.');
+    this.popupService.ok('Green aliens.');
+    this.popupService.warn('Orange Trump.');
+    this.popupService.error('Red alert.');
   }
 }
