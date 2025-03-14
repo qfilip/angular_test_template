@@ -53,19 +53,14 @@ export class TrackerComponent implements OnInit {
     this.branchService.loadBranches();
   }
 
-  createBranch(uncommitted: FsItemEvent[]) {
-    if(uncommitted.length > 0) {
-      this.popupService.warn('Cannot create new branch until all changes are committed');
-      return;
-    }
-    this.createDialog.open(this.$branches());
-  }
+  createBranch = () => this.createDialog.open(this.$branches());
 
   cloneBranch = () => this.cloneDialog.open();
 
   merge = () => this.mergeDialog.open(); 
 
-  commit(numOfChanges: number) {
+  commit() {
+    const numOfChanges = this.$uncommitted().length;
     this.dialogService.openCheck(
       `Commit ${numOfChanges} changes?`,
       () => this.branchService.commit()

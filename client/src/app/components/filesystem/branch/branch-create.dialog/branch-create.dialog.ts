@@ -24,6 +24,11 @@ export class BranchCreateDialog {
   private $branches = signal<Branch[]>([]);
   
   open(allBranches: Branch[]) {
+    if(this.fsBranchStateService.$uncommitted().length > 0) {
+      this.popupService.warn('Cannot create new branch until all changes are committed');
+      return;
+    }
+
     this.$branches.set(allBranches);
     this.wrapper.open();
   }

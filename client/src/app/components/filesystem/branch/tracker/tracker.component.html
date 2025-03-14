@@ -5,16 +5,17 @@
 @let branches = $branches();
 @let selectedBranch = $selectedBranch();
 @let uncommitted = $uncommitted();
+@let hasChanges = uncommitted.length > 0;
 <div>
     <section>
         <div>
             <label>
                 <span>Branch:</span>
-                <select [disabled]="uncommitted.length > 0">
+                <select [disabled]="hasChanges">
                     @for(b of branches; track $index) {
                         <option [selected]="selectedBranch?.id === b.id" [value]="b.id">
                             [{{ b.name }}]&nbsp;
-                            @if(uncommitted.length > 0) {
+                            @if(hasChanges) {
                                 locked due to changes
                             }
                         </option>
@@ -22,24 +23,23 @@
                 </select>
             </label>
         </div>
-
     </section>
     <section>
         <div>
             <h3>Actions</h3>
             <div class="actions-list">
-            @if(uncommitted) {
-                <button (click)="createBranch(uncommitted)" class="blue">Create branch</button>
+            @if(branches) {
+                <button (click)="createBranch()" class="blue">Create branch</button>
                 <button (click)="cloneBranch()" class="green">Clone branch</button>
                 <button (click)="merge()" class="orange">Merge</button>
-                <button (click)="commit(uncommitted.length)" class="red">Commit</button>
+                <button (click)="commit()" class="red">Commit</button>
             }
             </div>
         </div>
     </section>
     <section>
         <h3>Changes</h3>
-        <details [open]="uncommitted.length > 0">
+        <details [open]="hasChanges">
             <summary>Uncommitted: {{ uncommitted.length }}</summary>
             <ul class="change-list">
                 @for (item of uncommitted; track $index) {
