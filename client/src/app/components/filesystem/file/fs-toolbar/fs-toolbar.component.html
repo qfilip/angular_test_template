@@ -11,10 +11,18 @@
             <span class="ellipsis">{{ selected.path }}</span>
         }
         <div class="actions">
-            <button (click)="selectRoot()" class="blue">root</button>
-            <button (click)="toggleSearch()" class="blue">q</button>
-            <button (click)="openCreateDialog(selected)" class="green">+</button>
-            <button (click)="delete()" class="red">x</button>
+            <button (click)="selectRoot()" class="blue">
+                <i class="top"></i>
+            </button>
+            <button (click)="toggleSearch()" class="blue">
+                <i class="search"></i>
+            </button>
+            <button (click)="openCreateDialog(selected)" class="green">
+                <i class="plus"></i>
+            </button>
+            <button (click)="delete()" class="red">
+                <i class="close"></i>
+            </button>
         </div>
     </div>
 }

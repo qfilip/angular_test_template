@@ -16,13 +16,17 @@
                 </ul>
                 <ul>
                     @for (doc of items.docs; track $index) {
-                        <li (click)="selectItem(doc, true)">{{ doc.path | fsItemName }}</li>
+                        <li (click)="selectItem(doc, true)">
+                            <i class="doc"></i> {{ doc.path | fsItemName }}
+                        </li>
                     }
                 </ul>
             </div>
         </details>
     }
     @else {
-        <div (click)="selectItem(item, true)" class="ellipsis clickable">{{ item.path | fsItemName }}</div>
+        <div (click)="selectItem(item, true)" class="ellipsis clickable">
+            <i class="doc"></i> {{ item.path | fsItemName }}
+        </div>
     }
 }

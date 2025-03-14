@@ -35,6 +35,14 @@ a {
     color: var(--c-green);
 }
 
+details > summary {
+    list-style-type: '📁';
+}
+
+details[open] > summary {
+    list-style-type: '📂';
+}
+
 summary, li, .clickable {
     cursor: pointer;
 }

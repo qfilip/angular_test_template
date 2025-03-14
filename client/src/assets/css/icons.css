@@ -1,14 +1,31 @@
 i {
-    font-size: 1.2rem;
-    cursor: pointer;
-
-    padding: var(--rem-xxs);
-
-    color: var(--color, var(--c-black));
-    background-color: var(--bgColor, var(--c-white));
+    font-style: normal;
 }
 
-i:hover {
-    color: var(--color, var(--c-white));
-    background-color: var(--color, var(--c-black));
+i.top::before {
+    content: '🔝';
+}
+
+i.plus::before {
+    content: '➕';
+}
+
+i.close::before {
+    content: '❌';
+}
+
+i.search::before {
+    content: '🔍';
+}
+
+i.doc::before {
+    content: '📃';
+}
+
+i.dir::before {
+    content: '📁';
+}
+
+i.dir-open::before {
+    content: '📂';
 }

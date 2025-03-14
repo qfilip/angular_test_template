@@ -4,7 +4,15 @@
 
 @if(preview && item) {
     <div class="actions">
-        <span class="ellipsis">{{ item.path | fsItemName }}</span>
+        <span class="ellipsis">
+            @if(preview.previewDoc) {
+                <i class="doc"></i>
+            }
+            @else {
+                <i class="dir"></i>
+            }
+            {{ item.path | fsItemName }}
+        </span>
         <span>
             <button (click)="rename()" class="orange">Rename</button>
             <button (click)="delete()" class="red">Delete</button>
