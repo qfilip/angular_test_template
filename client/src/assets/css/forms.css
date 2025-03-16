@@ -10,11 +10,11 @@ label {
 }
 
 label.disabled > * {
-    color: var(--c-white-d3);
+    color: var(--color2-d3);
 }
 
 input[readonly] {
-    background-color: var(--c-white-d1);
+    background-color: var(--color2-d1);
 }
 
 .form-fields label {
@@ -24,7 +24,7 @@ input[readonly] {
 }
 
 .form-fields div.error {
-    color: var(--c-red);
+    color: var(--color7);
     min-height: var(--rem-s);
     font-size: var(--rem-s);
 }

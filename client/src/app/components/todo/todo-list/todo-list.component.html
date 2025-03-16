@@ -13,15 +13,15 @@
             <span>
                 @switch (display) {
                     @case('pending') {
-                        <button (click)="toggleCompleted(x)" class="green">Complete</button>
-                        <button (click)="updateTitle(x)" class="orange">Update title</button>
+                        <button (click)="toggleCompleted(x)" class="ok">Complete</button>
+                        <button (click)="updateTitle(x)" class="warn">Update title</button>
                     }
                     @case ('completed') {
-                        <button (click)="toggleCompleted(x)" class="green">Reactivate</button>
+                        <button (click)="toggleCompleted(x)" class="ok">Reactivate</button>
                     }
                 }
-                <button (click)="viewHistory(x)" class="blue">View history</button>
-                <button (click)="deleteTodo(x)" class="red">Delete</button>
+                <button (click)="viewHistory(x)" class="info">View history</button>
+                <button (click)="deleteTodo(x)" class="error">Delete</button>
             </span>
         </li>
     }

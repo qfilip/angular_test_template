@@ -1,4 +1,4 @@
-export type PopupColor = 'blue' | 'green' | 'orange' | 'red';
+export type PopupColor = 'info' | 'ok' | 'warn' | 'error';
 
 export type Popup = {
     color: PopupColor;

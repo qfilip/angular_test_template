@@ -6,13 +6,13 @@ table {
 }
 
 table th {
-    color: var(--c-white);
-    background-color: var(--c-black);
+    color: var(--color2);
+    background-color: var(--color1);
     text-align: center;
 }
 
 tbody tr:nth-of-type(even) {
-    background-color: var(--c-white-d1);
+    background-color: var(--color2-d1);
 }
 
 tr > th, tr > td {

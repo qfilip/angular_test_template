@@ -7,7 +7,7 @@
     left: 0;
     right: 0;
     
-    background: var(--c-black-t2);
+    background: var(--color1-t2);
     
     display: flex;
     justify-content: center;
@@ -24,13 +24,13 @@
     flex-direction: column;
     width: 25%;
     text-align: center;
-    color: var(--c-white);
+    color: var(--color2);
 }
 
 .la-cog {
     line-height: 100%;
-    color: var(--c-blue);
-    text-shadow: 1px 1px 5px var(--c-red);
+    color: var(--color4);
+    text-shadow: 1px 1px 5px var(--color7);
     width: fit-content;
     height: 100%;
     text-align: center;
@@ -42,7 +42,7 @@
 
 .la-cog > i {
     font-size: 2rem;
-    color: var(--c-white);
+    color: var(--color2);
     background-color: transparent;
 }
 
@@ -51,32 +51,32 @@
  */
 @keyframes cog-color {
     0% {
-        color: var(--c-blue);
-        text-shadow: 1px 1px 2px var(--c-red);
+        color: var(--color4);
+        text-shadow: 1px 1px 2px var(--color7);
     }
     16% {
-        color: var(--c-green);
-        text-shadow: 1px 1px 2px var(--c-orange);
+        color: var(--color5);
+        text-shadow: 1px 1px 2px var(--color6);
     }
     32% {
-        color: var(--c-orange);
-        text-shadow: 1px 1px 2px var(--c-green);
+        color: var(--color6);
+        text-shadow: 1px 1px 2px var(--color5);
     }
     65% {
-        color: var(--c-red);
-        text-shadow: 1px 1px 2px var(--c-blue);
+        color: var(--color7);
+        text-shadow: 1px 1px 2px var(--color4);
     }
     76% {
-        color: var(--c-orange);
-        text-shadow: 1px 1px 2px var(--c-green);
+        color: var(--color6);
+        text-shadow: 1px 1px 2px var(--color5);
     }
     90% {
-        color: var(--c-green);
-        text-shadow: 1px 1px 2px var(--c-orange);
+        color: var(--color5);
+        text-shadow: 1px 1px 2px var(--color6);
     }
     100% {
-        color: var(--c-blue);
-        text-shadow: 1px 1px 2px var(--c-red);
+        color: var(--color4);
+        text-shadow: 1px 1px 2px var(--color7);
     }
 }
 

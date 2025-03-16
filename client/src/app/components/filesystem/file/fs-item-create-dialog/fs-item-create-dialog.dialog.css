@@ -14,5 +14,5 @@ label {
 
 .error {
     text-align: end;
-    color: var(--c-red);
+    color: var(--color7);
 }

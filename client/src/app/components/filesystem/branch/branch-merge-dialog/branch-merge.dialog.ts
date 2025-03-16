@@ -35,7 +35,7 @@ export class BranchMergeDialog {
     const target = this.$target();
     if(!source || !target) return null;
 
-    const diffs: {source?: Commit, target?: Commit }[] = [];
+    const diffs: { source?: Commit, target?: Commit }[] = [];
     const srcLen = source.commits.length;
     const tgtLen = target.commits.length;
     const len = srcLen > tgtLen ? srcLen : tgtLen;

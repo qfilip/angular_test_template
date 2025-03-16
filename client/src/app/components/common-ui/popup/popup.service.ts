@@ -17,16 +17,16 @@ export class PopupService {
         });
 
     info = (message: string, header = 'Info') =>
-        this.pushItem(message, 'blue', header);
+        this.pushItem(message, 'info', header);
 
     ok = (message: string, header = 'Ok') =>
-        this.pushItem(message, 'green', header);
+        this.pushItem(message, 'ok', header);
 
     warn = (message: string, header = 'Warning') =>
-        this.pushItem(message, 'orange', header); 
+        this.pushItem(message, 'warn', header); 
 
     error = (message: string, header = 'Error') =>
-        this.pushItem(message, 'red', header); 
+        this.pushItem(message, 'error', header); 
 
     private pushItem(message: string, color: PopupColor, header: string) {
         this._popup$.next({

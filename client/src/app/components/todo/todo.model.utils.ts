@@ -10,7 +10,7 @@ export class TodoModelUtils {
     static printErrors(service: PopupService, errors: string[]) {
         errors.forEach(x => {
             service.push({
-                color: 'orange',
+                color: 'warn',
                 header: 'Validation failed',
                 text: x 
             });

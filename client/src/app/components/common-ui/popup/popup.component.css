@@ -13,23 +13,23 @@
     background-color: transparent;
     
     & div {
-        background-color: var(--c-white);
+        background-color: var(--color2);
 
         & section {
-            color: var(--c1, var(--c-black));
-            background-color: var(--c3, var(--c-white-d3));
+            color: var(--c1, var(--color1));
+            background-color: var(--c3, var(--color2-d3));
             
-            border-top: var(--rem-s) solid var(--c1, var(--c-black));
+            border-top: var(--rem-s) solid var(--c1, var(--color1));
             border-left: none;
             border-right: none;
-            border-bottom: var(--rem-s) solid var(--c1, var(--c-black));
+            border-bottom: var(--rem-s) solid var(--c1, var(--color1));
             
             padding: var(--rem-xxs) var(--rem-xs);
             margin-bottom: var(--rem-xs);
     
             & p {
                 margin: 0;
-                color: var(--c-black);
+                color: var(--color1);
                 text-wrap: wrap;
             }
         }

@@ -48,11 +48,7 @@ export class BranchCreateDialog {
     this.fsBranchStateService.createBranch(res.data!);
 
     this.loaderService.hide();
-    this.popupService.push({
-      color: 'green',
-      header: 'Ok',
-      text: 'Branch created'
-    });
+    this.popupService.ok('Branch created');
     
     this.close();
   }

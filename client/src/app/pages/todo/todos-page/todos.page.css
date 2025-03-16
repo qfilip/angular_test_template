@@ -3,8 +3,8 @@ section, .new-todo {
 }
 
 section {
-    border: 1px groove var(--c-black);
-    box-shadow: 2px 2px 5px var(--c-black);
+    border: 1px groove var(--color1);
+    box-shadow: 2px 2px 5px var(--color1);
 
     min-height: 30vh;
     max-height: 30vh;
@@ -14,8 +14,8 @@ section {
     & h2 {
         font-size: 1em;
         padding: .5rem 1rem;
-        background-color: var(--c-black);
-        color: var(--c-white-d1);
+        background-color: var(--color1);
+        color: var(--color2-d1);
         
         position: sticky;
         top: 0;

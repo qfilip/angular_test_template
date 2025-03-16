@@ -39,13 +39,7 @@ export class BranchCloneDialog {
     }
     
     this.fsBranchStateService.createBranch(res.data!);
-
-    this.popupService.push({
-      color: 'green',
-      header: 'Ok',
-      text: 'Branch cloned'
-    });
-    
+    this.popupService.ok('Branch cloned');
     this.close();
   }
   

@@ -52,13 +52,13 @@ export class TodoStateService {
             next: x => {
                 this._$todoEvents.update((xs) => xs.concat(x));
                 this.popup.push({
-                    color: 'green',
+                    color: 'ok',
                     header: 'Ok',
                     text: okMessage
                 })
             },
             error: _ => this.popup.push({
-                color: 'red',
+                color: 'error',
                 header: 'Error',
                 text: errMessage
             })

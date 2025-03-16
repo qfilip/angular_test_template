@@ -3,7 +3,7 @@ div {
     justify-content: space-between;
     align-items: center;
 
-    border: var(--rem-xxxs) solid var(--c-black);
+    border: var(--rem-xxxs) solid var(--color1);
 
     font-size: var(--rem);
     

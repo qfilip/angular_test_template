@@ -14,14 +14,14 @@ article.dialog {
     justify-content: center;
     align-items: center;
 
-    background-color: var(--c-black-t2);
+    background-color: var(--color1-t2);
     
     & section {
         width: fit-content;
         min-width: 40%;
     
-        border: 2px groove var(--c-black);
-        background-color: var(--c-white);
+        border: 2px groove var(--color1);
+        background-color: var(--color2);
         max-height: 80vh;
         overflow-y: auto;
         
@@ -29,8 +29,8 @@ article.dialog {
             position: sticky;
             top: 0;
             padding: var(--rem-xs);
-            background-color: var(--c-black);;
-            color: var(--c-white);
+            background-color: var(--color1);;
+            color: var(--color2);
         }
         
         & main {
@@ -45,9 +45,9 @@ article.dialog {
         
             position: sticky;
             bottom: 0;
-            border-top: 1px solid var(--c-black);;
+            border-top: 1px solid var(--color1);;
             padding: var(--rem-xxs) var(--rem-xs);
-            background-color: var(--c-white);
+            background-color: var(--color2);
 
             & button {
                 width: 5rem;

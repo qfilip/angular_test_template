@@ -14,8 +14,8 @@
             {{ item.path | fsItemName }}
         </span>
         <span>
-            <button (click)="rename()" class="orange">Rename</button>
-            <button (click)="delete()" class="red">Delete</button>
+            <button (click)="rename()" class="warn">Rename</button>
+            <button (click)="delete()" class="error">Delete</button>
         </span>
     </div>
     @if(preview.previewDoc) {

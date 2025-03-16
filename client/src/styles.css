@@ -32,7 +32,7 @@ ul {
 }
 
 a {
-    color: var(--c-green);
+    color: var(--color5);
 }
 
 details > summary {
@@ -48,15 +48,15 @@ summary, li, .clickable {
 }
 
 summary:hover, li:hover, .clickable:hover {
-    background-color: var(--c-white-d1);
+    background-color: var(--color2-d1);
 }
 
 a:hover {
-    color: var(--c-white);
-    background-color: var(--c-green);
+    color: var(--color2);
+    background-color: var(--color5);
 }
 
 ::selection {
-    color: var(--c-white);
-    background: var(--c-green);
+    color: var(--color2);
+    background: var(--color5);
 }

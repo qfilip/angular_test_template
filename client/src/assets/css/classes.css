@@ -1,25 +1,25 @@
-.blue {
-    --c1: var(--c-blue);
-    --c2: var(--c-white);
-    --c3: var(--c-blue-t);
+.info {
+    --c1: var(--color4);
+    --c2: var(--color2);
+    --c3: var(--color4-t);
 }
 
-.green {
-    --c1: var(--c-green);
-    --c2: var(--c-white);
-    --c3: var(--c-green-t);
+.ok {
+    --c1: var(--color5);
+    --c2: var(--color2);
+    --c3: var(--color5-t);
 }
 
-.orange {
-    --c1: var(--c-orange);
-    --c2: var(--c-white);
-    --c3: var(--c-orange-t);
+.warn {
+    --c1: var(--color6);
+    --c2: var(--color2);
+    --c3: var(--color6-t);
 }
 
-.red {
-    --c1: var(--c-red);
-    --c2: var(--c-white);
-    --c3: var(--c-red-t);
+.error {
+    --c1: var(--color7);
+    --c2: var(--color2);
+    --c3: var(--color7-t);
 }
 
 .noselect {

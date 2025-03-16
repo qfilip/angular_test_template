@@ -5,10 +5,9 @@ export class Utils {
     static makeId = () => Math.random().toString(16).substr(2, 8);
 
     static printErrors(service: PopupService, errors: string[]) {
-        console.log(errors);
         errors.forEach(x => {
             service.push({
-                color: 'orange',
+                color: 'warn',
                 header: 'Validation failed',
                 text: x 
             });
