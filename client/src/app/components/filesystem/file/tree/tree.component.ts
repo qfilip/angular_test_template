@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Component, computed, effect, inject, Input, signal, ViewChild } from '@angular/core';
 
 import { DirsAndDocs, FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
@@ -46,16 +45,6 @@ export class TreeComponent {
         this._$items.set(dds);
         this._$expanded.set(true);
       }
-    });
-
-    effect(() => {
-      const selected = this.fsItemStateService.$selected();
-      const item = this.$item()!;
-
-      if(!selected) return;
-      if(selected.id !== item.id) return;
-
-      this._$items.set(FsItemUtils.getDirsAndDocs(item, selected));
     });
   }
 
