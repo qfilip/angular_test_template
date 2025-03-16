@@ -16,7 +16,7 @@
                     }
                     
                     @for (doc of items.docs; track $index) {
-                        <li (click)="selectItem(doc, true)">
+                        <li (click)="selectItem(doc, true)" class="clickable">
                             <i class="doc"></i> {{ doc.path | fsItemName }}
                         </li>
                     }

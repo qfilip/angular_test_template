@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FsItemStateService {
     private fsBranchStateService = inject(FsBranchStateService);
 
-    private _expanded$ = new BehaviorSubject<string[]>([ROOT.path]);
+    private _$expanded = signal<string[]>([ROOT.path], { equal: _ => false });
     
     private _$rootCache = signal<FsItem>(ROOT, { equal: _ => false });
     private _$selected = signal<FsItem | null>(null, { equal: _ => false });
@@ -20,7 +20,7 @@ export class FsItemStateService {
     private _$searchActive = signal<boolean>(false);
     private _$searchResult = signal<FsItem[] | null>(null);
 
-    expanded$ = this._expanded$.asObservable();
+    $expanded = this._$expanded.asReadonly();
     
     $selected = this._$selected.asReadonly();
     $root = this._$root.asReadonly();
@@ -57,7 +57,7 @@ export class FsItemStateService {
         const paths = FsItemUtils.findAllPaths(item);
         
         if(expand) {
-            this._expanded$.next(paths);
+            this._$expanded.set(paths);
         }
     }
 

@@ -26,12 +26,12 @@
     @else {
         <ul>
             @for (item of preview.dirsAndDocs.dirs; track $index) {
-                <li (click)="setSelected(item)">
+                <li (click)="setSelected(item)" class="clickable">
                    <i class="dir"></i> {{ item.path | fsItemName }}
                 </li>
             }
             @for (item of preview.dirsAndDocs.docs; track $index) {
-                <li (click)="setSelected(item)">
+                <li (click)="setSelected(item)" class="clickable">
                     <i class="doc"></i> {{ item.path | fsItemName }}
                 </li>
             }

@@ -43,7 +43,7 @@
             <summary>Uncommitted: {{ uncommitted.length }}</summary>
             <ul class="change-list">
                 @for (item of uncommitted; track $index) {
-                    <li>
+                    <li class="hoverable">
                         <span class="ellipsis">
                             {{ item | fsItemEvent }}
                         </span>

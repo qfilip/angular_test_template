@@ -27,9 +27,11 @@ label {
     }
 }
 
-.change-list > li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: default;
+.change-list {
+    & li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: default;
+    }
 }
