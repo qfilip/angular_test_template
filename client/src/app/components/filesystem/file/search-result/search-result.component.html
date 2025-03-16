@@ -3,7 +3,7 @@
 @else if(searchResult.length > 0) {
     <ul>
         @for (item of searchResult; track $index) {
-            <li>
+            <li class="hoverable">
                 <span class="ellipsis">
                     @if(item.type === 'directory') {
                         <i class="dir"></i>
