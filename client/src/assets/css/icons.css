@@ -6,6 +6,10 @@ i.top::before {
     content: '🔝';
 }
 
+i.eye::before {
+    content: '👁‍🗨';
+}
+
 i.plus::before {
     content: '➕';
 }

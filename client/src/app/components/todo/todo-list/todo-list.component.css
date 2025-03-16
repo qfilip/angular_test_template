@@ -12,6 +12,6 @@ ul {
 }
 
 button {
-    font-size: 1.2rem;
+    font-size: var(--font-xl);
     border: none;
 }

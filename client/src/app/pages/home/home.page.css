@@ -26,7 +26,7 @@ li {
     width: 100%;
     
     & button {
-        font-size: var(--rem-xl);
+        font-size: var(--font-xl);
         width: 100%;
     }
 }

@@ -4,6 +4,7 @@ import { FsBranchStateService } from '../branch/fsBranchState.service';
 import { FsDirectory, FsItem, FsItemEvent } from './fsitem.models';
 import { FsItemUtils } from './fsitem.utils';
 import { ROOT } from '../fsConstants';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -11,15 +12,17 @@ import { ROOT } from '../fsConstants';
 export class FsItemStateService {
     private fsBranchStateService = inject(FsBranchStateService);
 
+    private _expanded$ = new BehaviorSubject<string[]>([ROOT.path]);
+    
     private _$rootCache = signal<FsItem>(ROOT, { equal: _ => false });
     private _$selected = signal<FsItem | null>(null, { equal: _ => false });
-    private _$expanded = signal<string[]>([], { equal: _ => false});
     private _$root = signal<FsItem | null>(null, { equal: _ => false });
     private _$searchActive = signal<boolean>(false);
     private _$searchResult = signal<FsItem[] | null>(null);
 
+    expanded$ = this._expanded$.asObservable();
+    
     $selected = this._$selected.asReadonly();
-    $expanded = this._$expanded.asReadonly();
     $root = this._$root.asReadonly();
     $searchActive = this._$searchActive.asReadonly();
     $searchResult = this._$searchResult.asReadonly();
@@ -54,7 +57,7 @@ export class FsItemStateService {
         const paths = FsItemUtils.findAllPaths(item);
         
         if(expand) {
-            this._$expanded.set(paths);
+            this._expanded$.next(paths);
         }
     }
 

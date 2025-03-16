@@ -3,7 +3,7 @@ form button {
 }
 
 label {
-    font-size: var(--rem-s);
+    font-size: var(--font-s);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,5 +26,5 @@ input[readonly] {
 .form-fields div.error {
     color: var(--color7);
     min-height: var(--rem-s);
-    font-size: var(--rem-s);
+    font-size: var(--font-s);
 }

@@ -47,6 +47,14 @@
     --rem-l: 1.2rem;
     --rem-xl: 1.4rem;
 
+    /* font */
+    --font-xs: 0.8rem;
+    --font-s: 1rem;
+    --font-base: 1.1rem;
+    --font-l: 1.2rem;
+    --font-xl: 1.3rem;
+    --font-xxl: 1.4rem;
+
     /* movement */
     --transition: .3s;
 }

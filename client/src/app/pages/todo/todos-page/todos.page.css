@@ -12,7 +12,7 @@ section {
     overflow-y: auto;
     
     & h2 {
-        font-size: 1em;
+        font-size: var(--font-s);
         padding: .5rem 1rem;
         background-color: var(--color1);
         color: var(--color2-d1);

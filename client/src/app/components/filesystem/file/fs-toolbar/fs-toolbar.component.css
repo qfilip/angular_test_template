@@ -5,7 +5,7 @@ div {
 
     border: var(--rem-xxxs) solid var(--color1);
 
-    font-size: var(--rem);
+    font-size: var(--font-s);
     
     & span, input {
         border: none;

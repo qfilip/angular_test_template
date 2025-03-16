@@ -1,10 +1,11 @@
 @let item = $item();
 @let searchActive = $searchActive();
+@let expanded = expanded$ | async;
 
 @if(item && !searchActive) {
     @if(item.type === 'directory') {
-        <details [open]="$open()" #fsDetails (toggle)="selectDir(item, $event)">
-            <summary class="ellipsis">{{ item.path | fsItemName }}</summary>
+        <details [open]="expanded" #fsDetails>
+            <summary (click)="selectItem(item, expanded!)" class="ellipsis">{{ item.path | fsItemName }}</summary>
             <div class="children">
                 @let items = $items();
                 <ul>
@@ -13,8 +14,7 @@
                             <app-tree [fsItem]="dir"></app-tree>
                         </li>
                     }
-                </ul>
-                <ul>
+                    
                     @for (doc of items.docs; track $index) {
                         <li (click)="selectItem(doc, true)">
                             <i class="doc"></i> {{ doc.path | fsItemName }}

@@ -14,8 +14,8 @@
             <button (click)="selectRoot()" title="root" class="info">
                 <i class="top"></i>
             </button>
-            <button (click)="toggleSearch()" title="search toggle" class="info">
-                <i class="search"></i>
+            <button (click)="toggleSearch()" [title]="!searchActive ? 'search view' : 'normal view'" class="info">
+                <i [ngClass]="!searchActive ? 'search' : 'eye'"></i>
             </button>
             <button (click)="openCreateDialog(selected)" title="create" class="ok">
                 <i class="plus"></i>

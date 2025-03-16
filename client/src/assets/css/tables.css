@@ -16,5 +16,5 @@ tbody tr:nth-of-type(even) {
 }
 
 tr > th, tr > td {
-    font-size: var(--rem-s);
+    font-size: var(--font-xs);
 }

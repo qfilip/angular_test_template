@@ -3,7 +3,7 @@ section {
 }
 
 label {
-    font-size: var(--rem);
+    font-size: var(--font-s);
     display: flex;
     & span {
         margin-right: var(--rem);

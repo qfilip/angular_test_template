@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, Input, signal, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, computed, effect, inject, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
 
 import { DirsAndDocs, FsItem } from '../fsitem.models';
 import { FsItemNamePipe } from '../fsitem.pipes';
@@ -13,7 +13,7 @@ import { FsItemStateService } from '../fsItemState.service';
   templateUrl: './tree.component.html',
   styleUrl: './tree.component.css'
 })
-export class TreeComponent {
+export class TreeComponent implements OnInit {
   @Input({ required: true }) set fsItem(x: FsItem) {
     this._$item.set(x);
   }
@@ -23,14 +23,36 @@ export class TreeComponent {
   
   private _$items = signal<DirsAndDocs>({ dirs: [], docs: [] }, {equal: _ => false });
   private _$item = signal<FsItem | null>(null);
-  private _$open = signal<boolean>(false, {equal: _ => false});
 
   $items = this._$items.asReadonly();
   $item = this._$item.asReadonly();
-  $open = this._$open.asReadonly();
-
   $searchActive = computed(() => this.fsItemStateService.$searchActive());
   
+  expanded$!: Observable<boolean>;
+  
+  ngOnInit(): void {
+    this.expanded$ = this.fsItemStateService.expanded$
+      .pipe(
+        map(paths => {
+          const item = this.$item()!;
+          
+          if(paths.length === 1) {
+            return false;
+          }
+
+          return paths.includes(item.path);
+        }),
+        tap(expanded => {
+          if(expanded) {
+            const item = this.$item()!;
+            const root = this.fsItemStateService.$root()!;
+            const dds = FsItemUtils.getDirsAndDocs(item, root);
+            this._$items.set(dds);
+          }
+        })
+      );
+  }
+
   constructor() {
     effect(() => {
       const selected = this.fsItemStateService.$selected();
@@ -41,30 +63,9 @@ export class TreeComponent {
 
       this._$items.set(FsItemUtils.getDirsAndDocs(item, selected));
     });
-
-    effect(() => {
-      const expanded = this.fsItemStateService.$expanded();
-      const item = this.$item()!;
-
-      if(expanded.includes(item.path)) {
-        this._$open.set(true);
-      }
-    });
   }
 
-  selectItem = (x: FsItem, expand: boolean) => {
-    this._$open.set(expand);
-    this.fsItemStateService.setSelected(x, expand);
-  }
-  
-  selectDir(x: FsItem, ev: Event) {
-    const tev = ev as ToggleEvent;
-    const expand = tev.newState === 'open';
-    
-    this.selectItem(x, expand);
-  }
-
-  toggleOpened() {
-    this._$open.set(true);
+  selectItem = (x: FsItem, expanded: boolean) => {
+    this.fsItemStateService.setSelected(x, !expanded);
   }
 }
