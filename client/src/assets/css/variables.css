@@ -1,40 +1,40 @@
 :root {
     /* colors */
-    --blackHue: 0;
-    --blueHue: 207;
-    --greenHue: 122;
-    --orangeHue: 39;
-    --redHue: 4;
+    --hue1: 0;
+    --hue4: 207;
+    --hue5: 122;
+    --hue6: 39;
+    --hue7: 4;
     --transparency: 0.2;
     --transparency-1: 0.8;
     
-    --color1: hsl(var(--blackHue), 0%, 7%);
-    --color1-t1: hsla(var(--blackHue), 0%, 7%, var(--transparency));
-    --color1-t2: hsla(var(--blackHue), 0%, 7%, var(--transparency-1));
+    --color1: hsl(var(--hue1), 0%, 7%);
+    --color1-t1: hsla(var(--hue1), 0%, 7%, var(--transparency));
+    --color1-t2: hsla(var(--hue1), 0%, 7%, var(--transparency-1));
     
-    --color2: hsl(var(--blackHue), 0%, 100%);
-    --color2-d1: hsl(var(--blackHue), 0%, 90%);
-    --color2-d3: hsl(var(--blackHue), 0%, 70%);
+    --color2: hsl(var(--hue1), 0%, 100%);
+    --color2-d1: hsl(var(--hue1), 0%, 90%);
+    --color2-d3: hsl(var(--hue1), 0%, 70%);
     
-    --color3: hsl(var(--blackHue), 0%, 40%);
-    --color3-d1: hsl(var(--blackHue), 0%, 20%);
+    --color3: hsl(var(--hue1), 0%, 40%);
+    --color3-d1: hsl(var(--hue1), 0%, 20%);
     
-    --color4: hsl(var(--blueHue), 90%, 54%);
-    --color4-t: hsla(var(--blueHue), 90%, 54%, var(--transparency));
+    --color4: hsl(var(--hue4), 90%, 54%);
+    --color4-t: hsla(var(--hue4), 90%, 54%, var(--transparency));
 
-    --color5:hsl(var(--greenHue), 39%, 49%);
-    --color5-t:hsla(var(--greenHue), 39%, 49%, var(--transparency));
+    --color5:hsl(var(--hue5), 39%, 49%);
+    --color5-t:hsla(var(--hue5), 39%, 49%, var(--transparency));
     
-    --color5-d1:hsl(var(--greenHue), 39%, 39%);
+    --color5-d1:hsl(var(--hue5), 39%, 39%);
     
-    --color6:hsl(var(--orangeHue), 100%, 50%);
-    --color6-t:hsla(var(--orangeHue), 100%, 50%, var(--transparency));
+    --color6:hsl(var(--hue6), 100%, 50%);
+    --color6-t:hsla(var(--hue6), 100%, 50%, var(--transparency));
     
     
-    --color7: hsl(var(--redHue), 90%, 58%);
-    --color7-l2: hsl(var(--redHue), 90%, 78%);
+    --color7: hsl(var(--hue7), 90%, 58%);
+    --color7-l2: hsl(var(--hue7), 90%, 78%);
     
-    --color7-t: hsla(var(--redHue), 90%, 58%, var(--transparency));
+    --color7-t: hsla(var(--hue7), 90%, 58%, var(--transparency));
     
     
 

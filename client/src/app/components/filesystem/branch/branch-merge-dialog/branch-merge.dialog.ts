@@ -6,6 +6,7 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
 import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FsCommitPipe } from "../fsCommit.pipe";
+import { FsBranchUtils } from '../fsBranch.utils';
 
 @Component({
   selector: 'app-branch-merge-dialog',
@@ -35,25 +36,7 @@ export class BranchMergeDialog {
     const target = this.$target();
     if(!source || !target) return null;
 
-    const diffs: { source?: Commit, target?: Commit }[] = [];
-    const srcLen = source.commits.length;
-    const tgtLen = target.commits.length;
-    const len = srcLen > tgtLen ? srcLen : tgtLen;
-
-    for(let i = 0; i < len; i++) {
-      let scrCommit: Commit | undefined = undefined;
-      let tgtCommit: Commit | undefined = undefined;
-
-      if(srcLen > i)
-        scrCommit = source.commits[i];
-
-      if(tgtLen > i)
-        tgtCommit = target.commits[i];
-
-      diffs.push({ source: scrCommit, target: tgtCommit });
-    }
-
-    return diffs;
+    return FsBranchUtils.getDiffs(source, target);
   });
 
   open() {

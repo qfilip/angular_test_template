@@ -22,12 +22,12 @@
                 <h3>Diffs</h3>
                 <ul>
                     @for (x of diffs; track $index) {
-                        <li [ngClass]="x.source?.id === x.target?.id ? 'commit-same' : 'commit-diff'">
-                            <div class="source">
-                                {{ x.source | fsCommit }}
+                        <li [ngClass]="x.aCommit?.id === x.bCommit?.id ? 'commit-same' : 'commit-diff'">
+                            <div>
+                                {{ x.aCommit | fsCommit }}
                             </div>
-                            <div class="target">
-                                {{ x.target | fsCommit }}
+                            <div>
+                                {{ x.bCommit | fsCommit }}
                             </div>
                         </li>
                     }

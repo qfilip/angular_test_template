@@ -1,5 +1,5 @@
 import { makeResult, Utils } from "../../../shared/services/utils";
-import { Branch, FsItemCreatedEvent } from "../file/fsitem.models";
+import { Branch, Commit, FsItemCreatedEvent } from "../file/fsitem.models";
 import { ROOT } from "../fsConstants";
 
 export class FsBranchUtils {
@@ -38,6 +38,28 @@ export class FsBranchUtils {
         };
 
         return makeResult<Branch>(errors, branch);
+    }
+
+    static getDiffs(a: Branch, b: Branch) {
+        const diffs: { aCommit?: Commit, bCommit?: Commit }[] = [];
+        const aLen = a.commits.length;
+        const bLen = b.commits.length;
+        const len = aLen > bLen ? aLen : bLen;
+    
+        for(let i = 0; i < len; i++) {
+          let ac: Commit | undefined = undefined;
+          let bc: Commit | undefined = undefined;
+    
+          if(aLen > i)
+            ac = a.commits[i];
+    
+          if(bLen > i)
+            bc = b.commits[i];
+    
+          diffs.push({ aCommit: ac, bCommit: bc });
+        }
+    
+        return diffs;
     }
 
     private static validateName(name: string, allBranches: Branch[]) {

@@ -2,7 +2,7 @@ hgroup {
     background-color: var(--color1);
     color: var(--color2-d1);
 
-    padding: .5rem 1rem;
+    padding: var(--rem-xs) var(--rem);
     box-shadow: 2px 2px 5px var(--color1);
 
     & p {
