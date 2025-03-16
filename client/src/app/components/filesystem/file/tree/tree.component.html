@@ -1,6 +1,6 @@
 @let item = $item();
 @let searchActive = $searchActive();
-@let expanded = expanded$ | async;
+@let expanded = $expanded();
 
 @if(item && !searchActive) {
     @if(item.type === 'directory') {
