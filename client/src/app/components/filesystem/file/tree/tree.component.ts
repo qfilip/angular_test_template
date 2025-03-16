@@ -36,15 +36,16 @@ export class TreeComponent {
 
       if(expanded.length === 1) {
         this._$expanded.set(false);
+        return;
       }
 
       const expand = expanded.includes(item.path);
-      if(expand) {
-        const root = this.fsItemStateService.$root()!;
-        const dds = FsItemUtils.getDirsAndDocs(item, root);
-        this._$items.set(dds);
-        this._$expanded.set(true);
-      }
+      if(!expand) return;
+      
+      const root = this.fsItemStateService.$root()!;
+      const dds = FsItemUtils.getDirsAndDocs(item, root);
+      this._$items.set(dds);
+      this._$expanded.set(true);
     });
   }
 
