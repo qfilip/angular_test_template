@@ -6,10 +6,17 @@ section, div {
 
 section {
     min-height: 80vh;
-
+    
     & div {
         flex-direction: column;
     }
+}
+
+h1 {
+    height: 7vh;
+    background-image: url('../../../assets/gifs/notbug.gif');
+    background-repeat: no-repeat;
+    background-position-y: bottom;
 }
 
 nav {
