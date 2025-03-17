@@ -10,32 +10,35 @@
     --transparency: 0.2;
     --transparency-1: 0.8;
     
-    --color1: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) - 43%));
-    --color1-t1: hsla(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) - 43%), var(--transparency));
-    --color1-t2: hsla(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) - 43%), var(--transparency-1));
+    --sat1: calc(var(--sat) - 50%);
+    --color1: hsl(var(--hue1), var(--sat1), 7%);
+    --color1-t1: hsla(var(--hue1), var(--sat1), 7%, var(--transparency));
+    --color1-t2: hsla(var(--hue1), var(--sat1), 7%, var(--transparency-1));
     
-    --color2: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) + 50%));
-    --color2-d1: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) + 40%));
-    --color2-d3: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) + 30%));
+    --color2: hsl(var(--hue1), var(--sat1), 100%);
+    --color2-d1: hsl(var(--hue1), var(--sat1), 90%);
+    --color2-d3: hsl(var(--hue1), var(--sat1), 70%);
     
-    --color3: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) - 10%));
-    --color3-d1: hsl(var(--hue1), calc(var(--sat) - 50%), calc(var(--light) - 30%));
+    --color3: hsl(var(--hue1), var(--sat1), 40%);
+    --color3-d1: hsl(var(--hue1), var(--sat1), 20%);
     
-    --color4: hsl(var(--hue4), calc(var(--sat) + 40%), calc(var(--light) + 4%));
-    --color4-t: hsla(var(--hue4), calc(var(--sat) + 40%), calc(var(--light) + 4%), var(--transparency));
+    --sat4: calc(var(--sat) + 40%);
+    --color4: hsl(var(--hue4), var(--sat4), 54%);
+    --color4-t: hsla(var(--hue4), var(--sat4), 54%, var(--transparency));
 
-    --color5:hsl(var(--hue5), calc(var(--sat) - 11%), calc(var(--light) - 1%));
-    --color5-t:hsla(var(--hue5), calc(var(--sat) - 11%), calc(var(--light) - 1%), var(--transparency));
+    --sat5: calc(var(--sat) - 11%);
+    --color5:hsl(var(--hue5), var(--sat5), 49%);
+    --color5-t:hsla(var(--hue5), var(--sat5), 49%, var(--transparency));
+    --color5-d1:hsl(var(--hue5), var(--sat5), 39%);
     
-    --color5-d1:hsl(var(--hue5), calc(var(--sat) - 11%), calc(var(--light) - 11%));
+    --sat6: calc(var(--sat) + 50%);
+    --color6:hsl(var(--hue6), var(--sat6), 50%);
+    --color6-t:hsla(var(--hue6), var(--sat6), 50%, var(--transparency));
     
-    --color6:hsl(var(--hue6), calc(var(--sat) + 50%), var(--light));
-    --color6-t:hsla(var(--hue6), calc(var(--sat) + 40%), var(--light), var(--transparency));
-    
-    --color7: hsl(var(--hue7), calc(var(--sat) + 40%), calc(var(--light) + 8%));
-    --color7-l2: hsl(var(--hue7), calc(var(--sat) + 40%), calc(var(--light) + 28%));
-    
-    --color7-t: hsla(var(--hue7), calc(var(--sat) + 40%), calc(var(--light) + 8%), var(--transparency));
+    --sat7: calc(var(--sat) + 40%);
+    --color7: hsl(var(--hue7), var(--sat7), 58%);
+    --color7-l2: hsl(var(--hue7), var(--sat7), 78%);
+    --color7-t: hsla(var(--hue7), var(--sat7), 58%, var(--transparency));
     
     
 
