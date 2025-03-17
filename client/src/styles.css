@@ -16,7 +16,7 @@ html, body {
     overflow-y: hidden;
 }
 
-html, body, h1, h2, h3, h4, h5, h6 {
+html, body, h1, h2, h3, h4, h5, h6, ul {
     margin: 0;
     padding: 0;
 }
@@ -27,12 +27,15 @@ html, body, button {
 
 ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 a {
     color: var(--color5);
+}
+
+a:hover {
+    color: var(--color2);
+    background-color: var(--color5);
 }
 
 details > summary {
@@ -49,11 +52,6 @@ summary, li, .clickable {
 
 summary:hover, .hoverable:hover, .clickable:hover {
     background-color: var(--color2-d1);
-}
-
-a:hover {
-    color: var(--color2);
-    background-color: var(--color5);
 }
 
 ::selection {
