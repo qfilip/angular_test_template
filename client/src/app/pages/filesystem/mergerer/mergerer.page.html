@@ -22,7 +22,7 @@
         </section>
 
         <section>
-            <h3>Commits</h3>
+            <h3>Commit differences</h3>
             <hr />
             @if($diffs()?.length === 0) {
                 <p>
@@ -37,10 +37,10 @@
                         'commit-a-before': x.first === 1,
                         'commit-b-before': x.first === 2
                     }">
-                        <button>
+                        <button (click)="useCommit(x.aCommit)">
                             {{ x.aCommit | fsCommit }}
                         </button>
-                        <button>
+                        <button (click)="useCommit(x.bCommit)">
                             {{ x.bCommit | fsCommit }}
                         </button>
                     </li>
@@ -50,8 +50,28 @@
         </section>
 
         <section class="diff-section">
-            <h3>Diffs</h3>
+            <h3>Trees</h3>
             <hr />
+            <div class="diff-trees">
+                <!-- <section>
+                    <h4>Source</h4>
+                    <div>
+                        <app-tree [fsItem]=""></app-tree>
+                    </div>
+                </section>
+                <section>
+                    <h4>Target</h4>
+                    <div>
+                        <app-tree [fsItem]=""></app-tree>
+                    </div>
+                </section>
+                <section>
+                    <h4>Result</h4>
+                    <div>
+                        <app-tree [fsItem]=""></app-tree>
+                    </div>
+                </section> -->
+            </div>
         </section>
     </div>
 </section>

@@ -67,3 +67,9 @@ li.commit-a-before {
 li.commit-b-before {
     flex-flow: column-reverse;
 }
+
+.diff-trees {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
