@@ -9,6 +9,7 @@ import { FsCommitPipe } from "../fsCommit.pipe";
 import { FsBranchUtils } from '../fsBranch.utils';
 
 @Component({
+  standalone: true,
   selector: 'app-branch-merge-dialog',
   imports: [CommonModule, DialogWrapperComponent, FsCommitPipe],
   templateUrl: './branch-merge.dialog.html',

@@ -13,6 +13,7 @@ import { ROOT } from '../../fsConstants';
 import { FsItemRenameDialog } from "../fs-item-rename-dialog/fs-item-rename.dialog";
 
 @Component({
+  standalone: true,
   selector: 'app-file-preview',
   imports: [CommonModule, FsItemNamePipe, FsItemRenameDialog],
   templateUrl: './file-preview.component.html',

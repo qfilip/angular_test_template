@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-dialog-wrapper',
   imports: [],
   templateUrl: './dialog-wrapper.component.html',

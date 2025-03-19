@@ -2,6 +2,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import { FsItemEvent } from '../file/fsitem.models';
 import { FsItemUtils } from '../file/fsitem.utils';
 @Pipe({
+  standalone: true,
   name: 'fsItemEvent',
 })
 export class FsItemEventPipe implements PipeTransform {

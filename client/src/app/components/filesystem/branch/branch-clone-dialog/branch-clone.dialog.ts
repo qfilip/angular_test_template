@@ -7,6 +7,7 @@ import { FsBranchUtils } from '../fsBranch.utils';
 import { Utils } from '../../../../shared/services/utils';
 
 @Component({
+  standalone: true,
   selector: 'app-branch-clone-dialog',
   imports: [DialogWrapperComponent],
   templateUrl: './branch-clone.dialog.html',

@@ -32,8 +32,10 @@ ul {
 li {
     width: 100%;
     
-    & button {
+    & a {
+        display: block;
         font-size: var(--font-xl);
         width: 100%;
+        text-align: center;
     }
 }

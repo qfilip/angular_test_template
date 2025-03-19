@@ -4,6 +4,7 @@ import { PopupService } from './popup.service';
 import { filter } from 'rxjs';
 
 @Component({
+  standalone: true,
   selector: 'app-popup',
   imports: [],
   templateUrl: './popup.component.html',

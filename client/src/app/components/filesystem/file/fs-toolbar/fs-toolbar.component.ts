@@ -12,6 +12,7 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
+  standalone: true,
   selector: 'app-fs-toolbar',
   imports: [CommonModule, FsItemCreateDialog],
   templateUrl: './fs-toolbar.component.html',

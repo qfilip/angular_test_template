@@ -8,8 +8,10 @@ import { FsItemEventPipe } from "../fsEvent.pipe";
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 import { BranchCloneDialog } from "../branch-clone-dialog/branch-clone.dialog";
 import { BranchMergeDialog } from "../branch-merge-dialog/branch-merge.dialog";
+import { Router } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-tracker',
   imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog, BranchMergeDialog],
   templateUrl: './tracker.component.html',
@@ -20,6 +22,7 @@ export class TrackerComponent implements OnInit {
   @ViewChild('cloneDialog') cloneDialog!: BranchCloneDialog;
   @ViewChild('mergeDialog') mergeDialog!: BranchMergeDialog;
   
+  private router = inject(Router);
   private popupService = inject(PopupService);
   private dialogService = inject(DialogService);
   private branchService = inject(FsBranchStateService);
@@ -61,6 +64,20 @@ export class TrackerComponent implements OnInit {
   cloneBranch = () => this.cloneDialog.open();
 
   merge = () => this.mergeDialog.open(); 
+  merger() {
+    const enoughBranches = this.$branches().length > 0;
+    const noChanges = this.$uncommitted.length === 0;
+    
+    if(!enoughBranches)
+      this.popupService.warn(`${this.$branches().length} branches available. Cannot perform merge`);
+
+    if(!noChanges)
+      this.popupService.warn(`Cannot merge with uncommitted changes`);
+
+    if(enoughBranches && noChanges) {
+      this.router.navigate(['filesystem/mergerer']);
+    }
+  }
 
   commit() {
     if(!this.$selectedBranch()) {

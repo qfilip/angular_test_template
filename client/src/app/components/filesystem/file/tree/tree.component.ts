@@ -7,6 +7,7 @@ import { FsItemUtils } from '../fsitem.utils';
 import { FsItemStateService } from '../fsItemState.service';
 
 @Component({
+  standalone: true,
   selector: 'app-tree',
   imports: [CommonModule, FsItemNamePipe],
   templateUrl: './tree.component.html',

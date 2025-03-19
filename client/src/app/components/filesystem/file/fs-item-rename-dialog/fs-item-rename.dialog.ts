@@ -10,6 +10,7 @@ import { Utils } from '../../../../shared/services/utils';
 import { FsItem } from '../fsitem.models';
 
 @Component({
+  standalone: true,
   selector: 'app-fs-item-rename-dialog',
   imports: [DialogWrapperComponent],
   templateUrl: './fs-item-rename.dialog.html',

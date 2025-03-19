@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LocalstorageCacheService } from '../../shared/services/cache/local-storage-cache.service';
 import { fs_show_project_info, scratch_show_project_info, todo_show_project_info } from '../../shared/cache.keys';
-import { filter, firstValueFrom, Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { AppInfoDialog } from "../app-info-dialog/app-info-dialog.page";
 import { AppInfoDialogResult } from '../app-info-dialog/app-info-dialog.models';
 import { CacheFunctions } from '../../shared/services/cache/cache.models';
 import { Project } from './home.models';
 
 @Component({
+  standalone: true,
   selector: 'app-home',
-  imports: [AppInfoDialog],
+  imports: [AppInfoDialog, RouterLink],
   templateUrl: './home.page.html',
   styleUrl: './home.page.css'
 })

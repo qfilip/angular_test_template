@@ -8,6 +8,7 @@ import { Branch } from '../../file/fsitem.models';
 import { FsBranchUtils } from '../fsBranch.utils';
 
 @Component({
+  standalone: true,
   selector: 'app-branch-create-dialog',
   imports: [DialogWrapperComponent],
   templateUrl: './branch-create.dialog.html',

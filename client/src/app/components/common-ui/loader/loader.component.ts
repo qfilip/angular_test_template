@@ -3,6 +3,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { LoaderService } from './loader.service';
 
 @Component({
+  standalone: true,
   selector: 'app-loader',
   imports: [],
   templateUrl: './loader.component.html',

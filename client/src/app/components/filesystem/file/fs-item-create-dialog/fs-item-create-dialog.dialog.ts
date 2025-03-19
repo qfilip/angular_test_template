@@ -9,6 +9,7 @@ import { FsItem, FsItemType } from '../fsitem.models';
 import { FsItemUtils } from '../fsitem.utils';
 
 @Component({
+  standalone: true,
   selector: 'app-fs-item-create-dialog',
   imports: [DialogWrapperComponent],
   templateUrl: './fs-item-create-dialog.dialog.html',

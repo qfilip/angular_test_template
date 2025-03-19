@@ -3,6 +3,7 @@ import { FsItemStateService } from '../fsItemState.service';
 import { FsItem } from '../fsitem.models';
 
 @Component({
+  standalone: true,
   selector: 'app-search-result',
   imports: [],
   templateUrl: './search-result.component.html',
