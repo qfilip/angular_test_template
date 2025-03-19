@@ -37,7 +37,7 @@ export class BranchMergeDialog {
     const target = this.$target();
     if(!source || !target) return null;
 
-    return FsBranchUtils.getDiffs(source, target);
+    return FsBranchUtils.zipDiffs(source, target);
   });
 
   open() {

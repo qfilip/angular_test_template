@@ -3,14 +3,55 @@
         <h2>Mergerer</h2>
         <a routerLink="/filesystem">back to filesystem</a>
     </hgroup>
-    
+
     <div class="sections">
-        <section>
+        <section >
             <h3>Branches</h3>
+            <hr />
+            Merge:
+            <select #src (change)="setSource(src.value)">
+                @for (x of $branches(); track $index) {
+                <option [value]="x.id">{{ x.name }}</option>
+                }
+            </select>
+            into
+            <span class="target-branch">
+                {{ $target()?.name }}
+            </span>            
+            <button class="reset-merge">Reset merge</button>
         </section>
 
         <section>
+            <h3>Commits</h3>
+            <hr />
+            @if($diffs()?.length === 0) {
+                <p>
+                    No different commits. Nothing to merge.
+                </p>
+            }
+            @else {
+                <ul>
+                    @for (x of $diffs(); track $index) {
+                    <li [ngClass]="{
+                        'disabled': $index === $resolved(),
+                        'commit-a-before': x.first === 1,
+                        'commit-b-before': x.first === 2
+                    }">
+                        <button>
+                            {{ x.aCommit | fsCommit }}
+                        </button>
+                        <button>
+                            {{ x.bCommit | fsCommit }}
+                        </button>
+                    </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <section class="diff-section">
             <h3>Diffs</h3>
+            <hr />
         </section>
     </div>
 </section>

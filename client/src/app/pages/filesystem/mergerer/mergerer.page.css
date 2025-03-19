@@ -1,5 +1,69 @@
+hgroup {
+    margin: var(--rem);
+}
+
 .sections {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+    padding: 0rem var(--rem);
+    
+    .diff-section {
+        flex: 2;
+    }
+    
+    & section {
+        flex: 1;
+    }
+}
+
+
+.target-branch {
+    padding: var(--rem-xxxs);
+    background-color: var(--color2-d1);
+}
+
+.reset-merge {
+    margin-left: var(--rem);
+}
+
+.diffs {
+    width: 100%;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem var(--rem-xxxs);
+    border-bottom: var(--rem-xxxs) solid var(--color2-d1);
+
+    & button {
+        display: block;
+        width: 100%;
+        border: none;
+    }
+
+    & button:nth-child(even) {
+        text-align: right;
+    }
+
+    & button:nth-child(odd) {
+        text-align: left;
+    }
+}
+
+li.disabled {
+    pointer-events: none;
+    & button {
+        color: var(--color2-d1);
+    }
+}
+
+li.commit-a-before {
+    flex-flow: column;
+}
+
+li.commit-b-before {
+    flex-flow: column-reverse;
 }
