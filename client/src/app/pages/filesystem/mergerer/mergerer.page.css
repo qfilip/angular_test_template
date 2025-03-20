@@ -33,39 +33,46 @@ hgroup {
 }
 
 li {
-    display: flex;
-    justify-content: space-between;
     padding: 0rem var(--rem-xxxs);
     border-bottom: var(--rem-xxxs) solid var(--color2-d1);
 
-    & button {
-        display: block;
-        width: 100%;
-        border: none;
+    .commits {
+        display: flex;
+        justify-content: space-between;
+        
+        & div:nth-child(even) {
+            text-align: right;
+        }
+    
+        & div:nth-child(odd) {
+            text-align: left;
+        }
     }
 
-    & button:nth-child(even) {
-        text-align: right;
+    .commit-a-before {
+        flex-flow: column;
     }
 
-    & button:nth-child(odd) {
-        text-align: left;
+    .commit-b-before {
+        flex-flow: column-reverse;
+    }
+
+    .commit-buttons {
+        display: flex;
+        justify-content: space-between;
+        
+        & button {
+            width: 100%;
+        }
     }
 }
 
-li.disabled {
+.disabled {
     pointer-events: none;
-    & button {
+    & * {
         color: var(--color2-d1);
     }
-}
-
-li.commit-a-before {
-    flex-flow: column;
-}
-
-li.commit-b-before {
-    flex-flow: column-reverse;
+    
 }
 
 .diff-trees {

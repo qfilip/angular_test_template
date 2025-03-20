@@ -32,17 +32,27 @@
             @else {
                 <ul>
                     @for (x of $diffs(); track $index) {
-                    <li [ngClass]="{
-                        'disabled': $index === $resolved(),
-                        'commit-a-before': x.first === 1,
-                        'commit-b-before': x.first === 2
-                    }">
-                        <button (click)="useCommit(x.aCommit)">
-                            {{ x.aCommit | fsCommit }}
-                        </button>
-                        <button (click)="useCommit(x.bCommit)">
-                            {{ x.bCommit | fsCommit }}
-                        </button>
+                    <li [ngClass]="{'disabled': $index !== $resolved()}">
+                        <div class="commits" [ngClass]="{
+                            'commit-a-before': x.first === 1,
+                            'commit-b-before': x.first === 2
+                        }">
+                            <div>
+                                {{ x.aCommit | fsCommit }}
+                            </div>
+                            <div>
+                                {{ x.bCommit | fsCommit }}
+                            </div>
+                        </div>
+                        <div class="commit-buttons">
+                            <button (click)="useCommit(x.aCommit)">
+                                take left
+                            </button>
+                            <button (click)="useCommit(x.bCommit)">
+                                take right
+                            </button>
+                            <button>take both</button>
+                        </div>
                     </li>
                     }
                 </ul>

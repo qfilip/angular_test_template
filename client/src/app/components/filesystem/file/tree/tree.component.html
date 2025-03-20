@@ -6,22 +6,20 @@
     @if(item.type === 'directory') {
         <details [open]="expanded" #fsDetails>
             <summary (click)="selectItem(item, expanded!)" class="ellipsis">{{ item.path | fsItemName }}</summary>
-            <div class="children">
-                @let items = $items();
-                <ul>
-                    @for (dir of items.dirs; track $index) {
-                        <li>
-                            <app-tree [fsItem]="dir"></app-tree>
-                        </li>
-                    }
-                    
-                    @for (doc of items.docs; track $index) {
-                        <li (click)="selectItem(doc, true)" class="clickable">
-                            <i class="doc"></i> {{ doc.path | fsItemName }}
-                        </li>
-                    }
-                </ul>
-            </div>
+            @let items = $items();
+            <ul>
+                @for (dir of items.dirs; track $index) {
+                    <li>
+                        <app-tree [fsItem]="dir"></app-tree>
+                    </li>
+                }
+                
+                @for (doc of items.docs; track $index) {
+                    <li (click)="selectItem(doc, true)" class="clickable">
+                        <i class="doc"></i> {{ doc.path | fsItemName }}
+                    </li>
+                }
+            </ul>
         </details>
     }
     @else {

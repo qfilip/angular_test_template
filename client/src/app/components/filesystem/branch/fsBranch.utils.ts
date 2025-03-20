@@ -76,6 +76,23 @@ export class FsBranchUtils {
         return diffs;
     }
 
+    static zipEquals(src: Branch, targ: Branch) {
+        const final: Commit[] = [];
+    
+        const aLen = src.commits.length;
+        const bLen = targ.commits.length;
+        const len = aLen < bLen ? aLen : bLen;
+    
+        for(let i = 0; i < len; i++) {
+          if(src.commits[i].id !== targ.commits[i].id)
+            break;
+    
+          final.push(targ.commits[i]);
+        }
+    
+        return final;
+    }
+
     private static validateName(name: string, allBranches: Branch[]) {
         if (!name) return ['Name cannot be empty'];
 

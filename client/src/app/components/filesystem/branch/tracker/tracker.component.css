@@ -13,10 +13,6 @@ label {
     }
 }
 
-.action-section > div {
-    margin: auto;
-}
-
 .actions-list {
     display: flex;
     flex-direction: column;

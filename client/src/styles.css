@@ -46,7 +46,7 @@ details[open] > summary {
     list-style-type: '📂';
 }
 
-summary, li, .clickable {
+summary, .clickable {
     cursor: pointer;
 }
 
