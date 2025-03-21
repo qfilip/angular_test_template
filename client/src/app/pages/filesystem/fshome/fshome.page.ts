@@ -30,9 +30,11 @@ export class FsHomePage {
   constructor() {
     effect(() => {
       const root = this.fsItemStateService.$root();
-      if (!!root) {
-        const dds = FsItemUtils.getDirsAndDocs(root, root)
-        this._$items.set(dds);
+      if (root) {
+        const dds = FsItemUtils.getDirsAndDocs(root, root);
+        if(dds.data) {
+          this._$items.set(dds.data);
+        }
       }
     })
   }

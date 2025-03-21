@@ -48,7 +48,7 @@ export class FilePreviewComponent {
       this._$preview.set({
         previewDoc: selected.type === 'document',
         content: (selected as FsDocument).content,
-        dirsAndDocs: dds
+        dirsAndDocs: dds.data!
       });
     })
    }

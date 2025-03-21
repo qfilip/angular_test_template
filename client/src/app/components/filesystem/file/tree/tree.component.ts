@@ -45,8 +45,10 @@ export class TreeComponent {
       
       const root = this.fsItemStateService.$root()!;
       const dds = FsItemUtils.getDirsAndDocs(item, root);
-      this._$items.set(dds);
-      this._$expanded.set(true);
+      if(dds.data) {
+        this._$items.set(dds.data);
+        this._$expanded.set(true);
+      }
     });
   }
 

@@ -1,3 +1,4 @@
+import { Result } from '../../../shared/models';
 import { makeResult, Utils } from '../../../shared/services/utils';
 import { ROOT } from '../fsConstants';
 import {
@@ -68,19 +69,19 @@ export class FsItemUtils {
         return this.findChildDir(parentPath, root);
     }
 
-    static getDirsAndDocs(item: FsItem, root: FsItem) {
+    static getDirsAndDocs(item: FsItem, root: FsItem): Result<DirsAndDocs> {
         if(item.type === 'document') {
             const dds: DirsAndDocs = { dirs: [], docs: [] }
-            return dds;
+            return makeResult([], dds);
         }
         
         const target = this.findChildDir(item.path, root);
         
         if(!target) {
-            throw 'Child directory not found';
+            return makeResult(['Child directory not found']);
         }
 
-        return this.getChildren(target);
+        return makeResult([], this.getChildren(target));
     }
 
     static cloneWithUpdatedChildPaths(fsi: FsItem, newPath: string) {
@@ -116,15 +117,15 @@ export class FsItemUtils {
         return updated;
     }
 
-    static findChildDoc(targetId: string, root: FsItem): FsItem {
+    static findChildDoc(targetId: string, root: FsItem): Result<FsItem> {
         if(targetId === root.id) {
-            return root;
+            return makeResult([], root);
         }
         const { dirs, docs } = this.getChildren(root);
         const idx = docs.findIndex(x => x.id === targetId);
         
         if(idx !== -1) {
-            return docs[idx];
+            return makeResult([], docs[idx]);
         }
 
         const children = dirs
@@ -132,7 +133,7 @@ export class FsItemUtils {
             .filter(x => !!x);
 
         if(children.length === 0) {
-            throw `No child found at: ${root.path}`;
+            return makeResult([`No child found at: ${root.path}`]);
         }
 
         return children[0];
@@ -210,7 +211,7 @@ export class FsItemUtils {
         if(!name) return ['Name cannot be empty'];
 
         const duplicateNameCheck = () => {
-            const dds = this.getDirsAndDocs(parent, root);
+            const dds = this.getDirsAndDocs(parent, root).data!;
             const sameNameItem = dds.dirs.concat(dds.docs).find(x => this.getName(x.path) === name);
             
             return !!sameNameItem;
