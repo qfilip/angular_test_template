@@ -7,20 +7,18 @@ import { PopupService } from '../../../common-ui/popup/popup.service';
 import { FsItemEventPipe } from "../fsEvent.pipe";
 import { DialogService } from '../../../common-ui/simple-dialog/dialog.service';
 import { BranchCloneDialog } from "../branch-clone-dialog/branch-clone.dialog";
-import { BranchMergeDialog } from "../branch-merge-dialog/branch-merge.dialog";
 import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'app-tracker',
-  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog, BranchMergeDialog],
+  imports: [CommonModule, BranchCreateDialog, FsItemEventPipe, BranchCloneDialog],
   templateUrl: './tracker.component.html',
   styleUrl: './tracker.component.css'
 })
 export class TrackerComponent implements OnInit {
   @ViewChild('createDialog') createDialog!: BranchCreateDialog;
   @ViewChild('cloneDialog') cloneDialog!: BranchCloneDialog;
-  @ViewChild('mergeDialog') mergeDialog!: BranchMergeDialog;
   
   private router = inject(Router);
   private popupService = inject(PopupService);
@@ -63,8 +61,7 @@ export class TrackerComponent implements OnInit {
 
   cloneBranch = () => this.cloneDialog.open();
 
-  merge = () => this.mergeDialog.open(); 
-  merger() {
+  merge() {
     const enoughBranches = this.$branches().length > 0;
     const noChanges = this.$uncommitted.length === 0;
     

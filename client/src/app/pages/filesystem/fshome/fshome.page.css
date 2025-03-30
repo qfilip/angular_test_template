@@ -1,3 +1,7 @@
+h2 {
+    padding: var(--rem);
+}
+
 .fs-sections {
     display: flex;
     justify-content: space-between;

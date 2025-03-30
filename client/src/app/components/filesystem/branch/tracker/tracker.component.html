@@ -1,6 +1,5 @@
 <app-branch-create-dialog #createDialog></app-branch-create-dialog>
 <app-branch-clone-dialog #cloneDialog></app-branch-clone-dialog>
-<app-branch-merge-dialog #mergeDialog></app-branch-merge-dialog>
 
 @let branches = $branches();
 @let selectedBranch = $selectedBranch();
@@ -31,7 +30,7 @@
             @if(branches) {
                 <button (click)="createBranch()" class="info">Create branch</button>
                 <button (click)="cloneBranch()" class="ok">Clone branch</button>
-                <button (click)="merger()" class="warn">Merge</button>
+                <button (click)="merge()" class="warn">Merge</button>
                 <button (click)="commit()" class="error">Commit</button>
             }
             </div>
@@ -52,6 +51,26 @@
                 }
             </ul>
         </details>
+        @if(selectedBranch) {
+            @let commits = selectedBranch.commits;
+            <details [open]="commits.length > 0">
+                <summary>Committed: {{ commits.length }}</summary>
+                @for(commit of commits; track $index) {
+                    <details class="commit-list">
+                        <summary>
+                            Commit: {{ commit.id }}
+                        </summary>
+                        <ul class="change-list">
+                            @for (item of commit.events; track $index) {
+                                <li class="hoverable ellipsis">
+                                    {{ item | fsItemEvent }}
+                                </li>
+                            }
+                        </ul>
+                    </details>
+                }
+            </details>
+        }
     </section>
 
 </div>

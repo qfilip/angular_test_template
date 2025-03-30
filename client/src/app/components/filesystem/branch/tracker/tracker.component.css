@@ -31,3 +31,19 @@ label {
         cursor: default;
     }
 }
+
+.commit-list {
+    margin-left: var(--rem);
+    
+    & > summary {
+        list-style-type: '';
+    }
+
+    &[open] > summary {
+        list-style-type: '';
+    }
+
+    & > ul {
+        margin-left: var(--rem);
+    }
+}
