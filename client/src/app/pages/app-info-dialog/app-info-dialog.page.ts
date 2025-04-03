@@ -1,8 +1,8 @@
 import { Component, signal, ViewChild } from '@angular/core';
-import { DialogWrapperComponent } from '../../components/common-ui/dialog-wrapper/dialog-wrapper.component';
 import { Project } from '../home/home.models';
 import { Subject } from 'rxjs';
 import { AppInfoDialogResult } from './app-info-dialog.models';
+import { DialogWrapperComponent } from '../../features/common-ui/components/dialog-wrapper/dialog-wrapper.component';
 
 @Component({
   selector: 'app-info-dialog',

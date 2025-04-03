@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { LoaderService } from '../../components/common-ui/loader/loader.service';
-import { PopupService } from '../../components/common-ui/popup/popup.service';
-import { DialogOptions } from '../../components/common-ui/simple-dialog/dialog-options.model';
-import { DialogService } from '../../components/common-ui/simple-dialog/dialog.service';
+import { DialogOptions } from '../../features/common-ui/models/dialog-options.model';
+import { DialogService } from '../../features/common-ui/services/dialog.service';
+import { LoaderService } from '../../features/common-ui/services/loader.service';
+import { PopupService } from '../../features/common-ui/services/popup.service';
 
 @Component({
   selector: 'app-scratchpad',

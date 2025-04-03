@@ -1,4 +1,4 @@
-import { PopupService } from "../../components/common-ui/popup/popup.service";
+import { PopupService } from "../../features/common-ui/services/popup.service";
 import { Result } from "../models";
 
 export class Utils {

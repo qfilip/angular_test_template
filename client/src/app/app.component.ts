@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { LoaderComponent } from "./components/common-ui/loader/loader.component";
-import { SimpleDialogComponent } from './components/common-ui/simple-dialog/simple-dialog.component';
 import { CommonModule } from '@angular/common';
-import { PopupComponent } from "./components/common-ui/popup/popup.component";
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { LoaderComponent } from './features/common-ui/components/loader/loader.component';
+import { PopupComponent } from './features/common-ui/components/popup/popup.component';
+import { SimpleDialogComponent } from './features/common-ui/components/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-root',
