@@ -7,12 +7,12 @@ import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
 
 // order matters
 const interceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+  //{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    interceptorProviders,
+    // interceptorProviders,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptorsFromDi()),

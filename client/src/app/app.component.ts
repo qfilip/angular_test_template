@@ -6,12 +6,12 @@ import { PopupComponent } from './features/common-ui/components/popup/popup.comp
 import { SimpleDialogComponent } from './features/common-ui/components/simple-dialog/simple-dialog.component';
 
 @Component({
-  selector: 'app-root',
-  imports: [CommonModule, LoaderComponent, SimpleDialogComponent, RouterOutlet, PopupComponent],
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+	selector: 'app-root',
+	imports: [CommonModule, LoaderComponent, SimpleDialogComponent, RouterOutlet, PopupComponent],
+	standalone: true,
+	templateUrl: './app.component.html',
+	styleUrl: './app.component.css'
 })
 export class AppComponent {
-  router = inject(Router);
+	router = inject(Router);
 }
