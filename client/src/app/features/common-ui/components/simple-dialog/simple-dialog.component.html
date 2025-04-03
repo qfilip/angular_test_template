@@ -1,6 +1,6 @@
-@let options = $options();
-@if(options) {
-<article class="dialog">
+<dialog #dialog>
+    @let options = $options();
+    @if(options) {
     <section>
         <header>
             {{ options.header }}
@@ -16,5 +16,5 @@
             }
         </footer>
     </section>
-</article>
-}
+    }
+</dialog>

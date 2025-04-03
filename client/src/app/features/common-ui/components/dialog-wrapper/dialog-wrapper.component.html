@@ -1,5 +1,5 @@
-@if($visible()) {
-<article class="dialog">
+<dialog #dialog>
+    @if($visible()) {
     <section>
         <header>
             <ng-content select="[header]"></ng-content>
@@ -11,5 +11,5 @@
             <ng-content select="[footer]"></ng-content>
         </footer>
     </section>
-</article>
-}
+    }
+</dialog>
