@@ -12,8 +12,6 @@ export class LoaderService {
 
     private tasks = 0;
 
-    constructor() { }
-
     show(message: string = 'Working...') {
         this.tasks += 1;
         this._$message.set(message);

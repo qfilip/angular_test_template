@@ -11,14 +11,8 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class LoaderComponent {
   private service = inject(LoaderService);
-  private _$visible = signal<boolean>(false);
   private _$message = signal<string>('loading...');
 
-  $visible = this._$visible.asReadonly();
+  $visible = this.service.$isLoading();
   $message = this._$message.asReadonly();
-
-  constructor() {
-    effect(() => this._$visible.set(this.service.$isLoading()));
-    effect(() => this._$message.set(this.service.$message()));
-  }
 }

@@ -7,7 +7,8 @@ import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
 
 // order matters
 const interceptorProviders = [
-  //{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+  // loader handled in base.api.service
+  // { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 ];
 
 export const appConfig: ApplicationConfig = {
