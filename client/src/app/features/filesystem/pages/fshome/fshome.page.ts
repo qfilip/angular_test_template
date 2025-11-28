@@ -19,23 +19,20 @@ import { FsItemUtils } from '../../utils/fsitem.utils';
 export class FsHomePage {
   private fsItemStateService = inject(FsItemStateService);
 
-  private _$items = signal<DirsAndDocs>({ dirs: [], docs: [] }, { equal: _ => false });
-  $items = this._$items.asReadonly();
   $searchActive = computed(() => this.fsItemStateService.$searchActive());
-
+  
   $root = computed(() => {
     return this.fsItemStateService.$root();
   });
-
-  constructor() {
-    effect(() => {
-      const root = this.fsItemStateService.$root();
-      if (root) {
-        const dds = FsItemUtils.getDirsAndDocs(root, root);
-        if(dds.data) {
-          this._$items.set(dds.data);
-        }
+  
+  $items = computed(() => {
+    const root = this.fsItemStateService.$root();
+      if(!root) {
+        return { dirs: [], docs: [] };
       }
-    })
-  }
+      const dds = FsItemUtils.getDirsAndDocs(root, root);
+      const data = dds.data ? dds.data : { dirs: [], docs: [] };
+      
+      return data;
+  });
 }
