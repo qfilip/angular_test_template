@@ -1,4 +1,227 @@
 {
   "todo-events": [],
-  "branches": []
+  "branches": [
+    {
+      "id": "e4b22613",
+      "name": "masta",
+      "commits": [
+        {
+          "id": "d73bc154",
+          "createdAt": "2025-03-30T09:39:50.433Z",
+          "events": [
+            {
+              "type": "created",
+              "created": {
+                "id": "root",
+                "path": "/",
+                "type": "directory",
+                "items": []
+              },
+              "createdAt": "2025-03-30T09:39:50.433Z"
+            }
+          ]
+        },
+        {
+          "id": "37bbf192",
+          "createdAt": "2025-03-30T09:41:06.804Z",
+          "events": [
+            {
+              "created": {
+                "id": "79e7d294",
+                "type": "directory",
+                "path": "/home/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:03.365Z"
+            },
+            {
+              "created": {
+                "id": "dbb63aea",
+                "type": "directory",
+                "path": "/shared/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:13.922Z"
+            },
+            {
+              "created": {
+                "id": "87a4b44b",
+                "type": "directory",
+                "path": "/home/pictures/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:24.466Z"
+            },
+            {
+              "created": {
+                "id": "d429e710",
+                "type": "directory",
+                "path": "/home/documents/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:32.433Z"
+            },
+            {
+              "created": {
+                "id": "2af9a6f2",
+                "type": "document",
+                "path": "/home/documents/text.txt/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:43.252Z"
+            },
+            {
+              "updated": {
+                "id": "2af9a6f2",
+                "type": "document",
+                "path": "/home/documents/text.txt/",
+                "content": "some text present",
+                "items": []
+              },
+              "type": "updated",
+              "createdAt": "2025-03-30T09:40:55.123Z"
+            }
+          ]
+        },
+        {
+          "id": "a3a101bd",
+          "createdAt": "2025-03-30T12:30:03.932Z",
+          "events": [
+            {
+              "created": {
+                "id": "bfda818f",
+                "type": "document",
+                "path": "/home/change1/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T12:29:59.771Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c2806b30",
+      "name": "masta-clone",
+      "commits": [
+        {
+          "id": "d73bc154",
+          "createdAt": "2025-03-30T09:39:50.433Z",
+          "events": [
+            {
+              "type": "created",
+              "created": {
+                "id": "root",
+                "path": "/",
+                "type": "directory",
+                "items": []
+              },
+              "createdAt": "2025-03-30T09:39:50.433Z"
+            }
+          ]
+        },
+        {
+          "id": "37bbf192",
+          "createdAt": "2025-03-30T09:41:06.804Z",
+          "events": [
+            {
+              "created": {
+                "id": "79e7d294",
+                "type": "directory",
+                "path": "/home/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:03.365Z"
+            },
+            {
+              "created": {
+                "id": "dbb63aea",
+                "type": "directory",
+                "path": "/shared/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:13.922Z"
+            },
+            {
+              "created": {
+                "id": "87a4b44b",
+                "type": "directory",
+                "path": "/home/pictures/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:24.466Z"
+            },
+            {
+              "created": {
+                "id": "d429e710",
+                "type": "directory",
+                "path": "/home/documents/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:32.433Z"
+            },
+            {
+              "created": {
+                "id": "2af9a6f2",
+                "type": "document",
+                "path": "/home/documents/text.txt/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T09:40:43.252Z"
+            },
+            {
+              "updated": {
+                "id": "2af9a6f2",
+                "type": "document",
+                "path": "/home/documents/text.txt/",
+                "content": "some text present",
+                "items": []
+              },
+              "type": "updated",
+              "createdAt": "2025-03-30T09:40:55.123Z"
+            }
+          ]
+        },
+        {
+          "id": "49e2b643",
+          "createdAt": "2025-03-30T12:30:15.210Z",
+          "events": [
+            {
+              "created": {
+                "id": "cbbc9faf",
+                "type": "directory",
+                "path": "/home/change2/",
+                "content": "",
+                "items": []
+              },
+              "type": "created",
+              "createdAt": "2025-03-30T12:30:12.814Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { FsCommitPipe } from "../../../components/filesystem/branch/fsCommit.pipe";
 import { Utils } from '../../../shared/services/utils';
 import { TreeComponent } from "../../../components/filesystem/file/tree/tree.component";
+import { FsItemUtils } from '../../../components/filesystem/file/fsitem.utils';
 
 @Component({
   standalone: true,
   selector: 'app-mergerer',
-  imports: [CommonModule, RouterLink, FsCommitPipe],
+  imports: [CommonModule, RouterLink, FsCommitPipe, TreeComponent],
   templateUrl: './mergerer.page.html',
   styleUrl: './mergerer.page.css'
 })
@@ -28,6 +29,10 @@ export class MergererPage implements OnInit {
   $source = this._$source.asReadonly();
   $mergeBase = this._$mergeBase.asReadonly();
   $resolved = this._$resolved.asReadonly();
+  $newRoot = computed(() => {
+    const events = this.$mergeBase();
+    return FsItemUtils.mapRootFromEvents(events);
+  });
   
   $branches = computed(() => {
     const branches = this.branchService.$branches();
@@ -63,14 +68,21 @@ export class MergererPage implements OnInit {
 
   useCommit(commit: Commit | undefined) {
     if(!commit) {
-      this._$resolved.set(this._$resolved() + 1);
+      this._$resolved.update(x => x + 1);
       return;
     }
 
-    // const branchForUpdate = Utils.deepClone(this._$final()!);
-    // branchForUpdate.commits.push(commit);
-    
-    // this._$final.set(branchForUpdate);
-    this._$resolved.set(this._$resolved() + 1);
+    const baseEvents = this.$mergeBase();
+    const baseRoot = FsItemUtils.mapRootFromEvents(baseEvents);
+
+    try {
+      FsItemUtils.mapRootFromEvents(commit.events, baseRoot);
+      this._$mergeBase.update(xs => xs.concat(commit.events))
+      this._$resolved.set(this._$resolved() + 1);
+    }
+    catch (error) {
+      this.popup.error(`Could not add commit ${commit.id}`);
+      this.popup.error(`Error: ${error}`);
+    }
   }
 }
