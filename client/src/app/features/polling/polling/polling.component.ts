@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { PollingService } from '../polling.service';
 import { PopupService } from '../../common-ui/services/popup.service';
 
@@ -8,14 +8,23 @@ import { PopupService } from '../../common-ui/services/popup.service';
   templateUrl: './polling.component.html',
   styleUrl: './polling.component.css'
 })
-export class PollingComponent {
+export class PollingComponent implements OnInit, OnDestroy {
   service = inject(PollingService);
   popup = inject(PopupService);
+
   constructor() {
-    this.service.startPolling(3);
+    this.service.startPolling(1000);
     effect(() => {
-      const x = this.service.$data();
-      // this.popup.showInfo(`Polled data updated. Total items: ${x.length}`);
+      const time = this.service.$time();
+      this.popup.info(`time is: ${time}`);
     })
+  }
+  
+  ngOnInit(): void {
+    
+  }
+
+  ngOnDestroy(): void {
+    this.service.stopPolling();
   }
 }

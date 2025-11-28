@@ -1,24 +1,32 @@
 import { Injectable, signal } from '@angular/core';
-import { delay, EMPTY, expand, from, of, tap } from 'rxjs';
+import { delay, EMPTY, expand, from, Observable, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PollingService {
-  $data = signal<string[]>([]);
+  $time = signal<Date | null>(null);
+  private unsubscribe$ = new Subject();
 
-  startPolling(times: number) {
-    let count = 0;
-    from([1,2,3])
+  startPolling(timeInterval: number) {
+    return timer(0, timeInterval)
     .pipe(
-      delay(1000),
-      tap(_ => count++),
-      expand((x, _) => {
-        if(count === times) return EMPTY;
-        return of(x);
-      })
-    ).subscribe({
-      next: (value) => this.$data.update(data => [...data, `Polled value: ${value} at ${new Date().toLocaleTimeString()}`]),
-    })
+      switchMap(() => this.callTimeApiService()),
+      takeUntil(this.unsubscribe$),
+    )
+    .subscribe({
+      next: (x) => this.$time.set(x)
+    });
+  }
+
+  stopPolling() {
+    this.unsubscribe$.next(1);
+  }
+
+  private callTimeApiService() {
+    return new Observable<Date>(obs => {
+      obs.next(new Date());
+      obs.complete();
+    });
   }
 }
