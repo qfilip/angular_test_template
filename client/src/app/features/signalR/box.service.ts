@@ -10,7 +10,8 @@ export class BoxService {
   $id = signal<string>('');
   private $message = signal<string | null>(null);
   private socket?: Socket;
-  
+  // private animate;
+
   connect() {
     this.socket = io('http://localhost:3000');
     
@@ -25,6 +26,23 @@ export class BoxService {
     this.socket.on('all', (boxes: Box[]) => {
         this.$boxes.set(boxes);
     });
+
+    this.socket.on('updated', (box: Box) => {
+      this.$boxes.update(xs => xs.filter(x => x.id !== box.id).concat(box));
+    });
+
+    this.socket.on('removed', (boxId: string) => {
+      this.$boxes.update(xs => xs.filter(x => x.id !== boxId));
+    });
+
+    setInterval(() => {
+      const boxes = this.$boxes();
+      boxes.forEach(x => {
+        x.x += x.x < x.targetX ? 3 : -3;
+        x.y += x.y < x.targetY ? 3 : -3;
+      });
+      this.$boxes.set(boxes);
+    }, 50);
   }
 
   disconnect() {
@@ -34,7 +52,8 @@ export class BoxService {
   }
 
   public move(box: Box) {
-      this.socket?.emit('movebox', box);
+    console.log(box.targetX, box.targetY)
+      this.socket?.emit('move', box);
   }
 
   static generateRandomColor(){

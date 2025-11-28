@@ -14,10 +14,10 @@ export class BoxesComponent implements OnInit, OnDestroy {
   $id = computed(() => this.service.$id());
   
   move(event: MouseEvent) {
-    console.log(event.x, event.y);
+    console.log(event.offsetX, event.offsetY);
     const target = this.$boxes().find(b => b.id === this.$id());
     if(!target) return;
-    const box = {... target, targetX: event.x, targetY: event.y };
+    const box = {... target, targetX: event.offsetX, targetY: event.offsetY };
     this.service.move(box);
   }
 
