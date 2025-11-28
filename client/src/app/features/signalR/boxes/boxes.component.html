@@ -1,0 +1,12 @@
+<h2>Box playground</h2>
+
+<section (click)="move($event)">
+  @for(box of $boxes(); track box.id) {
+    <span [class.mybox] = "$id() === box.id"
+          [style.marginLeft.px] = box.x
+          [style.marginTop.px] = box.y>
+      {{box.id}}
+    </span>
+
+  }
+</section>

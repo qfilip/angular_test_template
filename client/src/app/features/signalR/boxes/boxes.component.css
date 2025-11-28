@@ -1,0 +1,18 @@
+section {
+  min-width: 10rem;
+  min-height: 20rem;
+  border: 2px solid black;
+  position: relative;
+
+  & > span {
+    position: absolute;
+    border: 1px solid gray;
+    padding: .5rem;
+    text-wrap: wrap;
+  }
+}
+
+.mybox {
+  border: 2px solid red;
+  color: red;
+}

@@ -13,6 +13,7 @@ db/db.json
 client/dist
 client/node_modules
 db/node_modules
+server/node_modules
 npm-debug.log
 yarn-error.log
 
