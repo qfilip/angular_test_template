@@ -1,3 +1,67 @@
 {
-  "data": []
+  "data": [],
+  "students": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    {
+      "id": 2,
+      "firstName": "Jane",
+      "lastName": "Smith"
+    },
+    {
+      "id": 3,
+      "firstName": "Michael",
+      "lastName": "Johnson"
+    },
+    {
+      "id": 4,
+      "firstName": "Emily",
+      "lastName": "Davis"
+    },
+    {
+      "id": 5,
+      "firstName": "David",
+      "lastName": "Brown"
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1,
+      "street": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001"
+    },
+    {
+      "id": 2,
+      "street": "456 Oak Ave",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipCode": "90001"
+    },
+    {
+      "id": 3,
+      "street": "789 Pine Rd",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601"
+    },
+    {
+      "id": 4,
+      "street": "321 Elm St",
+      "city": "Houston",
+      "state": "TX",
+      "zipCode": "77001"
+    },
+    {
+      "id": 5,
+      "street": "654 Maple Dr",
+      "city": "Phoenix",
+      "state": "AZ",
+      "zipCode": "85001"
+    }
+  ]
 }

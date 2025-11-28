@@ -1,0 +1,111 @@
+<div class="crud-container">
+  <h2>CRUD Example with Signals</h2>
+
+  <!-- Error Display -->
+  @if (crudService.error()) {
+  <div class="error-message">
+    {{ crudService.error() }}
+  </div>
+  }
+
+  <!-- Form Section (shown when adding/editing) -->
+  @if (showForm()) {
+  <div class="form-section">
+    <h3>{{ isEditMode() ? "Edit Item" : "Create New Item" }}</h3>
+
+    <div class="form-group">
+      <input
+        type="text"
+        [(ngModel)]="itemName"
+        placeholder="Enter item name"
+        [disabled]="crudService.loading()"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button
+        (click)="saveItem()"
+        [disabled]="!itemName().trim() || crudService.loading()"
+        class="btn-primary"
+      >
+        {{ isEditMode() ? "Update" : "Create" }}
+      </button>
+
+      <button
+        (click)="cancelEdit()"
+        [disabled]="crudService.loading()"
+        class="btn-secondary"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Loading State -->
+  @if (crudService.loading()) {
+  <div class="loading">Loading...</div>
+  }
+
+  <!-- Empty State - Show Add Button -->
+  @if (!crudService.loading() && crudService.items().length === 0 &&
+  !showForm()) {
+  <div class="empty-state">
+    <p class="no-items">No items found.</p>
+    <button (click)="startCreate()" class="btn-primary btn-large">
+      Add Item
+    </button>
+  </div>
+  }
+
+  <!-- Data Table -->
+  @if (!crudService.loading() && crudService.items().length > 0) {
+  <div class="table-header">
+    <h3>Items ({{ crudService.items().length }})</h3>
+    <div class="header-actions">
+      <button
+        (click)="startCreate()"
+        class="btn-primary"
+        [disabled]="showForm()"
+      >
+        Add Item
+      </button>
+      <button (click)="refresh()" class="btn-secondary">Refresh</button>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of crudService.items(); track item.id) {
+      <tr [class.editing]="editingItem()?.id === item.id">
+        <td class="cell-id">{{ item.id }}</td>
+        <td class="cell-name">{{ item.name }}</td>
+        <td class="cell-actions">
+          <button
+            (click)="startEdit(item)"
+            [disabled]="crudService.loading() || showForm()"
+            class="btn-edit"
+          >
+            Edit
+          </button>
+          <button
+            (click)="deleteItem(item.id)"
+            [disabled]="crudService.loading()"
+            class="btn-delete"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>
