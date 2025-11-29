@@ -25,8 +25,11 @@ export class PollingService {
 
   private callTimeApiService() {
     return new Observable<Date>(obs => {
-      obs.next(new Date());
-      obs.complete();
+      const fakeDelay = setTimeout(() => {
+        obs.next(new Date());
+        obs.complete();
+        clearTimeout(fakeDelay);
+      }, Math.random() * 500);
     });
   }
 }

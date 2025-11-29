@@ -10,6 +10,10 @@ h1 {
   font-size: 2rem;
   margin-bottom: 3rem;
   font-weight: 600;
+  height: 7vh;
+  background-image: url('../../../../assets/gifs/notbug.gif');
+  background-repeat: no-repeat;
+  background-position-y: bottom;
 }
 
 span {
