@@ -16,6 +16,14 @@ export class PopupService {
             duration: duration
         });
 
+    pushMany = (xs: Popup[], duration = this.defaultDuration) =>
+      xs.forEach(x => {
+        this._popup$.next({
+            x: x,
+            duration: duration
+        });
+      });
+
     info = (message: string, header = 'Info') =>
         this.pushItem(message, 'info', header);
 
