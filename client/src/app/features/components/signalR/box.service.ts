@@ -10,7 +10,7 @@ export class BoxService {
   $id = signal<string>('');
   private $message = signal<string | null>(null);
   private socket?: Socket;
-  // private animate;
+  private animation: unknown | null = null;
 
   connect() {
     this.socket = io('http://localhost:3000');
@@ -35,11 +35,12 @@ export class BoxService {
       this.$boxes.update(xs => xs.filter(x => x.id !== boxId));
     });
 
-    setInterval(() => {
+    this.animation = setInterval(() => {
       const boxes = this.$boxes();
+      const speed = 3;
       boxes.forEach(x => {
-        x.x += x.x < x.targetX ? 3 : -3;
-        x.y += x.y < x.targetY ? 3 : -3;
+        x.x += x.x < x.targetX ? speed : -speed;
+        x.y += x.y < x.targetY ? speed : -speed;
       });
       this.$boxes.set(boxes);
     }, 50);
@@ -48,6 +49,7 @@ export class BoxService {
   disconnect() {
     if (this.socket) {
       this.socket.disconnect();
+      clearInterval(this.animation! as any);
     }
   }
 

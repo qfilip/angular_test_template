@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { delay, EMPTY, expand, from, Observable, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
+import { Observable, Subject, switchMap, takeUntil, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class PollingService {
         obs.next(new Date());
         obs.complete();
         clearTimeout(fakeDelay);
-      }, Math.random() * 500);
+      }, Math.random() * 1000);
     });
   }
 }
