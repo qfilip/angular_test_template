@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CrudService } from './crud.service';
@@ -11,12 +11,16 @@ import { Example } from './example.model';
   styleUrl: './crud-example.component.css',
 })
 export class CrudExampleComponent implements OnInit {
+  private crudService = inject(CrudService);
+
+  items = this.crudService.items;
+  loading = this.crudService.loading;
+  error = this.crudService.error;
+
   editingItem = signal<Example | null>(null);
   itemName = signal<string>('');
   isEditMode = signal<boolean>(false);
   showForm = signal<boolean>(false);
-
-  constructor(public crudService: CrudService) {}
 
   ngOnInit() {
     this.crudService.getAll();
