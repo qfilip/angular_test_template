@@ -1,9 +1,9 @@
 <div class="crud-container">
   <h2>CRUD Example with Signals</h2>
 
-  @if (crudService.error()) {
+  @if (error()) {
   <div class="error-message">
-    {{ crudService.error() }}
+    {{ error() }}
   </div>
   } @if (showForm()) {
   <div class="form-section">
@@ -14,14 +14,14 @@
         type="text"
         [(ngModel)]="itemName"
         placeholder="Enter item name"
-        [disabled]="crudService.loading()"
+        [disabled]="loading()"
       />
     </div>
 
     <div class="form-actions">
       <button
         (click)="saveItem()"
-        [disabled]="!itemName().trim() || crudService.loading()"
+        [disabled]="!itemName().trim() || loading()"
         class="btn-primary"
       >
         {{ isEditMode() ? "Update" : "Create" }}
@@ -29,26 +29,25 @@
 
       <button
         (click)="cancelEdit()"
-        [disabled]="crudService.loading()"
+        [disabled]="loading()"
         class="btn-secondary"
       >
         Cancel
       </button>
     </div>
   </div>
-  } @if (crudService.loading()) {
+  } @if (loading()) {
   <div class="loading">Loading...</div>
-  } @if (!crudService.loading() && crudService.items().length === 0 &&
-  !showForm()) {
+  } @if (!loading() && items().length === 0 && !showForm()) {
   <div class="empty-state">
     <p class="no-items">No items found.</p>
     <button (click)="startCreate()" class="btn-primary btn-large">
       Add Item
     </button>
   </div>
-  } @if (!crudService.loading() && crudService.items().length > 0) {
+  } @if (!loading() && items().length > 0) {
   <div class="table-header">
-    <h3>Items ({{ crudService.items().length }})</h3>
+    <h3>Items ({{ items().length }})</h3>
     <div class="header-actions">
       <button
         (click)="startCreate()"
@@ -70,21 +69,21 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of crudService.items(); track item.id) {
+      @for (item of items(); track item.id) {
       <tr [class.editing]="editingItem()?.id === item.id">
         <td class="cell-id">{{ item.id }}</td>
         <td class="cell-name">{{ item.name }}</td>
         <td class="cell-actions">
           <button
             (click)="startEdit(item)"
-            [disabled]="crudService.loading() || showForm()"
+            [disabled]="loading() || showForm()"
             class="btn-edit"
           >
             Edit
           </button>
           <button
             (click)="deleteItem(item.id)"
-            [disabled]="crudService.loading()"
+            [disabled]="loading()"
             class="btn-delete"
           >
             Delete
