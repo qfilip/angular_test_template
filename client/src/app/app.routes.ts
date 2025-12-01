@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { BoxesComponent } from './features/signalR/boxes/boxes.component';
 import { HomeComponent } from './features/components/home/home.component';
 import { CrudExampleComponent } from './features/components/crud-example/crud-example.component';
 import { CompositeComponent } from './features/components/composite/composite.component';
-import { PollingComponent } from './features/polling/polling/polling.component';
+import { BoxesComponent } from './features/components/signalR/boxes/boxes.component';
+import { PollingComponent } from './features/components/polling/polling/polling.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },

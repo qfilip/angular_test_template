@@ -1,6 +1,6 @@
 import { Component, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { PollingService } from '../polling.service';
-import { PopupService } from '../../common-ui/services/popup.service';
+import { PopupService } from '../../../common-ui/services/popup.service';
 
 @Component({
   selector: 'app-polling',
