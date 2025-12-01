@@ -1,13 +1,13 @@
-import { Injectable, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 import { forkJoin, switchMap } from 'rxjs';
 import { Student, Address } from './composite.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompositeService {
-  private readonly apiUrl = 'http://localhost:5000';
+  private readonly apiUrl = 'httpClient://localhost:5000';
 
   private studentsSignal = signal<Student[]>([]);
 
@@ -17,18 +17,20 @@ export class CompositeService {
 
   error = signal<string | null>(null);
 
-  constructor(private http: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   getAll() {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http
+    this.httpClient
       .get<Student[]>(`${this.apiUrl}/students`)
       .pipe(
         switchMap((students) => {
           const addressRequests = students.map((student) =>
-            this.http.get<Address>(`${this.apiUrl}/addresses/${student.id}`)
+            this.httpClient.get<Address>(
+              `${this.apiUrl}/addresses/${student.id}`
+            )
           );
 
           return forkJoin(addressRequests).pipe(

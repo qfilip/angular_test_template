@@ -1,15 +1,11 @@
 <div class="crud-container">
   <h2>CRUD Example with Signals</h2>
 
-  <!-- Error Display -->
   @if (crudService.error()) {
   <div class="error-message">
     {{ crudService.error() }}
   </div>
-  }
-
-  <!-- Form Section (shown when adding/editing) -->
-  @if (showForm()) {
+  } @if (showForm()) {
   <div class="form-section">
     <h3>{{ isEditMode() ? "Edit Item" : "Create New Item" }}</h3>
 
@@ -40,15 +36,9 @@
       </button>
     </div>
   </div>
-  }
-
-  <!-- Loading State -->
-  @if (crudService.loading()) {
+  } @if (crudService.loading()) {
   <div class="loading">Loading...</div>
-  }
-
-  <!-- Empty State - Show Add Button -->
-  @if (!crudService.loading() && crudService.items().length === 0 &&
+  } @if (!crudService.loading() && crudService.items().length === 0 &&
   !showForm()) {
   <div class="empty-state">
     <p class="no-items">No items found.</p>
@@ -56,10 +46,7 @@
       Add Item
     </button>
   </div>
-  }
-
-  <!-- Data Table -->
-  @if (!crudService.loading() && crudService.items().length > 0) {
+  } @if (!crudService.loading() && crudService.items().length > 0) {
   <div class="table-header">
     <h3>Items ({{ crudService.items().length }})</h3>
     <div class="header-actions">

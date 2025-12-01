@@ -11,7 +11,6 @@ import { Example } from './example.model';
   styleUrl: './crud-example.component.css',
 })
 export class CrudExampleComponent implements OnInit {
-  // Form state signals
   editingItem = signal<Example | null>(null);
   itemName = signal<string>('');
   isEditMode = signal<boolean>(false);
@@ -23,14 +22,12 @@ export class CrudExampleComponent implements OnInit {
     this.crudService.getAll();
   }
 
-  // Start creating new item
   startCreate() {
     this.resetForm();
     this.isEditMode.set(false);
     this.showForm.set(true);
   }
 
-  // Start editing existing item
   startEdit(item: Example) {
     this.editingItem.set(item);
     this.itemName.set(item.name);
@@ -38,7 +35,6 @@ export class CrudExampleComponent implements OnInit {
     this.showForm.set(true);
   }
 
-  // Save item (create or update)
   saveItem() {
     const name = this.itemName().trim();
 
@@ -58,24 +54,19 @@ export class CrudExampleComponent implements OnInit {
     this.resetForm();
   }
 
-  // Delete item
   deleteItem(id: number) {
     if (confirm('Are you sure you want to delete this item?')) {
       this.crudService.delete(id);
-
-      // Clear form if deleting the item being edited
       if (this.editingItem()?.id === id) {
         this.resetForm();
       }
     }
   }
 
-  // Cancel editing
   cancelEdit() {
     this.resetForm();
   }
 
-  // Reset form state
   private resetForm() {
     this.editingItem.set(null);
     this.itemName.set('');
@@ -83,7 +74,6 @@ export class CrudExampleComponent implements OnInit {
     this.showForm.set(false);
   }
 
-  // Refresh list
   refresh() {
     this.crudService.getAll();
   }

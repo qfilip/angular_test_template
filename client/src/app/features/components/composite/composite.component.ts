@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompositeService } from './composite.service';
 
@@ -9,10 +9,13 @@ import { CompositeService } from './composite.service';
   styleUrl: './composite.component.css',
 })
 export class CompositeComponent implements OnInit {
-  constructor(public compositeService: CompositeService) {}
+  private compositeService = inject(CompositeService);
+
+  students = this.compositeService.students;
+  loading = this.compositeService.loading;
+  error = this.compositeService.error;
 
   ngOnInit() {
-    // Load data on initialization
     this.compositeService.getAll();
   }
 

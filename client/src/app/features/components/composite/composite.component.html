@@ -1,16 +1,16 @@
 <div class="composite-container">
   <h2>Students with Addresses</h2>
 
-  @if (compositeService.error()) {
+  @if (error()) {
   <div class="error-message">
-    {{ compositeService.error() }}
+    {{ error() }}
   </div>
-  } @if (compositeService.loading()) {
+  } @if (loading()) {
   <div class="loading">Loading...</div>
-  } @if (!compositeService.loading() && compositeService.students().length > 0)
-  {
+  } @if (!loading() && students().length > 0) {
   <div class="table-header">
-    <h3>Students ({{ compositeService.students().length }})</h3>
+    <h3>Students ({{ students().length }})</h3>
+    <button (click)="refresh()" class="btn-secondary">Refresh</button>
   </div>
 
   <table class="data-table">
@@ -26,7 +26,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (student of compositeService.students(); track student.id) {
+      @for (student of students(); track student.id) {
       <tr>
         <td class="cell-id">{{ student.id }}</td>
         <td>{{ student.firstName }}</td>
@@ -39,8 +39,7 @@
       }
     </tbody>
   </table>
-  } @if (!compositeService.loading() && compositeService.students().length === 0
-  && !compositeService.error()) {
+  } @if (!loading() && students().length === 0 && !error()) {
   <div class="empty-state">
     <p class="no-items">No students found.</p>
   </div>
