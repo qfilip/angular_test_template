@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class CompositeService {
-  private readonly apiUrl = 'httpClient://localhost:5000';
+  private readonly apiUrl = 'http://localhost:5000';
 
   private studentsSignal = signal<Student[]>([]);
 
