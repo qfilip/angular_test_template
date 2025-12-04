@@ -12,14 +12,13 @@ import { DialogService } from '../../services/dialog.service';
 export class SimpleDialogComponent {
   @ViewChild('dialog') private dialog!: ElementRef<HTMLDialogElement>;
   private service = inject(DialogService);
-  private _$options = signal<DialogOptions | null>(null);
 
-  $options = this._$options.asReadonly();
+  protected $options = signal<DialogOptions | null>(null);
 
   constructor() {
     effect(() => {
       const opts = this.service.$dialogOptions();
-      this._$options.set(opts);
+      this.$options.set(opts);
 
       if(!this.dialog) return;
       
