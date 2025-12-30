@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, catchError, of, filter, tap } from "rxjs";
+import { Observable, catchError, of, filter, tap, from, switchMap } from "rxjs";
 import { LoaderService } from "../../features/common-ui/services/loader.service";
 import { PopupService } from "../../features/common-ui/services/popup.service";
 import { Popup } from "../../features/common-ui/models/popup.model";
@@ -14,26 +14,41 @@ export class BaseApiService {
     protected popup = inject(PopupService);
     protected loader = inject(LoaderService);
 
+    private ms = 1000;
+    
+    test() {
+      const promise = from(new Promise<number>((res, rej) => {
+        setTimeout(() => res(1), this.ms);
+      }));
+
+      const obs = new Observable<number>(obs => {
+        setTimeout(() => obs.error('crap observable'), this.ms);
+      });
+
+      promise.pipe(
+        this.withLoader(),
+        switchMap(x => obs.pipe(this.withLoader()))
+      ).subscribe({
+        error: e => console.log('Subscribed to error: ', e)
+      });
+    }
+
     protected withLoader = <T>(alwaysHide = false) => (source: Observable<T>): Observable<T> => {
       this.loader.show();
       return source.pipe(
           catchError(err => {
-              if(err instanceof HttpErrorResponse) {
-                const e = err as HttpErrorResponse;
-                this.loader.hide();
-                if(e.status >= 400 && e.status < 500) {
-                  this.popup.warn(e.statusText)
-                } else if(e.status > 500) {
-                  this.popup.error(e.statusText)
-                }
-              }
-              return of(null);
+              console.warn(err);
+              this.loader.hide();
+              return of(err);
           }),
           tap(x => {
-              if (x) this.loader.hide();
-              if(alwaysHide) this.loader.hide();
-          }),
-          filter(x => x !== null)
+              if (x) {
+                console.log('x value: ', x);
+                this.loader.hide();
+              }
+              // if(alwaysHide) this.loader.hide();
+          })
+          // filter(x => x !== null)
       );
   }
 }
