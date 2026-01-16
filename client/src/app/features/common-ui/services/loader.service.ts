@@ -6,21 +6,21 @@ import { computed, effect, Injectable, signal } from '@angular/core';
 export class LoaderService {
   
   private callCount$ = signal<number>(0);
+  private _$isLoading = signal<boolean>(false);
   protected $message = signal<string>('');
-  readonly $isLoading = signal<boolean>(false);
+  $isLoading = this._$isLoading.asReadonly();
 
   constructor() {
     effect(() => {
       const cc = this.callCount$();
       
       if(cc > 0) {
-        this.$isLoading.set(true);
+        this._$isLoading.set(true);
       }
       else if(cc === 0) {
-        this.$isLoading.set(false);
+        this._$isLoading.set(false);
       }
       else if(cc < 0) {
-        console.log('oops');
         this.callCount$.set(0);
       }
     });
