@@ -22,7 +22,7 @@ export class BaseApiService {
       }));
 
       const obs = new Observable<number>(obs => {
-        setTimeout(() => obs.error('crap observable'), this.ms);
+        setTimeout(() => obs.next(1), this.ms);
       });
 
       promise.pipe(
@@ -33,22 +33,25 @@ export class BaseApiService {
       });
     }
 
+    continueWith<T, R>(first: Observable<T>, second: (x: T) => Observable<R>) {
+        return first.pipe(
+            this.withLoader(),
+            switchMap(x => second(x).pipe(this.withLoader()))
+        )
+    }
+
     protected withLoader = <T>(alwaysHide = false) => (source: Observable<T>): Observable<T> => {
       this.loader.show();
       return source.pipe(
-          catchError(err => {
-              console.warn(err);
-              this.loader.hide();
-              return of(err);
-          }),
-          tap(x => {
-              if (x) {
-                console.log('x value: ', x);
-                this.loader.hide();
-              }
-              // if(alwaysHide) this.loader.hide();
+          // catchError(err => {
+          //     console.warn(err);
+          //     this.loader.hide();
+          //     return of(err);
+          // }),
+          tap({
+            next: () => this.loader.hide(),
+            error: () => this.loader.hide()
           })
-          // filter(x => x !== null)
       );
   }
 }

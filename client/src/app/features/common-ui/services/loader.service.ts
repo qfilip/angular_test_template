@@ -1,41 +1,36 @@
-import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { computed, effect, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoaderService {
-  private _$isLoading = signal<boolean>(false);
-  private _$message = signal<string>('');
+  
+  private callCount$ = signal<number>(0);
+  protected $message = signal<string>('');
+  readonly $isLoading = signal<boolean>(false);
 
-  $isLoading = this._$isLoading.asReadonly();
-  $message = this._$message.asReadonly();
-
-  private tasks$ = new BehaviorSubject<number>(0);
-  private _ = this.tasks$.subscribe({
-    next: x => {
-      console.log('tasks is', x);
-      if(x > 0) {
-        this._$isLoading.set(true);
+  constructor() {
+    effect(() => {
+      const cc = this.callCount$();
+      
+      if(cc > 0) {
+        this.$isLoading.set(true);
       }
-      else if(x === 0) {
-        this._$isLoading.set(false);
+      else if(cc === 0) {
+        this.$isLoading.set(false);
       }
-      else if(x < 0) {
-        this.tasks$.next(0);
+      else if(cc < 0) {
+        console.log('oops');
+        this.callCount$.set(0);
       }
-    }
-  });
-
-  show(message: string = 'Working...') {
-    this.tasks$.next(this.tasks$.getValue() + 1);
+    });
   }
 
-  setMessage(message: string) {
-    this._$message.set(message);
+  show(message: string = 'Working...') {
+    this.callCount$.update(x => x + 1);
   }
 
   hide() {
-    this.tasks$.next(this.tasks$.getValue() - 1);
+    this.callCount$.update(x => x - 1);
   }
 }
