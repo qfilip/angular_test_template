@@ -10,13 +10,4 @@
 <main>
   <app-popup></app-popup>
   <router-outlet></router-outlet>
-
-  <input #input type="number" (change)="onInput(input.value)" />
-  <button (click)="cancelCall()">Cancel call</button>
-  <ul>
-    @let resources = resourceService.$resources();
-    @for (r of resources; track r.id) {
-      <li>{{ r.id }}</li>
-    }
-  </ul>
 </main>
