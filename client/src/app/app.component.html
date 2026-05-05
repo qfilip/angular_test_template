@@ -2,12 +2,21 @@
 <app-simple-dialog></app-simple-dialog>
 
 <hgroup>
-    <a (click)="router.navigate([''])">
-        <h1>App Template</h1>
-        <p>Your horrible ideas begin here...</p>
-    </a>
+  <a (click)="router.navigate([''])">
+    <h1>App Template</h1>
+    <p>Your horrible ideas begin here...</p>
+  </a>
 </hgroup>
 <main>
-    <app-popup></app-popup>
-    <router-outlet></router-outlet>
+  <app-popup></app-popup>
+  <router-outlet></router-outlet>
+
+  <input #input type="number" (change)="onInput(input.value)" />
+  <button (click)="cancelCall()">Cancel call</button>
+  <ul>
+    @let resources = resourceService.$resources();
+    @for (r of resources; track r.id) {
+      <li>{{ r.id }}</li>
+    }
+  </ul>
 </main>
